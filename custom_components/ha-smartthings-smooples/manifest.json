@@ -1,11 +1,33 @@
 {
+  "domain": "ha-smartthings-smooples",
+  "name": "SmartThings Smooples",
   "codeowners": ["@catjw"],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": ["application_credentials"],
+  "dhcp": [
+    {
+      "hostname": "st*",
+      "macaddress": "24FD5B*"
+    },
+    {
+      "hostname": "smartthings*",
+      "macaddress": "24FD5B*"
+    },
+    {
+      "hostname": "hub*",
+      "macaddress": "24FD5B*"
+    },
+    {
+      "hostname": "hub*",
+      "macaddress": "D052A8*"
+    },
+    {
+      "hostname": "hub*",
+      "macaddress": "286D97*"
+    }
+  ],
   "documentation": "https://github.com/catjw/ha-smartthings-smooples/",
-  "domain": "ha-smartthings-smooples",
   "iot_class": "cloud_push",
-  "name": "SmartThings Smooples",
-  "requirements": [],
-  "version": "1.0.0"
+  "loggers": ["pysmartthings"],
+  "requirements": ["pysmartthings==2.7.0"]
 }
