@@ -1,5 +1,5 @@
 {
-  "domain": "ha-smartthings-smooples",
+  "domain": "smartthings",
   "name": "SmartThings Smooples",
   "codeowners": ["@catjw"],
   "config_flow": true,

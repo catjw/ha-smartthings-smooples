@@ -1,6 +1,6 @@
 """Constants used by the SmartThings component and platforms."""
 
-DOMAIN = "ha-smartthings-smooples"
+DOMAIN = "smartthings"
 
 SCOPES = [
     "r:devices:*",
