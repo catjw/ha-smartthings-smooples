@@ -44,7 +44,7 @@ CUSTOM_CAPABILITIES = (
 )
 
 CAPABILITY_TO_SWITCH = {
-    Capability.switch: [
+    Capability.SWITCH: [
         Map(
             Attribute.switch,
             "switch_on",
