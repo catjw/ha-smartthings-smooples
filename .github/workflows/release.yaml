@@ -6,9 +6,6 @@ on:
 
 jobs:
   release:
-    needs: 
-    - hassfest
-    - hacs-validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
