@@ -29,5 +29,6 @@
   "documentation": "https://github.com/catjw/ha-smartthings-smooples/",
   "iot_class": "cloud_push",
   "loggers": ["pysmartthings"],
-  "requirements": ["pysmartthings==2.7.0"]
+  "requirements": ["pysmartthings==2.7.0"],
+  "version": "1.0.0"
 }
