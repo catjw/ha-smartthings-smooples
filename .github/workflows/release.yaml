@@ -1,40 +1,34 @@
-name: Release
+name: "Release"
 
 on:
-  workflow_call:
-  workflow_dispatch:
+  release:
+    types: [published, edited]
+
+permissions: {}
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    name: "Release"
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v3.5.3"
+
+      - name: "Adjust version number"
+        shell: "bash"
+        run: |
+          yq -i -o json '.version="${{ github.event.release.tag_name }}"' \
+            "${{ github.workspace }}/custom_components/smartthings/manifest.json"
+
+      - name: "ZIP the integration directory"
+        shell: "bash"
+        run: |
+          cd "${{ github.workspace }}/custom_components/smartthings"
+          zip smartthings.zip -r ./
+
+      - name: "Upload the ZIP file to the release"
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          fetch-depth: 0
-      - name: asdf_install
-        uses: asdf-vm/actions/install@v3
-      - name: Install dependencies
-        run: npm ci
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run release
-      - name: Merge main into develop
-        if: ${{ github.repository_owner == 'BottlecapDave' && github.ref == 'refs/heads/main' }}
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          message: "chore: Merged main into develop"
-          from_branch: main
-          target_branch: develop
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Merge main into beta
-        if: ${{ github.repository_owner == 'BottlecapDave' && github.ref == 'refs/heads/beta' }}
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          message: "chore: Merged main into beta"
-          from_branch: main
-          target_branch: beta
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: ${{ github.workspace }}/custom_components/smartthings/smartthings.zip
