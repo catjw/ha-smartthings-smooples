@@ -31,5 +31,5 @@
   "issue_tracker": "https://github.com/catjw/ha-smartthings-smooples/issues",
   "loggers": ["pysmartthings"],
   "requirements": ["pysmartthings==2.7.0"],
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
