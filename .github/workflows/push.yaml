@@ -9,7 +9,5 @@ on:
 jobs:
   hassfest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
-    needs: [tests]
   hacs-validate:
     uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
-    needs: [tests]
