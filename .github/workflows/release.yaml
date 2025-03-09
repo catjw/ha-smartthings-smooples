@@ -1,7 +1,6 @@
 name: "Release"
 
 on:
-  workflow_call:
   release:
     types: [published, edited]
 
