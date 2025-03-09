@@ -73,6 +73,7 @@ STATE_TO_AC_MODE = {
     HVACMode.COOL: "cool",
     HVACMode.DRY: "dry",
     HVACMode.HEAT: "heat",
+    HVACMode.FAN_ONLY: "wind",
     HVACMode.FAN_ONLY: "fanOnly",
 }
 
@@ -156,6 +157,8 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
             },
         )
         self._attr_supported_features = self._determine_features()
+        self._hvac_mode = None
+        self._hvac_modes = None
 
     def _determine_features(self) -> ClimateEntityFeature:
         flags = (
@@ -389,6 +392,8 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         # Turn on the device if it's off before setting mode.
         if self.get_attribute_value(Capability.SWITCH, Attribute.SWITCH) == "off":
             tasks.append(self.async_turn_on())
+        if not self.get_attribute_value(Capability.SWITCH, Attribute.SWITCH):
+            tasks.append(self.async_turn_on())
 
         mode = STATE_TO_AC_MODE[hvac_mode]
         # If new hvac_mode is HVAC_MODE_FAN_ONLY and AirConditioner support "wind" mode the AirConditioner new mode has to be "wind"
@@ -447,6 +452,28 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             Command.OFF,
         )
 
+    async def async_update(self) -> None:
+        """Update the calculated fields of the AC."""
+        modes = {HVACMode.OFF}
+        for mode in self._device.status.supported_ac_modes:
+            if (state := AC_MODE_TO_STATE.get(mode)) is not None:
+                modes.add(state)
+            else:
+                _LOGGER.debug(
+                    "Device %s (%s) returned an invalid supported AC mode: %s",
+                    self._device.label,
+                    self._device.device_id,
+                    mode,
+                )
+        self._hvac_modes = list(modes)
+
+    @property
+    def current_humidity(self) -> float | None:
+        """Return the current humidity."""
+        return self.get_attribute_value(
+            Capability.RELATIVE_HUMIDITY_MEASUREMENT, Attribute.HUMIDITY
+        )
+
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
@@ -501,6 +528,34 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         )
 
     @property
+    def hvac_modes(self) -> list[HVACMode]:
+        """Return the list of available operation modes."""
+        return self._hvac_modes
+
+    @property
+    def supported_features(self):
+        """Return the supported features."""
+        supported_ac_optional_modes = [
+            str(x)
+            for x in self.get_attribute_value(
+                Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE,
+                Attribute.SUPPORTED_AC_OPTIONAL_MODE
+            )
+        ]
+        if len(supported_ac_optional_modes) == 1 and supported_ac_optional_modes[0] == "off":
+            return (
+                ClimateEntityFeature.TARGET_TEMPERATURE
+                | ClimateEntityFeature.FAN_MODE
+                | ClimateEntityFeature.SWING_MODE
+            )
+        return (
+            ClimateEntityFeature.TARGET_TEMPERATURE
+            | ClimateEntityFeature.FAN_MODE
+            | ClimateEntityFeature.SWING_MODE
+            | ClimateEntityFeature.PRESET_MODE
+        )
+
+    @property
     def target_temperature(self) -> float:
         """Return the temperature we try to reach."""
         return self.get_attribute_value(
@@ -547,11 +602,27 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
 
     def _determine_preset_modes(self) -> list[str] | None:
         """Return a list of available preset modes."""
+        restricted_values = ["windFree"]
+        model = self.get_attribute_value(Capability.OCF, Attribute.MODEL_NUMBER).split("|")[0]
         if self.supports_capability(Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE):
             supported_modes = self.get_attribute_value(
                 Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE,
                 Attribute.SUPPORTED_AC_OPTIONAL_MODE,
             )
+            if "quiet" not in supported_modes and model == "ARTIK051_PRAC_20K":
+                supported_modes.append("quiet")
+                self.is_faulty_quiet = True
+
+            if self.get_attribute_value(Capability.AIR_CONDITIONER_MODE, Attribute.AIR_CONDITIONER_MODE) in ("auto", "heat"):
+                if any(
+                    restrictedvalue in supported_modes
+                    for restrictedvalue in restricted_values
+                ):
+                    reduced_supported_optional_modes = supported_modes
+                    reduced_supported_optional_modes.remove("windFree")
+                    return reduced_supported_optional_modes
+            else:
+                return supported_modes
             if supported_modes and WINDFREE in supported_modes:
                 return [WINDFREE]
         return None

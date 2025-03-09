@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from collections import namedtuple
+from collections.abc import Sequence
+
+import asyncio
 from typing import Any
 
 from pysmartthings import Attribute, Capability, Command
@@ -13,6 +17,12 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from . import SmartThingsConfigEntry
 from .const import MAIN
 from .entity import SmartThingsEntity
+
+
+Map = namedtuple(
+    "map",
+    "attribute on_command off_command on_value off_value name icon extra_state_attributes",
+)
 
 CAPABILITIES = (
     Capability.SWITCH_LEVEL,
@@ -27,6 +37,50 @@ AC_CAPABILITIES = (
     Capability.TEMPERATURE_MEASUREMENT,
     Capability.THERMOSTAT_COOLING_SETPOINT,
 )
+
+CUSTOM_CAPABILITIES = (
+    Capability.CUSTOM_AUTO_CLEANING_MODE,
+    Capability.CUSTOM_SPI_MODE,
+)
+
+CAPABILITY_TO_SWITCH = {
+    Capability.switch: [
+        Map(
+            Attribute.switch,
+            "switch_on",
+            "switch_off",
+            "on",
+            "off",
+            "Switch",
+            None,
+            None,
+        )
+    ],
+    Capability.CUSTOM_SPI_MODE: [
+        Map(
+            "spiMode",
+            "setSpiMode",
+            "setSpiMode",
+            "on",
+            "off",
+            "SPI Mode",
+            None,
+            None,
+        )
+    ],
+    Capability.CUSTOM_AUTO_CLEANING_MODE: [
+        Map(
+            "autoCleaningMode",
+            "setAutoCleaningMode",
+            "setAutoCleaningMode",
+            "on",
+            "off",
+            "Auto Cleaning Mode",
+            "mdi:shimmer",
+            None,
+        )
+    ],
+}
 
 
 async def async_setup_entry(
@@ -45,6 +99,30 @@ async def async_setup_entry(
         and not any(capability in device.status[MAIN] for capability in CAPABILITIES)
         and not all(capability in device.status[MAIN] for capability in AC_CAPABILITIES)
     )
+    async_add_entities(
+        SmartThingsCustomSwitch(
+            entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
+            capability=capability,
+            attribute=CAPABILITY_TO_SWITCH[capability].attribute,
+            on_command=CAPABILITY_TO_SWITCH[capability].on_command,
+            off_command=CAPABILITY_TO_SWITCH[capability].off_command,
+            on_value=CAPABILITY_TO_SWITCH[capability].on_value,
+            off_value=CAPABILITY_TO_SWITCH[capability].off_value,
+            name=CAPABILITY_TO_SWITCH[capability].name,
+            icon=CAPABILITY_TO_SWITCH[capability].icon
+        )
+        for capability in CUSTOM_CAPABILITIES
+        for device in entry_data.devices.values()
+        if capability in device.status[MAIN]
+    )
+    async_add_entities(
+        SamsungOfcLightSwitch(
+            entry_data.client, device, entry_data.rooms, {Capability.SWITCH}
+        )
+        for device in entry_data.devices.values()
+        if device.get_attribute_value("ocf", Attribute.MANUFACTURER_NAME) == "Samsung Electronics"
+        and device.type == "OCF"
+    )
 
 
 class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
@@ -58,6 +136,9 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
             Capability.SWITCH,
             Command.OFF,
         )
+        # State is set optimistically in the command above, therefore update
+        # the entity state ahead of receiving the confirming push updates
+        self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch on."""
@@ -65,8 +146,164 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
             Capability.SWITCH,
             Command.ON,
         )
+        # State is set optimistically in the command above, therefore update
+        # the entity state ahead of receiving the confirming push updates
+        self.async_write_ha_state()
 
     @property
     def is_on(self) -> bool:
         """Return true if light is on."""
         return self.get_attribute_value(Capability.SWITCH, Attribute.SWITCH) == "on"
+
+class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
+    """Define a SmartThings custom switch."""
+
+    def __init__(
+        self,
+        capability: str,
+        attribute: str,
+        on_command: str,
+        off_command: str,
+        on_value: str | int | None,
+        off_value: str | int | None,
+        name: str,
+        icon: str | None,
+    ) -> None:
+        """Init the class."""
+        super().__init__(self)
+        self._capability = capability
+        self._attribute = attribute
+        self._on_command = on_command
+        self._off_command = off_command
+        self._on_value = on_value
+        self._off_value = off_value
+        self._name = name
+        self._icon = icon
+
+    async def async_turn_off(self, **kwargs) -> None:
+        """Turn the switch off."""
+        await self.execute_device_command(
+            "main", self._capability, self._off_command, [self._off_value]
+        )
+        # if result:
+        #     self._device.status.update_attribute_value(self._attribute, self._off_value)
+        # State is set optimistically in the command above, therefore update
+        # the entity state ahead of receiving the confirming push updates
+        self.async_write_ha_state()
+
+    async def async_turn_on(self, **kwargs) -> None:
+        """Turn the switch on."""
+        await self.execute_device_command(self._capability, self._on_command, [self._on_value])
+        # if result:
+        #     self._device.status.update_attribute_value(self._attribute, self._on_value)
+        # State is set optimistically in the command above, therefore update
+        # the entity state ahead of receiving the confirming push updates
+        self.async_write_ha_state()
+
+    # @property
+    # def name(self) -> str:
+    #     """Return the name of the switch."""
+    #     return f"{self._device.label} {self._name}"
+
+    # @property
+    # def unique_id(self) -> str:
+    #     """Return a unique ID."""
+    #     return f"{self._device.device_id}.{self._attribute}"
+
+    @property
+    def is_on(self) -> bool:
+        """Return true if switch is on."""
+        if self._on_value is not None:
+            if self.get_attribute_value(self._capability, self._attribute) == self._on_value:
+                return True
+            return False
+        return  self.get_attribute_value(self._capability, self._attribute)
+
+    @property
+    def icon(self) -> str | None:
+        return self._icon
+
+class SamsungOfcLightSwitch(SmartThingsEntity, SwitchEntity):
+    """add samsung ocf light switch"""
+    
+    def __init__(self) -> None:
+        """Init the class."""
+        super().__init__()
+        self._page = "/mode/vs/0"
+        self._key = "x.com.samsung.da.options"
+        self._on_value = ["Light_On"]
+        self._off_value = ["Light_Off"]
+        self._name = "Light"
+        self._on_icon = "mdi:led-on"
+        self._off_icon = "mdi:led-variant-off"
+
+    execute_state = False
+    init_bool = False
+
+    def startup(self):
+        """Make sure that OCF page visits mode on startup"""
+        tasks = []
+        tasks.append(
+            self.execute_device_command(
+                Capability.EXECUTE,
+                "execute",
+                [self._page]
+            )
+        )
+        asyncio.gather(*tasks)
+     
+    async def async_turn_off(self, **kwargs) -> None:
+        """Turn the switch off."""
+        await self.execute_device_command(
+            Capability.EXECUTE,
+            "execute",
+            [self._page, {self._key: self._off_value}]
+        )
+        # if result:
+        #     self._device.status.update_attribute_value(
+        #         "data", {"payload": {self._key: self._off_value}}
+        #     )
+        #     self.execute_state = False
+        self.async_write_ha_state()
+
+    async def async_turn_on(self, **kwargs) -> None:
+        """Turn the switch on."""
+        await self.execute_device_command(
+            Capability.EXECUTE,
+            "execute",
+            [self._page, {self._key: self._on_value}]
+        )
+        # if result:
+        #     self._device.status.update_attribute_value(
+        #         "data", {"payload": {self._key: self._on_value}}
+        #     )
+        #     self.execute_state = True
+        self.async_write_ha_state()
+        
+    @property
+    def is_on(self) -> bool:
+        """Return true if switch is on."""
+        if not self.init_bool:
+            self.startup()
+        if self.get_attribute_value(Capability.EXECUTE, Attribute.DATA)["href"] == self._page:
+            self.init_bool = True
+            output = self.get_attribute_value(Capability.EXECUTE, Attribute.DATA)["payload"][
+                self._key
+            ]
+            if len(self._on_value) > 1:
+                if self._on_value in output:
+                    self.execute_state = True
+                elif self._off_value in output:
+                    self.execute_state = False
+            else:
+                if self._on_value[0] in output:
+                    self.execute_state = True
+                elif self._off_value[0] in output:
+                    self.execute_state = False
+        return self.execute_state
+
+    @property
+    def icon(self) -> str | None:
+        if self.is_on:
+            return self._on_icon
+        return self._off_icon
