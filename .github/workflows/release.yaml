@@ -3,12 +3,12 @@ name: Release
 on:
   workflow_call:
   workflow_dispatch:
-  
+
 jobs:
   release:
-    # if: ${{ github.repository_owner == 'BottlecapDave' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta') }}
     needs: 
-    - validate
+    - hassfest
+    - hacs-validate
     # - unit_tests
     # - integration_tests
     runs-on: ubuntu-latest
