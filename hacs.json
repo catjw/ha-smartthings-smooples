@@ -1,4 +1,6 @@
 {
   "name": "SmartThings Smooples",
-  "render_readme": true
+  "render_readme": true,
+  "country": ["GB"],
+  "content_in_root": false
 }
