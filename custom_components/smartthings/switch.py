@@ -105,13 +105,13 @@ async def async_setup_entry(
         SmartThingsCustomSwitch(
             entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
             capability=capability,
-            attribute=CAPABILITY_TO_SWITCH[capability].attribute,
-            on_command=CAPABILITY_TO_SWITCH[capability].on_command,
-            off_command=CAPABILITY_TO_SWITCH[capability].off_command,
-            on_value=CAPABILITY_TO_SWITCH[capability].on_value,
-            off_value=CAPABILITY_TO_SWITCH[capability].off_value,
-            name=CAPABILITY_TO_SWITCH[capability].name,
-            icon=CAPABILITY_TO_SWITCH[capability].icon
+            attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
+            on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
+            off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
+            on_value=CAPABILITY_TO_SWITCH[capability][0].on_value,
+            off_value=CAPABILITY_TO_SWITCH[capability][0].off_value,
+            name=CAPABILITY_TO_SWITCH[capability][0].name,
+            icon=CAPABILITY_TO_SWITCH[capability][0].icon
         )
         for capability in CUSTOM_CAPABILITIES
         for device in entry_data.devices.values()
