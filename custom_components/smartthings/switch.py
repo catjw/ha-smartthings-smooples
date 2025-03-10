@@ -101,6 +101,10 @@ async def async_setup_entry(
         and not any(capability in device.status[MAIN] for capability in CAPABILITIES)
         and not all(capability in device.status[MAIN] for capability in AC_CAPABILITIES)
     )
+    for device in entry_data.devices.values():
+        for capability in CUSTOM_CAPABILITIES:
+            if capability in device.status[MAIN]:
+                _LOGGER.debug(CAPABILITY_TO_SWITCH[capability])
     async_add_entities(
         SmartThingsCustomSwitch(
             entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
