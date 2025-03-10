@@ -603,7 +603,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
     def _determine_preset_modes(self) -> list[str] | None:
         """Return a list of available preset modes."""
         restricted_values = ["windFree"]
-        for k, v in self._internal_state:
+        for k, v in self._internal_state.items():
             _LOGGER.debug(f"{k}: {v}")
         model = self.get_attribute_value(Capability.OCF, Attribute.MODEL_NUMBER).split("|")[0]
         if self.supports_capability(Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE):
