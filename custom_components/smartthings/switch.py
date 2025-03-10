@@ -18,6 +18,7 @@ from . import SmartThingsConfigEntry
 from .const import MAIN
 from .entity import SmartThingsEntity
 
+_LOGGER = logging.getLogger(__name__)
 
 Map = namedtuple(
     "map",
@@ -179,6 +180,7 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
         self._off_value = off_value
         self._name = name
         self._icon = icon
+        _LOGGER.warning(f"STCS - {self.device}")
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the switch off."""
@@ -200,15 +202,15 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
         # the entity state ahead of receiving the confirming push updates
         self.async_write_ha_state()
 
-    # @property
-    # def name(self) -> str:
-    #     """Return the name of the switch."""
-    #     return f"{self._device.label} {self._name}"
+    @property
+    def name(self) -> str:
+        """Return the name of the switch."""
+        return f"{self._device.label} {self._name}"
 
-    # @property
-    # def unique_id(self) -> str:
-    #     """Return a unique ID."""
-    #     return f"{self._device.device_id}.{self._attribute}"
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return f"{self._device.device_id}.{self._attribute}"
 
     @property
     def is_on(self) -> bool:
@@ -236,6 +238,7 @@ class SamsungOfcLightSwitch(SmartThingsEntity, SwitchEntity):
         self._name = "Light"
         self._on_icon = "mdi:led-on"
         self._off_icon = "mdi:led-variant-off"
+        _LOGGER.warning(f"SOLS - {self.device}")
 
     execute_state = False
     init_bool = False
@@ -279,7 +282,17 @@ class SamsungOfcLightSwitch(SmartThingsEntity, SwitchEntity):
         #     )
         #     self.execute_state = True
         self.async_write_ha_state()
-        
+
+    @property
+    def name(self) -> str:
+        """Return the name of the light switch."""
+        return f"{self._device.label} {self._name}"
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        _unique_id = self._name.lower().replace(" ", "_")
+        return f"{self._device.device_id}.{_unique_id}"
     @property
     def is_on(self) -> bool:
         """Return true if switch is on."""
