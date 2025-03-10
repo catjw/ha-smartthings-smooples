@@ -6,6 +6,7 @@ from collections import namedtuple
 from collections.abc import Sequence
 
 import asyncio
+import logging
 from typing import Any
 
 from pysmartthings import Attribute, Capability, Command
