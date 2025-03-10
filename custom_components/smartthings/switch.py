@@ -102,34 +102,31 @@ async def async_setup_entry(
         and not all(capability in device.status[MAIN] for capability in AC_CAPABILITIES)
     )
     _LOGGER.error('---------------------------------------------------')
+    custom_switches = []
     for device in entry_data.devices.values():
         for capability in CUSTOM_CAPABILITIES:
             if capability in device.status[MAIN]:
                 _LOGGER.error(CAPABILITY_TO_SWITCH[capability])
-    async_add_entities(
-        SmartThingsCustomSwitch(
-            entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
-            capability=capability,
-            attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
-            on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
-            off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
-            on_value=CAPABILITY_TO_SWITCH[capability][0].on_value,
-            off_value=CAPABILITY_TO_SWITCH[capability][0].off_value,
-            name=CAPABILITY_TO_SWITCH[capability][0].name,
-            icon=CAPABILITY_TO_SWITCH[capability][0].icon
-        )
-        for capability in CUSTOM_CAPABILITIES
-        for device in entry_data.devices.values()
-        if capability in device.status[MAIN]
-    )
-    async_add_entities(
-        SamsungOfcLightSwitch(
-            entry_data.client, device, entry_data.rooms, {Capability.SWITCH}
-        )
-        for device in entry_data.devices.values()
-        if device.get_attribute_value("ocf", Attribute.MANUFACTURER_NAME) == "Samsung Electronics"
-        and device.type == "OCF"
-    )
+                custom_switches.extend(
+                    [SmartThingsCustomSwitch(
+                        entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
+                        capability=capability,
+                        attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
+                        on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
+                        off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
+                        on_value=CAPABILITY_TO_SWITCH[capability][0].on_value,
+                        off_value=CAPABILITY_TO_SWITCH[capability][0].off_value,
+                        name=CAPABILITY_TO_SWITCH[capability][0].name,
+                        icon=CAPABILITY_TO_SWITCH[capability][0].icon
+                    )]
+                )
+        if device.get_attribute_value(Capability.OCF, Attribute.MANUFACTURER_NAME) == "Samsung Electronics" and device.type == "OCF":
+            custom_switches.extend([
+                SamsungOfcLightSwitch(
+                    entry_data.client, device, entry_data.rooms, {Capability.SWITCH}
+                )
+            ])
+    async_add_entities(custom_switches)
 
 
 class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
