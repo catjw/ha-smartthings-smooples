@@ -354,6 +354,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
                 Capability.TEMPERATURE_MEASUREMENT,
                 Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE,
                 Capability.DEMAND_RESPONSE_LOAD_CONTROL,
+                Capability.RELATIVE_HUMIDITY_MEASUREMENT,
                 Capability.OCF,
             },
         )
@@ -466,7 +467,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
                     self._device.device_id,
                     mode,
                 )
-        self._hvac_modes = list(modes)
+        self._attr_hvac_modes = list(modes)
 
     @property
     def current_humidity(self) -> float | None:
@@ -531,7 +532,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
     @property
     def hvac_modes(self) -> list[HVACMode]:
         """Return the list of available operation modes."""
-        return self._hvac_modes
+        return self._attr_hvac_modes
 
     @property
     def supported_features(self):
