@@ -354,6 +354,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
                 Capability.TEMPERATURE_MEASUREMENT,
                 Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE,
                 Capability.DEMAND_RESPONSE_LOAD_CONTROL,
+                Capability.OCF,
             },
         )
         self._attr_hvac_modes = self._determine_hvac_modes()
