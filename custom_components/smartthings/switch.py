@@ -162,7 +162,7 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
             client=client,
             device=device,
             rooms=rooms,
-            capability=capability
+            capabilities={capability}
         )
         self._attribute = attribute
         self._on_command = on_command
