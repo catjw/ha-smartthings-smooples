@@ -138,6 +138,7 @@ async def async_setup_entry(
 class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
     """Define a SmartThings climate entities."""
 
+    _enable_turn_on_off_backwards_compatibility = False
     _attr_name = None
 
     def __init__(
@@ -341,6 +342,9 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
 
     _attr_name = None
     _attr_preset_mode = None
+    _hvac_modes: list[HVACMode]
+    _enable_turn_on_off_backwards_compatibility = False
+    is_faulty_quiet = False
 
     def __init__(
         self, client: SmartThings, rooms: dict[str, str], device: FullDevice
@@ -390,6 +394,8 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             Command.SET_FAN_MODE,
             argument=fan_mode,
         )
+        self._attr_preset_mode = None
+
         self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
