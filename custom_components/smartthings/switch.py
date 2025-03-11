@@ -94,7 +94,8 @@ async def async_setup_entry(
     entry_data = entry.runtime_data
     async_add_entities(
         SmartThingsSwitch(
-            entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
+            entry_data.client, device, entry_data.rooms, 
+            capabilities={Capability.SWITCH},
             attribute=CAPABILITY_TO_SWITCH[Capability.SWITCH][0].attribute,
             on_command=CAPABILITY_TO_SWITCH[Capability.SWITCH][0].on_command,
             off_command=CAPABILITY_TO_SWITCH[Capability.SWITCH][0].off_command,
@@ -118,7 +119,7 @@ async def async_setup_entry(
                 custom_switches.extend(
                     [SmartThingsCustomSwitch(
                         entry_data.client, device, entry_data.rooms,
-                        capability=capability,
+                        capabilities={capability},
                         attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
                         on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
                         off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
@@ -147,7 +148,7 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
         client: SmartThings,
         device: FullDevice,
         rooms: dict[str, str],
-        capability: Capability.SWITCH,
+        capabilities: set[Capability],
         attribute: str,
         on_command: str,
         off_command: str,
@@ -162,7 +163,7 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
             client=client,
             device=device,
             rooms=rooms,
-            capabilities={capability}
+            capabilities=capabilities
         )
         self._attribute = attribute
         self._on_command = on_command
@@ -211,7 +212,7 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
         client: SmartThings,
         device: FullDevice,
         rooms: dict[str, str],
-        capability: str,
+        capabilities: set[Capability],
         attribute: str,
         on_command: str,
         off_command: str,
@@ -225,9 +226,9 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
             client=client,
             device=device,
             rooms=rooms,
-            capabilities={capability}
+            capabilities=capabilities
         )
-        self._capability = capability
+        self._capability = capabilities[0]
         self._attribute = attribute
         self._on_command = on_command
         self._off_command = off_command
