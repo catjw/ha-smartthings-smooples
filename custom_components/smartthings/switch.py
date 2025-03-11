@@ -110,7 +110,7 @@ async def async_setup_entry(
                 custom_switches.extend(
                     [SmartThingsCustomSwitch(
                         entry_data.client, device, entry_data.rooms,
-                        capabilities={capability},
+                        capability=capability,
                         attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
                         on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
                         off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
