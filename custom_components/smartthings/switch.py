@@ -9,13 +9,13 @@ import asyncio
 import logging
 from typing import Any
 
-from pysmartthings import Attribute, Capability, Command
+from pysmartthings import Attribute, Capability, Command, SmartThings
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import SmartThingsConfigEntry
+from . import FullDevice, SmartThingsConfigEntry
 from .const import MAIN
 from .entity import SmartThingsEntity
 
@@ -109,8 +109,8 @@ async def async_setup_entry(
                 _LOGGER.error(CAPABILITY_TO_SWITCH[capability])
                 custom_switches.extend(
                     [SmartThingsCustomSwitch(
-                        entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
-                        capability=capability,
+                        entry_data.client, device, entry_data.rooms,
+                        capabilities={capability},
                         attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
                         on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
                         off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
@@ -133,6 +133,37 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
     """Define a SmartThings switch."""
 
     _attr_name = None
+    
+    def __init__(
+        self,
+        client: SmartThings,
+        device: FullDevice,
+        rooms: dict[str, str],
+        capability: Capability.SWITCH,
+        attribute: str,
+        on_command: str,
+        off_command: str,
+        on_value: str | int | None,
+        off_value: str | int | None,
+        name: str,
+        icon: str | None,
+        extra_state_attributes: str | None,
+    ) -> None:
+        """Init the class."""
+        super().__init__(
+            client=client,
+            device=device,
+            rooms=rooms,
+            capabilities={capability}
+        )
+        self._attribute = attribute
+        self._on_command = on_command
+        self._off_command = off_command
+        self._on_value = on_value
+        self._off_value = off_value
+        self._name = name
+        self._icon = icon
+        self._extra_state_attributes = extra_state_attributes
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
@@ -155,15 +186,33 @@ class SmartThingsSwitch(SmartThingsEntity, SwitchEntity):
         self.async_write_ha_state()
 
     @property
+    def name(self) -> str:
+        """Return the name of the switch."""
+        return f"{self._device.label} {self._name}"
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return f"{self._device.device_id}.{self._attribute}"
+
+    @property
     def is_on(self) -> bool:
         """Return true if light is on."""
         return self.get_attribute_value(Capability.SWITCH, Attribute.SWITCH) == "on"
+
+    @property
+    def icon(self) -> str | None:
+        return self._icon
+
 
 class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
     """Define a SmartThings custom switch."""
 
     def __init__(
         self,
+        client: SmartThings,
+        device: FullDevice,
+        rooms: dict[str, str],
         capability: str,
         attribute: str,
         on_command: str,
@@ -174,7 +223,12 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
         icon: str | None,
     ) -> None:
         """Init the class."""
-        super().__init__(self)
+        super().__init__(
+            client=client,
+            device=device,
+            rooms=rooms,
+            capabilities={capability}
+        )
         self._capability = capability
         self._attribute = attribute
         self._on_command = on_command
@@ -231,9 +285,14 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
 class SamsungOfcLightSwitch(SmartThingsEntity, SwitchEntity):
     """add samsung ocf light switch"""
     
-    def __init__(self) -> None:
+    def __init__(self, client: SmartThings, rooms: dict[str, str], device: FullDevice, capabilties: set[Capability]) -> None:
         """Init the class."""
-        super().__init__()
+        super().__init__(
+            client=client,
+            device=device,
+            rooms=rooms,
+            capabilities=capabilties
+        )
         self._page = "/mode/vs/0"
         self._key = "x.com.samsung.da.options"
         self._on_value = ["Light_On"]

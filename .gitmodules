@@ -1,3 +1,4 @@
 [submodule "core"]
 	path = core
 	url = https://github.com/home-assistant/core.git
+	branch = 2025.3.2

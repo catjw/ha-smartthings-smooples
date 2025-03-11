@@ -30,6 +30,6 @@
   "iot_class": "cloud_push",
   "issue_tracker": "https://github.com/catjw/ha-smartthings-smooples/issues",
   "loggers": ["pysmartthings"],
-  "requirements": ["pysmartthings==2.7.0"],
+  "requirements": ["pysmartthings==2.7.2"],
   "version": "1.4.0"
 }

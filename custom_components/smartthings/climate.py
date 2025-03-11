@@ -38,12 +38,14 @@ MODE_TO_STATE = {
     "emergency heat": HVACMode.HEAT,
     "heat": HVACMode.HEAT,
     "off": HVACMode.OFF,
+    "wind": HVACMode.FAN_ONLY,
 }
 STATE_TO_MODE = {
     HVACMode.HEAT_COOL: "auto",
     HVACMode.COOL: "cool",
     HVACMode.HEAT: "heat",
     HVACMode.OFF: "off",
+    HVACMode.FAN_ONLY: "wind",
 }
 
 OPERATING_STATE_TO_ACTION = {
@@ -119,12 +121,12 @@ async def async_setup_entry(
     """Add climate entities for a config entry."""
     entry_data = entry.runtime_data
     entities: list[ClimateEntity] = [
-        SmartThingsAirConditioner(entry_data.client, entry_data.rooms, device)
+        SmartThingsAirConditioner(client=entry_data.client, rooms=entry_data.rooms, device=device)
         for device in entry_data.devices.values()
         if all(capability in device.status[MAIN] for capability in AC_CAPABILITIES)
     ]
     entities.extend(
-        SmartThingsThermostat(entry_data.client, entry_data.rooms, device)
+        SmartThingsThermostat(client=entry_data.client, rooms=entry_data.rooms, device=device)
         for device in entry_data.devices.values()
         if all(
             capability in device.status[MAIN] for capability in THERMOSTAT_CAPABILITIES
@@ -143,10 +145,10 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
     ) -> None:
         """Init the class."""
         super().__init__(
-            client,
-            device,
-            rooms,
-            {
+            client=client,
+            device=device,
+            rooms=rooms,
+            capabilities={
                 Capability.THERMOSTAT_FAN_MODE,
                 Capability.THERMOSTAT_MODE,
                 Capability.TEMPERATURE_MEASUREMENT,
@@ -178,6 +180,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
             Command.SET_THERMOSTAT_FAN_MODE,
             argument=fan_mode,
         )
+        self.async_schedule_update_ha_state(True)
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         """Set new target operation mode."""
@@ -186,6 +189,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
             Command.SET_THERMOSTAT_MODE,
             argument=STATE_TO_MODE[hvac_mode],
         )
+        self.async_schedule_update_ha_state(True)
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new operation mode and target temperatures."""
@@ -223,6 +227,7 @@ class SmartThingsThermostat(SmartThingsEntity, ClimateEntity):
                 )
             )
         await asyncio.gather(*tasks)
+        self.async_schedule_update_ha_state(True)
 
     @property
     def current_humidity(self) -> float | None:
@@ -342,10 +347,10 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
     ) -> None:
         """Init the class."""
         super().__init__(
-            client,
-            device,
-            rooms,
-            {
+            client=client,
+            device=device,
+            rooms=rooms,
+            capabilities={
                 Capability.AIR_CONDITIONER_MODE,
                 Capability.SWITCH,
                 Capability.FAN_OSCILLATION_MODE,
@@ -356,6 +361,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
                 Capability.DEMAND_RESPONSE_LOAD_CONTROL,
                 Capability.RELATIVE_HUMIDITY_MEASUREMENT,
                 Capability.OCF,
+                Capability.EXECUTE,
             },
         )
         self._attr_hvac_modes = self._determine_hvac_modes()
@@ -384,6 +390,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             Command.SET_FAN_MODE,
             argument=fan_mode,
         )
+        self.async_write_ha_state()
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         """Set new target operation mode."""
@@ -415,6 +422,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             )
         )
         await asyncio.gather(*tasks)
+        self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
@@ -439,6 +447,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             )
         )
         await asyncio.gather(*tasks)
+        self.async_write_ha_state()
 
     async def async_turn_on(self) -> None:
         """Turn device on."""
@@ -453,6 +462,7 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             Capability.SWITCH,
             Command.OFF,
         )
+        self.async_write_ha_state()
 
     async def async_update(self) -> None:
         """Update the calculated fields of the AC."""
@@ -565,6 +575,11 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
         )
 
     @property
+    def target_temperature_step(self):
+        """set the target temperature step size"""
+        return 1.0
+
+    @property
     def temperature_unit(self) -> str:
         """Return the unit of measurement."""
         unit = self._internal_state[Capability.TEMPERATURE_MEASUREMENT][
@@ -591,6 +606,9 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
             Command.SET_FAN_OSCILLATION_MODE,
             argument=SWING_TO_FAN_OSCILLATION[swing_mode],
         )
+        self._attr_preset_mode = None
+
+        self.async_schedule_update_ha_state(True)
 
     @property
     def swing_mode(self) -> str:
@@ -631,11 +649,16 @@ class SmartThingsAirConditioner(SmartThingsEntity, ClimateEntity):
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set special modes (currently only windFree is supported)."""
-        await self.execute_device_command(
+        result = await self.execute_device_command(
             Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE,
             Command.SET_AC_OPTIONAL_MODE,
             argument=preset_mode,
         )
+        if result:
+            self._internal_state[Capability.CUSTOM_AIR_CONDITIONER_OPTIONAL_MODE][Attribute.AC_OPTIONAL_MODE].value = preset_mode
+        self._attr_preset_mode = preset_mode
+
+        self.async_write_ha_state()
 
     def _determine_hvac_modes(self) -> list[HVACMode]:
         """Determine the supported HVAC modes."""
