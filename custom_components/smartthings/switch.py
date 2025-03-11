@@ -120,6 +120,7 @@ async def async_setup_entry(
                     [SmartThingsCustomSwitch(
                         entry_data.client, device, entry_data.rooms,
                         capabilities={capability},
+                        capability=capability,
                         attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
                         on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
                         off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
@@ -213,6 +214,7 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
         device: FullDevice,
         rooms: dict[str, str],
         capabilities: set[Capability],
+        capability: str,
         attribute: str,
         on_command: str,
         off_command: str,
@@ -228,7 +230,7 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
             rooms=rooms,
             capabilities=capabilities
         )
-        self._capability = list(capabilities)[0]
+        self._capability = capability
         self._attribute = attribute
         self._on_command = on_command
         self._off_command = off_command
