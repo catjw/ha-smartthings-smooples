@@ -94,7 +94,15 @@ async def async_setup_entry(
     entry_data = entry.runtime_data
     async_add_entities(
         SmartThingsSwitch(
-            entry_data.client, device, entry_data.rooms, {Capability.SWITCH}
+            entry_data.client, device, entry_data.rooms, {Capability.SWITCH},
+            attribute=CAPABILITY_TO_SWITCH[capability][0].attribute,
+            on_command=CAPABILITY_TO_SWITCH[capability][0].on_command,
+            off_command=CAPABILITY_TO_SWITCH[capability][0].off_command,
+            on_value=CAPABILITY_TO_SWITCH[capability][0].on_value,
+            off_value=CAPABILITY_TO_SWITCH[capability][0].off_value,
+            name=CAPABILITY_TO_SWITCH[capability][0].name,
+            icon=CAPABILITY_TO_SWITCH[capability][0].icon,
+            extra_state_attributes=CAPABILITY_TO_SWITCH[capability][0].extra_state_attributes,
         )
         for device in entry_data.devices.values()
         if Capability.SWITCH in device.status[MAIN]
