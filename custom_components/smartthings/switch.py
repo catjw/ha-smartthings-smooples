@@ -120,7 +120,7 @@ async def async_setup_entry(
                         icon=CAPABILITY_TO_SWITCH[capability][0].icon
                     )]
                 )
-        if device.status[MAIN][Capability.OCF][Attribute.MANUFACTURER_NAME] == "Samsung Electronics":
+        if device.status[MAIN].get(Capability.OCF,{}).get(Attribute.MANUFACTURER_NAME) == "Samsung Electronics":
             custom_switches.extend([
                 SamsungOfcLightSwitch(
                     entry_data.client, device, entry_data.rooms, {Capability.SWITCH}
