@@ -228,7 +228,7 @@ class SmartThingsCustomSwitch(SmartThingsEntity, SwitchEntity):
             rooms=rooms,
             capabilities=capabilities
         )
-        self._capability = capabilities[0]
+        self._capability = capabilities.pop()
         self._attribute = attribute
         self._on_command = on_command
         self._off_command = off_command
