@@ -6,14 +6,30 @@ on:
       - master
 
 jobs:
-  version:
+  get-version:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout the repository"
         uses: "actions/checkout@v3.5.3"
       - name: "Get current version"
+        id: current
         shell: bash
-        run: "VERSION=$(yq)"
+        run: |
+          echo "VERSION=$(yq -o json '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json)" >> $GITHUB_OUTPUT
+    outputs:
+      VERSION: ${{steps.current.outputs.VERSION}}
+  new-version:
+    needs: get-version
+    with:
+      VERSION: ${{ needs.get-version.outputs.VERSION }}
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v3.5.3"
+      - name: "Adjust version number"
+        shell: "bash"
+        run: |
+          echo "NEW_VERSION=$($VERSION | awk -F'.' '{print $1 "." $2 "." $3+=1}')" >> $GITHUB_OUTPUT
       - name: "Adjust version number"
         shell: "bash"
         run: |
