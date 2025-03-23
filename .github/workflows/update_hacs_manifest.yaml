@@ -22,8 +22,9 @@ jobs:
           yq -i -o json '.version="${{ steps.version.outputs.version }}"' \
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
 
-      - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - run: git config --global user.name "$GITHUB_ACTOR"
+      - run: echo $GITHUB_ACTOR
+      - run: git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: git config --global user.name "${GITHUB_ACTOR}"
 
       - name: "Version Push"
         id: "version-push"
