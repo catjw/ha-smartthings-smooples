@@ -15,6 +15,6 @@ jobs:
   # hacs-validate:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
   #   needs: [tests]
-  release:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
+  version:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/version.yaml@master
     # needs: [hassfest, hacs-validate]
