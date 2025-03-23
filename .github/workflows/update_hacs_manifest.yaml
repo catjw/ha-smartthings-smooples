@@ -15,6 +15,11 @@ jobs:
       - name: "Get version"
         id: "version"
         uses: "home-assistant/actions/helpers/version@master"
+
+      - name: "Version push"
+        id: "version"
+        uses: "home-assistant/actions/helpers/version-push@master"
+
       
       - name: "Print Versions"
         run: |
