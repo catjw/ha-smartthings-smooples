@@ -25,11 +25,7 @@ jobs:
           cd custom_components/smartthings
           zip smartthings.zip -r ./
 
-      - name: "Upload zip to release"
-        uses: "svenstaro/upload-release-action@v1-release"
+      - name: "Upload the ZIP file to the release"
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          file: "./custom_components/smartthings/smartthings.zip"
-          asset_name: "smartthings.zip"
-          tag: "${{ github.ref }}"
-          overwrite: true
+          files: ${{ github.workspace }}/custom_components/smartthings/smartthings.zip
