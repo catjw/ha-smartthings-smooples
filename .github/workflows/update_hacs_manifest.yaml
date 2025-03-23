@@ -22,16 +22,15 @@ jobs:
           yq -i -o json '.version="${{ steps.version.outputs.version }}"' \
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
 
-      - run: echo $GITHUB_ACTOR
-      - run: git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: git config --global user.name "${GITHUB_ACTOR}"
-
-      - name: "Version Push"
-        id: "version-push"
-        uses: "home-assistant/actions/helpers/version-push@master"
-        with:
-          key: version
-          version: ${{ steps.version.outputs.version }}
+      - name: "Commit and tag"
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
+          git add ${{ github.workspace }}/custom_components/smartthings/manifest.json
+          git commit --ammend --no-edit
+          git tag ${{ steps.version.outputs.version }}
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
 
 
       - name: "Print Envs"
