@@ -11,14 +11,18 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: "actions/checkout@v4"
+        
+      - name: "Get current version"
+        run: |
+          echo "CURRENT_VERSION=$(yq '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json)" >> $GITHUB_ENV"
 
       - name: "Get version"
         id: "version"
         uses: "home-assistant/actions/helpers/version@master"
-
       - uses: "actions/checkout@v4"
       - name: "Set and commit manifest version number"
         shell: "bash"
+        if: ${{ !contains(steps.version.outputs.version, $CURRENT_VERSION) }}
         run: |
           yq -i -o json '.version="${{ steps.version.outputs.version }}"' \
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
