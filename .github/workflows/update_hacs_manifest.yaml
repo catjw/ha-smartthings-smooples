@@ -26,6 +26,7 @@ jobs:
         id: "version-push"
         uses: "home-assistant/actions/helpers/version-push@master"
         with:
+          key: version
           version: ${{ steps.version.outputs.version }}
 
 
