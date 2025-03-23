@@ -11,10 +11,11 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: "actions/checkout@v4"
-        
+
       - name: "Get current version"
         run: |
           echo "CURRENT_VERSION=$(yq '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json)" >> $GITHUB_ENV"
+          echo $CURRENT_VERSION
 
       - name: "Get version"
         id: "version"
