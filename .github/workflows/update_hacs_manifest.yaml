@@ -26,8 +26,8 @@ jobs:
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit --amend --no-edit
+          git add "${{ github.workspace }}/custom_components/smartthings/manifest.json"
+          git commit -m "Update version to ${{ steps.version.outputs.version }}"
           git push
 
       - name: "Tag"
