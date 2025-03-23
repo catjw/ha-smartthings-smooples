@@ -32,6 +32,8 @@ jobs:
           git status
           git add "custom_components/smartthings/manifest.json"
           git status
+          git add .
+          git status
           git commit --amend --no-edit
           git status
           git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
