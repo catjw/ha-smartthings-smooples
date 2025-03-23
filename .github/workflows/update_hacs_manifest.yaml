@@ -30,9 +30,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git status
-          git add "${{ github.workspace }}/custom_components/smartthings/manifest.json"
+          git add "custom_components/smartthings/manifest.json"
+          git status
           git commit --amend --no-edit
+          git status
           git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
+          git status
           git push
       # git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
       # git config --global user.name "$GITHUB_ACTOR"
