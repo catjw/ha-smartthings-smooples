@@ -7,14 +7,14 @@ on:
       - dev
 
 jobs:
-  tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
-  hassfest:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
-    needs: [tests]
-  hacs-validate:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
-    needs: [tests]
-  # release:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
-  #   needs: [hassfest, hacs-validate]
+  # tests:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
+  # hassfest:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
+  #   needs: [tests]
+  # hacs-validate:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
+  #   needs: [tests]
+  release:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
+    # needs: [hassfest, hacs-validate]

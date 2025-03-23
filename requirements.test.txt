@@ -18,8 +18,8 @@ asyncio
 
 aresponses
 asynctest
-pytest
+pytest==8.3.5
 pytest-asyncio
 pytest-aiohttp
-pytest-cov
+pytest-cov==6.0.0
 pytest-socket
