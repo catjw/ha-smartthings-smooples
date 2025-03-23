@@ -1,6 +1,6 @@
 
-homeassistant==2025.1.4
-pysmartthings==2.7.2
+homeassistant==2025.3.4
+pysmartthings==2.7.4
 pysmartapp==0.3.5
 pytest-homeassistant-custom-component
 hass_nabucasa
