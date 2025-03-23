@@ -17,7 +17,7 @@ from tests.components.diagnostics import (
     get_diagnostics_for_config_entry,
     get_diagnostics_for_device,
 )
-from tests.typing import ClientSessionGenerator
+from pytest_homeassistant_custom_component.typing import ClientSessionGenerator
 
 
 @pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
@@ -31,7 +31,7 @@ async def test_config_entry_diagnostics(
 ) -> None:
     """Test generating diagnostics for a device entry."""
     mock_smartthings.get_raw_devices.return_value = [
-        load_json_object_fixture("devices/da_ac_rac_000001.json", DOMAIN)
+        load_json_object_fixture("devices/da_ac_rac_000001.json")
     ]
     await setup_integration(hass, mock_config_entry)
     assert (
@@ -52,10 +52,10 @@ async def test_device_diagnostics(
 ) -> None:
     """Test generating diagnostics for a device entry."""
     mock_smartthings.get_raw_device_status.return_value = load_json_object_fixture(
-        "device_status/da_ac_rac_000001.json", DOMAIN
+        "device_status/da_ac_rac_000001.json"
     )
     mock_smartthings.get_raw_device.return_value = load_json_object_fixture(
-        "devices/da_ac_rac_000001.json", DOMAIN
+        "devices/da_ac_rac_000001.json"
     )["items"][0]
     await setup_integration(hass, mock_config_entry)
 
