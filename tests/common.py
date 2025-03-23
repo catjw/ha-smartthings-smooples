@@ -554,7 +554,8 @@ def get_fixture_path(filename: str, integration: str | None = None) -> pathlib.P
         return pathlib.Path(__file__).parent.joinpath("fixtures", filename)
 
     return pathlib.Path(__file__).parent.joinpath(
-        "components", integration, "fixtures", filename
+        "fixtures", filename
+        # "components", integration, "fixtures", filename
     )
 
 
