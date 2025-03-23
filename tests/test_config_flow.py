@@ -28,6 +28,7 @@ from tests.common import MockConfigEntry
 from tests.test_util.aiohttp import AiohttpClientMocker
 from tests.typing import ClientSessionGenerator
 
+
 @pytest.fixture
 def use_cloud(hass: HomeAssistant) -> None:
     """Set up the cloud component."""
