@@ -153,10 +153,10 @@ def device_fixture(
 def devices(mock_smartthings: AsyncMock, device_fixture: str) -> Generator[AsyncMock]:
     """Return a specific device."""
     mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
-        load_fixture(f"devices/{device_fixture}.json", DOMAIN)
+        load_fixture(f"devices/{device_fixture}.json")
     ).items
     mock_smartthings.get_device_status.return_value = DeviceStatus.from_json(
-        load_fixture(f"device_status/{device_fixture}.json", DOMAIN)
+        load_fixture(f"device_status/{device_fixture}.json")
     ).components
     return mock_smartthings
 
