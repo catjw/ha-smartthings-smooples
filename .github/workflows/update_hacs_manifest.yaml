@@ -16,6 +16,7 @@ jobs:
         run: |
           echo "CURRENT_VERSION=$(yq '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json)" >> $GITHUB_ENV"
           echo $CURRENT_VERSION
+          echo $GITHUB_ENV
 
       - name: "Get version"
         id: "version"
