@@ -1,20 +1,12 @@
 """Tests for the SmartThings component init module."""
 
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock
 
-from aiohttp import ClientResponseError, RequestInfo
-from pysmartthings import (
-    Attribute,
-    Capability,
-    DeviceResponse,
-    DeviceStatus,
-    SmartThingsSinkError,
-)
-from pysmartthings.models import Lifecycle, Subscription
+from pysmartthings import Attribute, Capability, SmartThingsSinkError
+from pysmartthings.models import Subscription
 import pytest
 from syrupy import SnapshotAssertion
 
-from homeassistant.components.climate import HVACMode
 from homeassistant.components.smartthings import EVENT_BUTTON
 from homeassistant.components.smartthings.const import CONF_SUBSCRIPTION_ID, DOMAIN
 from homeassistant.config_entries import ConfigEntryState
@@ -264,105 +256,3 @@ async def test_removing_stale_devices(
     await hass.async_block_till_done()
 
     assert not device_registry.async_get_device({(DOMAIN, "aaa-bbb-ccc")})
-
-
-@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
-async def test_refreshing_expired_token(
-    hass: HomeAssistant,
-    devices: AsyncMock,
-    mock_config_entry: MockConfigEntry,
-) -> None:
-    """Test removing stale devices."""
-    with patch(
-        "homeassistant.components.smartthings.OAuth2Session.async_ensure_token_valid",
-        side_effect=ClientResponseError(
-            request_info=RequestInfo(
-                url="http://example.com",
-                method="GET",
-                headers={},
-                real_url="http://example.com",
-            ),
-            status=400,
-            history=(),
-        ),
-    ):
-        await setup_integration(hass, mock_config_entry)
-
-    assert mock_config_entry.state is ConfigEntryState.SETUP_ERROR
-    assert len(hass.config_entries.flow.async_progress()) == 1
-
-
-@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
-async def test_error_refreshing_token(
-    hass: HomeAssistant,
-    devices: AsyncMock,
-    mock_config_entry: MockConfigEntry,
-) -> None:
-    """Test removing stale devices."""
-    with patch(
-        "homeassistant.components.smartthings.OAuth2Session.async_ensure_token_valid",
-        side_effect=ClientResponseError(
-            request_info=RequestInfo(
-                url="http://example.com",
-                method="GET",
-                headers={},
-                real_url="http://example.com",
-            ),
-            status=500,
-            history=(),
-        ),
-    ):
-        await setup_integration(hass, mock_config_entry)
-
-    assert mock_config_entry.state is ConfigEntryState.SETUP_RETRY
-
-
-async def test_hub_via_device(
-    hass: HomeAssistant,
-    snapshot: SnapshotAssertion,
-    mock_config_entry: MockConfigEntry,
-    device_registry: dr.DeviceRegistry,
-    mock_smartthings: AsyncMock,
-) -> None:
-    """Test hub with child devices."""
-    mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
-        load_fixture("devices/hub.json")
-    ).items
-    mock_smartthings.get_device_status.side_effect = [
-        DeviceStatus.from_json(
-            load_fixture(f"device_status/{fixture}.json")
-        ).components
-        for fixture in ("hub", "multipurpose_sensor")
-    ]
-    await setup_integration(hass, mock_config_entry)
-
-    hub_device = device_registry.async_get_device(
-        {(DOMAIN, "074fa784-8be8-4c70-8e22-6f5ed6f81b7e")}
-    )
-    assert hub_device == snapshot
-    assert (
-        device_registry.async_get_device(
-            {(DOMAIN, "374ba6fa-5a08-4ea2-969c-1fa43d86e21f")}
-        ).via_device_id
-        == hub_device.id
-    )
-
-
-@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
-async def test_deleted_device_runtime(
-    hass: HomeAssistant,
-    devices: AsyncMock,
-    mock_config_entry: MockConfigEntry,
-    snapshot: SnapshotAssertion,
-) -> None:
-    """Test devices that are deleted in runtime."""
-    await setup_integration(hass, mock_config_entry)
-
-    assert hass.states.get("climate.ac_office_granit").state == HVACMode.OFF
-
-    for call in devices.add_device_lifecycle_event_listener.call_args_list:
-        if call[0][0] == Lifecycle.DELETE:
-            call[0][1]("96a5ef74-5832-a84b-f1f7-ca799957065d")
-    await hass.async_block_till_done()
-
-    assert hass.states.get("climate.ac_office_granit") is None

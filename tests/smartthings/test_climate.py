@@ -709,7 +709,7 @@ async def test_thermostat_set_temperature(
     mock_config_entry: MockConfigEntry,
     state: str,
     data: dict[str, Any],
-    calls: list[call],  # noqa: F821
+    calls: list[call],
 ) -> None:
     """Test thermostat set temperature."""
     set_attribute_value(
