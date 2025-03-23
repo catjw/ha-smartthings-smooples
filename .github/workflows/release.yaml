@@ -4,8 +4,8 @@ on:
   push:
     tags:
       - "*"
-  release:
-    types: [published, edited]
+  # release:
+  #   types: [published, edited]
 
 permissions: {}
 
