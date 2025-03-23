@@ -23,7 +23,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${{ github.workspace }}/custom_components/smartthings/manifest.json"
-          git git diff --quiet && git diff --staged --quiet || commit -m "Update version to ${{ steps.version.outputs.version }}"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update version to ${{ steps.version.outputs.version }}"
           git push
 
       - name: "Tag"
