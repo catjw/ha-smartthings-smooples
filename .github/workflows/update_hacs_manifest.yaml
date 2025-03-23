@@ -1,0 +1,35 @@
+name: Update HACS manifest
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  update-hacs-manifest:
+    name: "Prepare release asset"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out repository"
+        uses: "actions/checkout@v4"
+
+      - name: "Get version"
+        id: "version"
+        uses: "home-assistant/actions/helpers/version@master"
+
+      - name: "Set manifest version number"
+        run: |
+          python3 ${{ github.workspace }}/.github/update_hacs_manifest.py --version ${{ steps.version.outputs.version }}
+
+      - name: "Create zip"
+        run: |
+          cd custom_components/smartthings
+          zip smartthings.zip -r ./
+
+      - name: "Upload zip to release"
+        uses: "svenstaro/upload-release-action@v1-release"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          file: "./custom_components/smartthings/smartthings.zip"
+          asset_name: "smartthings.zip"
+          tag: "${{ github.ref }}"
+          overwrite: true
