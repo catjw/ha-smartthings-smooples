@@ -18,24 +18,20 @@ jobs:
         id: "version"
         uses: "home-assistant/actions/helpers/version@master"
 
-      - name: "Set manifest version number"
+      - uses: "actions/checkout@v4"
+      - name: "Set and commit manifest version number"
         shell: "bash"
         run: |
           yq -i -o json '.version="${{ steps.version.outputs.version }}"' \
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
-          cat "${{ github.workspace }}/custom_components/smartthings/manifest.json"
-
-      - uses: "actions/checkout@v4"
-      - name: "Commit and tag"
-        run: |
-          cat "${{ github.workspace }}/custom_components/smartthings/manifest.json"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git status
-          git add .
-          git status
-          git commit -m "Release ${{ steps.version.outputs.version }}"
-          git status
+          git add custom_components/smartthings/manifest.json
+          git commit --amend --no-edit
+          git push
+
+      - name: "Tag"
+        run: |
           git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
           git status
           git push
