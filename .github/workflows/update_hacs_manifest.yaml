@@ -27,10 +27,10 @@ jobs:
       - uses: "actions/checkout@v4"
       - name: "Commit and tag"
         run: |
-          echo ${{ secrets.ACCESS_TOKEN }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
+          git status
+          git add "${{ github.workspace }}/custom_components/smartthings/manifest.json"
           git commit --amend --no-edit
           git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
           git push
