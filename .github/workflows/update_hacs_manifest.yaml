@@ -16,11 +16,10 @@ jobs:
         id: "version"
         uses: "home-assistant/actions/helpers/version@master"
 
-      - name: "Version push"
-        id: "version-push"
-        uses: "home-assistant/actions/helpers/version-push@master"
+      - name: "Set manifest version number"
+        run: |
+          python3 ${{ github.workspace }}/.github/update_hacs_manifest.py --version ${{ steps.version.outputs.version }}
 
-      
       - name: "Print Versions"
         run: |
           echo ${{ steps.version.outputs.version }}
@@ -28,10 +27,7 @@ jobs:
           echo ${{ github.event.inputs.version }}
           echo ${{ github.event_name }}
           echo ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
-
-      - name: "Set manifest version number"
-        run: |
-          python3 ${{ github.workspace }}/.github/update_hacs_manifest.py --version ${{ steps.version.outputs.version }}
+          yq '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json
 
       - name: "Create zip"
         run: |
