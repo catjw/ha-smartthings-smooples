@@ -12,6 +12,7 @@ aiohttp_cors
 numpy
 colorlog==6.7.0
 asyncio
+annotatedyaml
 
 aresponses
 asynctest
