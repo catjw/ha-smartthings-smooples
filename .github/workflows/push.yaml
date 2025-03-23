@@ -18,3 +18,6 @@ jobs:
   update-hacs-manifest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
     needs: [hassfest, hacs-validate]
+  release:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
+    needs: [update-hacs-manifest]
