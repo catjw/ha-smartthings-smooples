@@ -9,12 +9,12 @@ on:
 jobs:
   # tests:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
-  # hassfest:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
-  #   needs: [tests]
-  # hacs-validate:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
-  #   needs: [tests]
+  hassfest:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
+    needs: [tests]
+  hacs-validate:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
+    needs: [tests]
   update-hacs-manifest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
-    # needs: [hassfest, hacs-validate]
+    needs: [hassfest, hacs-validate]

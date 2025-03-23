@@ -1,6 +1,9 @@
 name: "Release"
 
 on:
+  push:
+    tags:
+      - "*"
   release:
     types: [published, edited]
 
@@ -14,17 +17,7 @@ jobs:
       contents: write
     steps:
       - name: "Checkout the repository"
-        uses: "actions/checkout@v3.5.3"
-
-      - name: "Adjust version number"
-        shell: "bash"
-        run: |
-          yq -i -o json '.version="${{ github.event.release.tag_name }}"' \
-            "${{ github.workspace }}/custom_components/smartthings/manifest.json"
-            
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
-
+        uses: "actions/checkout@v4"
       - name: "ZIP the integration directory"
         shell: "bash"
         run: |

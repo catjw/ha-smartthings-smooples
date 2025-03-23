@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: "actions/checkout@v4"
-        with:
-          ref: ${{ github.ref }}
+        # with:
+        #   ref: ${{ github.ref }}
 
       - name: "Get version"
         id: "version"
@@ -33,31 +33,4 @@ jobs:
       - name: "Tag"
         run: |
           git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
-          git status
           git push
-      # git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      # git config --global user.name "$GITHUB_ACTOR"
-      # git add ${{ github.workspace }}/custom_components/smartthings/manifest.json
-      # git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      # git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
-
-
-      - name: "Print Envs"
-        run: |
-          echo ${{ github.event.inputs }}
-          echo ${{ github.event.inputs.version }}
-          echo ${{ steps.version.outputs.version }}
-          echo ${{ steps.version.outputs.stable }}
-          echo ${{ github.event_name }}
-          echo ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
-          yq '.version' ${{ github.workspace }}/custom_components/smartthings/manifest.json
-
-      - name: "Create zip"
-        run: |
-          cd custom_components/smartthings
-          zip smartthings.zip -r ./
-
-      - name: "Upload the ZIP file to the release"
-        uses: softprops/action-gh-release@v0.1.15
-        with:
-          files: ${{ github.workspace }}/custom_components/smartthings/smartthings.zip
