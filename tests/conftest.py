@@ -29,7 +29,7 @@ from homeassistant.const import CONF_ACCESS_TOKEN, CONF_CLIENT_ID, CONF_CLIENT_S
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
 
-from tests.common import MockConfigEntry, load_fixture
+from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
 
 
 @pytest.fixture
