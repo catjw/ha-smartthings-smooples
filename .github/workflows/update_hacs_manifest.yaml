@@ -17,7 +17,7 @@ jobs:
         uses: "home-assistant/actions/helpers/version@master"
 
       - name: "Version push"
-        id: "version"
+        id: "version-push"
         uses: "home-assistant/actions/helpers/version-push@master"
 
       
