@@ -29,6 +29,7 @@ jobs:
           git add ${{ github.workspace }}/custom_components/smartthings/manifest.json
           git commit --amend --no-edit
           git tag ${{ steps.version.outputs.version }}
+          git push
           git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
           git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
 
