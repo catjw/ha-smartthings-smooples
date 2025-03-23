@@ -75,16 +75,16 @@ def mock_smartthings() -> Generator[AsyncMock]:
     ):
         client = mock_client.return_value
         client.get_scenes.return_value = SceneResponse.from_json(
-            load_fixture("scenes.json", DOMAIN)
+            load_fixture("scenes.json")
         ).items
         client.get_locations.return_value = LocationResponse.from_json(
-            load_fixture("locations.json", DOMAIN)
+            load_fixture("locations.json")
         ).items
         client.get_rooms.return_value = RoomResponse.from_json(
-            load_fixture("rooms.json", DOMAIN)
+            load_fixture("rooms.json")
         ).items
         client.create_subscription.return_value = Subscription.from_json(
-            load_fixture("subscription.json", DOMAIN)
+            load_fixture("subscription.json")
         )
         yield client
 
