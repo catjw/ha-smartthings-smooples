@@ -1,9 +1,13 @@
 {
   "domain": "smartthings",
   "name": "SmartThings Smooples",
-  "codeowners": ["@catjw"],
+  "codeowners": [
+    "@catjw"
+  ],
   "config_flow": true,
-  "dependencies": ["application_credentials"],
+  "dependencies": [
+    "application_credentials"
+  ],
   "dhcp": [
     {
       "hostname": "st*",
@@ -29,7 +33,12 @@
   "documentation": "https://github.com/catjw/ha-smartthings-smooples/",
   "iot_class": "cloud_push",
   "issue_tracker": "https://github.com/catjw/ha-smartthings-smooples/issues",
-  "loggers": ["pysmartthings"],
-  "requirements": ["pysmartthings==2.7.4", "homeassistant==2025.3.4"],
-  "version": "1.4.0"
+  "loggers": [
+    "pysmartthings"
+  ],
+  "requirements": [
+    "pysmartthings==2.7.4",
+    "homeassistant==2025.3.4"
+  ],
+  "version": "2025.03.0.dev2301"
 }
