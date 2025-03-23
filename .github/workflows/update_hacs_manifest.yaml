@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --global user.name "$GITHUB_ACTOR"
           git add ${{ github.workspace }}/custom_components/smartthings/manifest.json
-          git commit --ammend --no-edit
+          git commit --amend --no-edit
           git tag ${{ steps.version.outputs.version }}
           git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
           git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
