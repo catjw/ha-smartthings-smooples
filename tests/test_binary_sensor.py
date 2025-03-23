@@ -17,7 +17,8 @@ from homeassistant.setup import async_setup_component
 
 from . import setup_integration, snapshot_smartthings_entities, trigger_update
 
-from tests.common import MockConfigEntry
+# from tests.common import MockConfigEntry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(

@@ -48,7 +48,7 @@ from . import (
     trigger_update,
 )
 
-from tests.common import MockConfigEntry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(
@@ -709,7 +709,7 @@ async def test_thermostat_set_temperature(
     mock_config_entry: MockConfigEntry,
     state: str,
     data: dict[str, Any],
-    calls: list[call],
+    calls: list[call],  # noqa: F821
 ) -> None:
     """Test thermostat set temperature."""
     set_attribute_value(

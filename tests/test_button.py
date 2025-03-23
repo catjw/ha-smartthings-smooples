@@ -15,7 +15,8 @@ from homeassistant.helpers import entity_registry as er
 
 from . import setup_integration, snapshot_smartthings_entities
 
-from tests.common import MockConfigEntry
+# from tests.common import MockConfigEntry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(
