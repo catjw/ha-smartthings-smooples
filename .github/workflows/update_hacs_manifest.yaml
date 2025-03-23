@@ -19,21 +19,10 @@ jobs:
       - name: "Print Versions"
         run: |
           echo ${{ steps.version.outputs.version }}
-          echo ${{ steps.version.outputs.major }}
-          echo ${{ steps.version.outputs.minor }}
-          echo ${{ steps.version.outputs.patch }}
-          echo ${{ steps.version.outputs.prerelease }}
-          echo ${{ steps.version.outputs.build }} 
-          echo ${{ steps.version.outputs.release_type }}
-          echo ${{ steps.version.outputs.release_type_number }}
           echo ${{ steps.version.outputs.stable }}
-          echo ${{ steps.version.outputs.stable_major }}
-          echo ${{ steps.version.outputs.stable_minor }}
-          echo ${{ steps.version.outputs.stable_patch }}
-          echo ${{ steps.version.outputs.stable_prerelease }}
-          echo ${{ steps.version.outputs.stable_build }}
-          echo ${{ steps.version.outputs.stable_release_type }}
-          echo ${{ steps.version.outputs.stable_release_type_number }}
+          echo ${{ github.event.inputs.version }}
+          echo ${{ github.event_name }}
+          echo ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - name: "Set manifest version number"
         run: |
