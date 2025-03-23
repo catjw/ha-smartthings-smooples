@@ -11,7 +11,6 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
-# from tests.common import MockConfigEntry
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
@@ -33,6 +32,7 @@ def snapshot_smartthings_entities(
     entities = hass.states.async_all(platform)
     for entity_state in entities:
         entity_entry = entity_registry.async_get(entity_state.entity_id)
+        print(entity_entry)
         assert entity_entry == snapshot(name=f"{entity_entry.entity_id}-entry")
         assert entity_state == snapshot(name=f"{entity_entry.entity_id}-state")
 
@@ -56,7 +56,6 @@ async def trigger_update(
     attribute: Attribute,
     value: str | float | dict[str, Any] | list[Any] | None,
     data: dict[str, Any] | None = None,
-    component: str = MAIN,
 ) -> None:
     """Trigger an update."""
     event = DeviceEvent(
@@ -64,7 +63,7 @@ async def trigger_update(
         "abc",
         "abc",
         device_id,
-        component,
+        MAIN,
         capability,
         attribute,
         value,
