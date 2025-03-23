@@ -17,7 +17,7 @@ aresponses
 asynctest
 
 astroid==3.3.9
-coverage==7.6.12
+coverage==7.6.10
 freezegun==1.5.1
 license-expression==30.4.1
 mock-open==1.4.0
