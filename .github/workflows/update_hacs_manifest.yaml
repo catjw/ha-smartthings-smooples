@@ -24,9 +24,8 @@ jobs:
           yq -i -o json '.version="${{ steps.version.outputs.version }}"' \
             "${{ github.workspace }}/custom_components/smartthings/manifest.json"
 
-      - name: "Commit and tag"
-        uses: "actions/checkout@v4"
-        run: |
+      - uses: "actions/checkout@v4"
+      - run: |
           echo ${{ secrets.ACCESS_TOKEN }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
