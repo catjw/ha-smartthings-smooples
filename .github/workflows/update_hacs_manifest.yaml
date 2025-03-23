@@ -14,6 +14,7 @@ jobs:
       - name: "Get version"
         id: "version"
         uses: "home-assistant/actions/helpers/version@master"
+
       - uses: "actions/checkout@v4"
       - name: "Set and commit manifest version number"
         shell: "bash"
@@ -28,5 +29,7 @@ jobs:
 
       - name: "Tag"
         run: |
+          git tag -d ${{ steps.version.outputs.version }} || true
+          git push origin :refs/tags/${{ steps.version.outputs.version }} || true
           git tag -fa ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
           git push origin --tags
