@@ -33,3 +33,10 @@ jobs:
           git push origin :refs/tags/${{ steps.version.outputs.version }} || true
           git tag -fa ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
           git push origin --tags
+
+      - name: "Create release"
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: ${{ steps.version.outputs.version }}
+          body: "Release ${{ steps.version.outputs.version }}"
