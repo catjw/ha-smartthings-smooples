@@ -11,5 +11,7 @@ class FullDevice(smartthings.FullDevice):
 
 async def async_setup_entry(hass: smartthings.HomeAssistant, entry: smartthings.SmartThingsConfigEntry) -> bool:
     """Initialize config entry which represents an installed SmartApp."""
-    return smartthings.async_setup_entry(hass, entry)
+    smartthings.async_setup_entry(hass, entry)
+    
+    return True
     
