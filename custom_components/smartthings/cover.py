@@ -3,5 +3,5 @@
 from homeassistant.components.smartthings import cover
 
 
-class SmartThingsCover(cover.SmartThingsCover):
-    pass
+# class SmartThingsCover(cover.SmartThingsCover):
+#     pass

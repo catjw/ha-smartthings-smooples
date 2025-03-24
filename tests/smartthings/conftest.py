@@ -30,12 +30,20 @@ from homeassistant.setup import async_setup_component
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
 
+from custom_components.smartthings import async_setup_entry
+from custom_components.smartthings.config_flow import SmartThings
+
+@pytest.fixture(autouse=True)
+def auto_enable_custom_integrations(enable_custom_integrations):
+    """Auto enable custom integrations."""
+    yield
 
 @pytest.fixture
 def mock_setup_entry() -> Generator[AsyncMock]:
     """Override async_setup_entry."""
     with patch(
-        "homeassistant.components.smartthings.async_setup_entry",
+        "custom_components.smartthings.async_setup_entry",
+        # "homeassistant.components.smartthings.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
         yield mock_setup_entry
@@ -68,7 +76,8 @@ def mock_smartthings() -> Generator[AsyncMock]:
             autospec=True,
         ) as mock_client,
         patch(
-            "homeassistant.components.smartthings.config_flow.SmartThings",
+            "custom_components.smartthings.config_flow.SmartThings",
+            # "homeassistant.components.smartthings.config_flow.SmartThings",
             new=mock_client,
         ),
     ):

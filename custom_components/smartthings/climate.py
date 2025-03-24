@@ -9,3 +9,7 @@ class SmartThingsThermostat(climate.SmartThingsThermostat):
 
 class SmartThingsAirConditioner(climate.SmartThingsAirConditioner):
     pass
+
+for i in climate.__all__:
+    setattr(SmartThingsThermostat, i, getattr(climate, i))
+    setattr(SmartThingsAirConditioner, i, getattr(climate, i))

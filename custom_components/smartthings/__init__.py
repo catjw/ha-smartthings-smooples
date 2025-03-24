@@ -15,3 +15,6 @@ async def async_setup_entry(hass: smartthings.HomeAssistant, entry: smartthings.
     
     return True
     
+for i in smartthings.__all__:
+    setattr(SmartThingsData, i, getattr(smartthings, i))
+    setattr(FullDevice, i, getattr(smartthings, i))
