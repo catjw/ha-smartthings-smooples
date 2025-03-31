@@ -4,7 +4,8 @@ from homeassistant.components.smartthings import entity
 
 
 class SmartThingsEntity(entity.SmartThingsEntity):
-    pass
+    """Representation of a SmartThings entity."""
 
-for i in entity.__all__:
-    setattr(SmartThingsEntity, i, getattr(entity, i))
+
+# for i in entity.__all__:
+#     setattr(SmartThingsEntity, i, getattr(entity, i))

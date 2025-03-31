@@ -1024,3 +1024,15 @@ async def check_translations(
     for description in translation_errors.values():
         if description != "used":
             pytest.fail(description)
+            
+"""Conftest for pytest."""
+
+import os
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+pytest_plugins = ["pytest_homeassistant_custom_component"]

@@ -3,7 +3,8 @@
 from homeassistant.components.smartthings import binary_sensor
 
 class SmartThingsBinarySensor(binary_sensor.SmartThingsBinarySensor):
-    pass
+    """Representation of a SmartThings binary sensor."""
 
-for i in binary_sensor.__all__:
-    setattr(SmartThingsBinarySensor, i, getattr(binary_sensor, i))
+
+# for i in binary_sensor.__all__:
+#     setattr(SmartThingsBinarySensor, i, getattr(binary_sensor, i))

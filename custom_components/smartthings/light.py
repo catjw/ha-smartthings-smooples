@@ -4,7 +4,7 @@ from homeassistant.components.smartthings import light
 
 
 class SmartThingsLight(light.SmartThingsLight):
-    pass
+    """Representation of a SmartThings light."""
 
-for i in light.__all__:
-    setattr(SmartThingsLight, i, getattr(light, i))
+# for i in light.__all__:
+#     setattr(SmartThingsLight, i, getattr(light, i))

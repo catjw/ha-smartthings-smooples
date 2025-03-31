@@ -17,7 +17,7 @@ from tests.components.diagnostics import (
     get_diagnostics_for_config_entry,
     get_diagnostics_for_device,
 )
-from pytest_homeassistant_custom_component.typing import ClientSessionGenerator
+from tests.typing import ClientSessionGenerator
 
 
 @pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])

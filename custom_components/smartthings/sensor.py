@@ -4,7 +4,10 @@ from homeassistant.components.smartthings import sensor
 
 
 class SmartThingsSensor(sensor.SmartThingsSensor):
-    pass
+    print("-------------------------")
+    print("TEST TEST TEST")
+    print("-------------------------")
+    """Representation of a SmartThings sensor."""
 
-for i in sensor.__all__:
-    setattr(SmartThingsSensor, i, getattr(sensor, i))
+# for i in sensor.__all__:
+#     setattr(SmartThingsSensor, i, getattr(sensor, i))

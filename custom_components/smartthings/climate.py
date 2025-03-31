@@ -4,12 +4,12 @@ from homeassistant.components.smartthings import climate
 
 
 class SmartThingsThermostat(climate.SmartThingsThermostat):
-    pass
+    """Representation of a SmartThings thermostat."""
 
 
 class SmartThingsAirConditioner(climate.SmartThingsAirConditioner):
-    pass
+    """Representation of a SmartThings air conditioner."""
 
-for i in climate.__all__:
-    setattr(SmartThingsThermostat, i, getattr(climate, i))
-    setattr(SmartThingsAirConditioner, i, getattr(climate, i))
+# for i in climate.__all__:
+#     setattr(SmartThingsThermostat, i, getattr(climate, i))
+#     setattr(SmartThingsAirConditioner, i, getattr(climate, i))

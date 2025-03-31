@@ -30,8 +30,6 @@ from homeassistant.setup import async_setup_component
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
 
-from custom_components.smartthings import async_setup_entry
-from custom_components.smartthings.config_flow import SmartThings
 
 @pytest.fixture(autouse=True)
 def auto_enable_custom_integrations(enable_custom_integrations):
@@ -43,7 +41,6 @@ def mock_setup_entry() -> Generator[AsyncMock]:
     """Override async_setup_entry."""
     with patch(
         "custom_components.smartthings.async_setup_entry",
-        # "homeassistant.components.smartthings.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
         yield mock_setup_entry
@@ -72,24 +69,26 @@ def mock_smartthings() -> Generator[AsyncMock]:
     """Mock a SmartThings client."""
     with (
         patch(
-            "homeassistant.components.smartthings.SmartThings",
+            "custom_components.smartthings.SmartThings",
             autospec=True,
         ) as mock_client,
         patch(
             "custom_components.smartthings.config_flow.SmartThings",
-            # "homeassistant.components.smartthings.config_flow.SmartThings",
             new=mock_client,
         ),
     ):
         client = mock_client.return_value
         client.get_scenes.return_value = SceneResponse.from_json(
             load_fixture("scenes.json")
+            # load_fixture("scenes.json", DOMAIN)
         ).items
         client.get_locations.return_value = LocationResponse.from_json(
             load_fixture("locations.json")
+            # load_fixture("locations.json", DOMAIN)
         ).items
         client.create_subscription.return_value = Subscription.from_json(
             load_fixture("subscription.json")
+            # load_fixture("subscription.json", DOMAIN)
         )
         yield client
 
@@ -156,9 +155,11 @@ def devices(mock_smartthings: AsyncMock, device_fixture: str) -> Generator[Async
     """Return a specific device."""
     mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
         load_fixture(f"devices/{device_fixture}.json")
+        # load_fixture(f"devices/{device_fixture}.json", DOMAIN)
     ).items
     mock_smartthings.get_device_status.return_value = DeviceStatus.from_json(
         load_fixture(f"device_status/{device_fixture}.json")
+        # load_fixture(f"device_status/{device_fixture}.json", DOMAIN)
     ).components
     return mock_smartthings
 

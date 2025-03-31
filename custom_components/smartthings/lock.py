@@ -4,7 +4,7 @@ from homeassistant.components.smartthings import lock
 
 
 class SmartThingsLock(lock.SmartThingsLock):
-    pass
+    """Representation of a SmartThings lock."""
 
-for i in lock.__all__:
-    setattr(SmartThingsLock, i, getattr(lock, i))
+# for i in lock.__all__:
+#     setattr(SmartThingsLock, i, getattr(lock, i))

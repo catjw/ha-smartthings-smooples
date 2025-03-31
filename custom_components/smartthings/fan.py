@@ -4,7 +4,7 @@ from homeassistant.components.smartthings import fan
 
 
 class SmartThingsFan(fan.SmartThingsFan):
-    pass
+    """Representation of a SmartThings fan."""
 
-for i in fan.__all__:
-    setattr(SmartThingsFan, i, getattr(fan, i))
+# for i in fan.__all__:
+#     setattr(SmartThingsFan, i, getattr(fan, i))

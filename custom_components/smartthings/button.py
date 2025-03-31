@@ -4,7 +4,8 @@ from homeassistant.components.smartthings import button
 
 
 class SmartThingsButton(button.SmartThingsButton):
-    pass
+    """Representation of a SmartThings button."""
 
-for i in button.__all__:
-    setattr(SmartThingsButton, i, getattr(button, i))
+
+# for i in button.__all__:
+#     setattr(SmartThingsButton, i, getattr(button, i))
