@@ -1,10 +1,20 @@
 """Support for scenes through the SmartThings cloud API."""
 
-from homeassistant.components.smartthings import scene
+from typing import Any
+
+from pysmartthings import Scene as STScene, SmartThings
+
+from homeassistant.components.scene import Scene
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+
+from homeassistant.components.smartthings import SmartThingsConfigEntry, scene
 
 
-class SmartThingsScene(scene.SmartThingsScene):
-    """Representation of a SmartThings scene."""
-
-# for i in scene.__all__:
-#     setattr(SmartThingsScene, i, getattr(scene, i))
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: SmartThingsConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Add lights for a config entry."""
+    await scene.async_setup_entry(hass, entry, async_add_entities)

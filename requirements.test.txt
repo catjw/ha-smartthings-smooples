@@ -1,8 +1,8 @@
 
-homeassistant==2025.3.4
-pysmartthings==2.7.4
+homeassistant==2025.4.1
+pysmartthings==3.0.2
 pysmartapp==0.3.5
-pytest-homeassistant-custom-component==0.13.225
+pytest-homeassistant-custom-component==0.13.233
 hass_nabucasa
 hassil
 home-assistant-intents
