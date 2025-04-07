@@ -13,7 +13,7 @@ from homeassistant.helpers import device_registry as dr
 from . import setup_integration
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_json_object_fixture
-from pytest_homeassistant_custom_component.components import (
+from pytest_homeassistant_custom_component.components.diagnostics import (
     get_diagnostics_for_config_entry,
     get_diagnostics_for_device,
 )
