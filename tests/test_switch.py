@@ -345,7 +345,7 @@ async def test_create_issue(
     entity_id = f"switch.{suggested_object_id}"
     issue_id = f"deprecated_switch_{issue_string}_{entity_id}"
 
-    entity_entry = entity_registry.async_q(
+    entity_entry = entity_registry.async_get_or_create(
         SWITCH_DOMAIN,
         DOMAIN,
         f"{device_id}_{MAIN}_{Capability.SWITCH}_{Attribute.SWITCH}_{Attribute.SWITCH}",
