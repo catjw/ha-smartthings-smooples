@@ -91,7 +91,7 @@ async def test_command_switch_turn_on_off(
     await hass.services.async_call(
         SWITCH_DOMAIN,
         action,
-        {ATTR_ENTITY_ID: "switch.office_airfree_none"},
+        {ATTR_ENTITY_ID: "switch.office_airfree_light"},
         blocking=True,
     )
     devices.execute_device_command.assert_called_once_with(
