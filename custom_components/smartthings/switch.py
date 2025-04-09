@@ -115,6 +115,8 @@ async def async_setup_entry(
         )
         if (
             device.device.type == "OCF"
+            and not media_player
+            and not appliance
             and device.status[MAIN][Capability.OCF][Attribute.MANUFACTURER_NAME].value == "Samsung Electronics"
         ):
             model = device.status[MAIN][Capability.OCF][Attribute.MODEL_NUMBER].value.split("|")[0]
