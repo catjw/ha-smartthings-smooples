@@ -140,7 +140,7 @@ async def async_setup_entry(
                             translation_key="light",
                             command=Command.EXECUTE,
                             # component_translation_key={
-                            #     MAIN: "light",
+                            #     'none': "light",
                             # },
                         ),
                         capability=Capability.EXECUTE,
