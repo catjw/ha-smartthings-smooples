@@ -20,7 +20,8 @@ async def setup_integration(hass: HomeAssistant, config_entry: MockConfigEntry) 
 
     await hass.config_entries.async_setup(config_entry.entry_id)
     await hass.async_block_till_done()
-    
+
+
 def snapshot_smartthings_entities(
     hass: HomeAssistant,
     entity_registry: er.EntityRegistry,
@@ -31,7 +32,6 @@ def snapshot_smartthings_entities(
     entities = hass.states.async_all(platform)
     for entity_state in entities:
         entity_entry = entity_registry.async_get(entity_state.entity_id)
-        print(entity_entry)
         assert entity_entry == snapshot(name=f"{entity_entry.entity_id}-entry")
         assert entity_state == snapshot(name=f"{entity_entry.entity_id}-state")
 
