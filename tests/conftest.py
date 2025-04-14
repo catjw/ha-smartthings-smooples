@@ -56,7 +56,7 @@ pytest_plugins = "pytest_homeassistant_custom_component"
 def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
     """Return snapshot assertion fixture with the Home Assistant extension."""
     return snapshot.use_extension(HomeAssistantSnapshotExtension)
@@ -67,45 +67,45 @@ def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 #     with patch.object(device_registry, "async_get_or_create"):
 #         yield
 
-@pytest.fixture
-def category_registry(hass: HomeAssistant) -> cr.CategoryRegistry:
-    """Return the category registry from the current hass instance."""
-    return cr.async_get(hass)
+# @pytest.fixture
+# def category_registry(hass: HomeAssistant) -> cr.CategoryRegistry:
+#     """Return the category registry from the current hass instance."""
+#     return cr.async_get(hass)
 
 
-@pytest.fixture
-def area_registry(hass: HomeAssistant) -> ar.AreaRegistry:
-    """Return the area registry from the current hass instance."""
-    return ar.async_get(hass)
+# @pytest.fixture
+# def area_registry(hass: HomeAssistant) -> ar.AreaRegistry:
+#     """Return the area registry from the current hass instance."""
+#     return ar.async_get(hass)
 
 
-@pytest.fixture
-def device_registry(hass: HomeAssistant) -> dr.DeviceRegistry:
-    """Return the device registry from the current hass instance."""
-    return dr.async_get(hass)
+# @pytest.fixture
+# def device_registry(hass: HomeAssistant) -> dr.DeviceRegistry:
+#     """Return the device registry from the current hass instance."""
+#     return dr.async_get(hass)
 
-@pytest.fixture
-def entity_registry(hass: HomeAssistant) -> er.EntityRegistry:
-    """Return the entity registry from the current hass instance."""
-    return er.async_get(hass)
-
-
-@pytest.fixture
-def floor_registry(hass: HomeAssistant) -> fr.FloorRegistry:
-    """Return the floor registry from the current hass instance."""
-    return fr.async_get(hass)
+# @pytest.fixture
+# def entity_registry(hass: HomeAssistant) -> er.EntityRegistry:
+#     """Return the entity registry from the current hass instance."""
+#     return er.async_get(hass)
 
 
-@pytest.fixture
-def issue_registry(hass: HomeAssistant) -> ir.IssueRegistry:
-    """Return the issue registry from the current hass instance."""
-    return ir.async_get(hass)
+# @pytest.fixture
+# def floor_registry(hass: HomeAssistant) -> fr.FloorRegistry:
+#     """Return the floor registry from the current hass instance."""
+#     return fr.async_get(hass)
 
 
-@pytest.fixture
-def label_registry(hass: HomeAssistant) -> lr.LabelRegistry:
-    """Return the label registry from the current hass instance."""
-    return lr.async_get(hass)
+# @pytest.fixture
+# def issue_registry(hass: HomeAssistant) -> ir.IssueRegistry:
+#     """Return the issue registry from the current hass instance."""
+#     return ir.async_get(hass)
+
+
+# @pytest.fixture
+# def label_registry(hass: HomeAssistant) -> lr.LabelRegistry:
+#     """Return the label registry from the current hass instance."""
+#     return lr.async_get(hass)
 
 
 
@@ -142,11 +142,11 @@ def mock_smartthings() -> Generator[AsyncMock]:
     """Mock a SmartThings client."""
     with (
         patch(
-            "custom_components.smartthings.smartthings.SmartThings",
+            "custom_components.smartthings.SmartThings",
             autospec=True,
         ) as mock_client,
         patch(
-            "custom_components.smartthings.config_flow.config_flow.SmartThings",
+            "custom_components.smartthings.config_flow.SmartThings",
             new=mock_client,
         ),
     ):
