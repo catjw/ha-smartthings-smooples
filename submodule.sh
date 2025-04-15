@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+
+git submodule init core
+git clone --no-checkout --depth=1 $(git config submodule.core.url) core
+
 cd core
 git sparse-checkout set \
 'tests/components/smartthings/fixtures' \
