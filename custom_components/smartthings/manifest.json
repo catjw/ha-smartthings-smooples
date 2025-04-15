@@ -5,9 +5,7 @@
     "@catjw"
   ],
   "config_flow": true,
-  "dependencies": [
-    "application_credentials"
-  ],
+  "dependencies": ["application_credentials"],
   "dhcp": [
     {
       "hostname": "st*",
