@@ -30,7 +30,7 @@ from homeassistant.components.climate import (
     HVACAction,
     HVACMode,
 )
-from homeassistant.components.smartthings.const import MAIN
+from custom_components.smartthings.const import MAIN
 from homeassistant.const import (
     ATTR_ENTITY_ID,
     ATTR_TEMPERATURE,

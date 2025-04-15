@@ -18,95 +18,35 @@ from homeassistant.components.application_credentials import (
     ClientCredential,
     async_import_client_credential,
 )
-from homeassistant.components.smartthings import CONF_INSTALLED_APP_ID
-from homeassistant.components.smartthings.const import (
+from custom_components.smartthings import CONF_INSTALLED_APP_ID
+from custom_components.smartthings.const import (
     CONF_LOCATION_ID,
     CONF_REFRESH_TOKEN,
+    DOMAIN,
     SCOPES,
 )
+
 from homeassistant.const import CONF_ACCESS_TOKEN, CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
 
-from homeassistant.helpers import (
-    area_registry as ar,
-    category_registry as cr,
-    config_entry_oauth2_flow,
-    device_registry as dr,
-    entity_registry as er,
-    floor_registry as fr,
-    frame,
-    issue_registry as ir,
-    label_registry as lr,
-    recorder as recorder_helper,
-    translation as translation_helper,
-)
-from custom_components.smartthings import (
-    DOMAIN,
-)
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
-from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotExtension
-from syrupy.assertion import SnapshotAssertion
-
-pytest_plugins = "pytest_homeassistant_custom_component"
-
+import pytest 
 
 @pytest.fixture(autouse=True)
 def auto_enable_custom_integrations(enable_custom_integrations):
+
+    """Enable custom integrations defined in the test dir."""
     yield
 
-@pytest.fixture(autouse=True)
+from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotExtension
+from syrupy.assertion import SnapshotAssertion
+
+
+@pytest.fixture
 def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
     """Return snapshot assertion fixture with the Home Assistant extension."""
     return snapshot.use_extension(HomeAssistantSnapshotExtension)
-
-# @pytest.fixture(autouse=True)
-# def disable_device_registry(hass):
-#     device_registry = dr.async_get(hass)
-#     with patch.object(device_registry, "async_get_or_create"):
-#         yield
-
-# @pytest.fixture
-# def category_registry(hass: HomeAssistant) -> cr.CategoryRegistry:
-#     """Return the category registry from the current hass instance."""
-#     return cr.async_get(hass)
-
-
-# @pytest.fixture
-# def area_registry(hass: HomeAssistant) -> ar.AreaRegistry:
-#     """Return the area registry from the current hass instance."""
-#     return ar.async_get(hass)
-
-
-# @pytest.fixture
-# def device_registry(hass: HomeAssistant) -> dr.DeviceRegistry:
-#     """Return the device registry from the current hass instance."""
-#     return dr.async_get(hass)
-
-# @pytest.fixture
-# def entity_registry(hass: HomeAssistant) -> er.EntityRegistry:
-#     """Return the entity registry from the current hass instance."""
-#     return er.async_get(hass)
-
-
-# @pytest.fixture
-# def floor_registry(hass: HomeAssistant) -> fr.FloorRegistry:
-#     """Return the floor registry from the current hass instance."""
-#     return fr.async_get(hass)
-
-
-# @pytest.fixture
-# def issue_registry(hass: HomeAssistant) -> ir.IssueRegistry:
-#     """Return the issue registry from the current hass instance."""
-#     return ir.async_get(hass)
-
-
-# @pytest.fixture
-# def label_registry(hass: HomeAssistant) -> lr.LabelRegistry:
-#     """Return the label registry from the current hass instance."""
-#     return lr.async_get(hass)
-
 
 
 @pytest.fixture

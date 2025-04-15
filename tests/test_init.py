@@ -22,8 +22,8 @@ from homeassistant.components.fan import DOMAIN as FAN_DOMAIN
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.lock import DOMAIN as LOCK_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
-from homeassistant.components.smartthings import EVENT_BUTTON
-from homeassistant.components.smartthings.const import (
+from custom_components.smartthings import EVENT_BUTTON
+from custom_components.smartthings.const import (
     CONF_INSTALLED_APP_ID,
     CONF_LOCATION_ID,
     CONF_SUBSCRIPTION_ID,

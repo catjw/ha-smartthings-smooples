@@ -11,7 +11,7 @@ from homeassistant.components.number import (
     DOMAIN as NUMBER_DOMAIN,
     SERVICE_SET_VALUE,
 )
-from homeassistant.components.smartthings import MAIN
+from custom_components.smartthings import MAIN
 from homeassistant.const import ATTR_ENTITY_ID, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
