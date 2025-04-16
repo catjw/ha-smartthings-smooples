@@ -30,8 +30,10 @@ from homeassistant.const import CONF_ACCESS_TOKEN, CONF_CLIENT_ID, CONF_CLIENT_S
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
 import pytest 
+from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture, get_fixture_path
+
+pytest_plugins = ["pytest_homeassistant_custom_component"]
 
 @pytest.fixture(autouse=True)
 def auto_enable_custom_integrations(enable_custom_integrations):
