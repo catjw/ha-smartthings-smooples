@@ -18,20 +18,17 @@ from homeassistant.components.application_credentials import (
     ClientCredential,
     async_import_client_credential,
 )
-from custom_components.smartthings import CONF_INSTALLED_APP_ID
-from custom_components.smartthings.const import (
-    CONF_LOCATION_ID,
-    CONF_REFRESH_TOKEN,
-    DOMAIN,
-    SCOPES,
-)
 
 from homeassistant.const import CONF_ACCESS_TOKEN, CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
 
-import pytest 
-from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture, get_fixture_path
+from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
+from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotExtension
+from syrupy.assertion import SnapshotAssertion
+
+from custom_components.smartthings import smartthings
+
 
 pytest_plugins = ["pytest_homeassistant_custom_component"]
 
@@ -40,9 +37,6 @@ def auto_enable_custom_integrations(enable_custom_integrations):
 
     """Enable custom integrations defined in the test dir."""
     yield
-
-from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotExtension
-from syrupy.assertion import SnapshotAssertion
 
 
 @pytest.fixture
@@ -55,7 +49,7 @@ def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 def mock_setup_entry() -> Generator[AsyncMock]:
     """Override async_setup_entry."""
     with patch(
-        "custom_components.smartthings.async_setup_entry",
+        "custom_components.smartthings.smartthings.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
         yield mock_setup_entry
@@ -73,9 +67,9 @@ async def setup_credentials(hass: HomeAssistant) -> None:
     assert await async_setup_component(hass, "application_credentials", {})
     await async_import_client_credential(
         hass,
-        DOMAIN,
+        smartthings.const.DOMAIN,
         ClientCredential("CLIENT_ID", "CLIENT_SECRET"),
-        DOMAIN,
+        smartthings.const.DOMAIN,
     )
 
 
@@ -84,26 +78,27 @@ def mock_smartthings() -> Generator[AsyncMock]:
     """Mock a SmartThings client."""
     with (
         patch(
-            "custom_components.smartthings.SmartThings",
+            "custom_components.smartthings.smartthings.SmartThings",
             autospec=True,
         ) as mock_client,
         patch(
-            "custom_components.smartthings.config_flow.SmartThings",
+            "homeassistant.components.smartthings.config_flow.SmartThings",
+            # "custom_components.smartthings.config_flow.SmartThings",
             new=mock_client,
         ),
     ):
         client = mock_client.return_value
         client.get_scenes.return_value = SceneResponse.from_json(
-            load_fixture("scenes.json", DOMAIN)
+            load_fixture("scenes.json", smartthings.const.DOMAIN)
         ).items
         client.get_locations.return_value = LocationResponse.from_json(
-            load_fixture("locations.json", DOMAIN)
+            load_fixture("locations.json", smartthings.const.DOMAIN)
         ).items
         client.get_rooms.return_value = RoomResponse.from_json(
-            load_fixture("rooms.json", DOMAIN)
+            load_fixture("rooms.json", smartthings.const.DOMAIN)
         ).items
         client.create_subscription.return_value = Subscription.from_json(
-            load_fixture("subscription.json", DOMAIN)
+            load_fixture("subscription.json", smartthings.const.DOMAIN)
         )
         yield client
 
@@ -179,10 +174,10 @@ def device_fixture(
 def devices(mock_smartthings: AsyncMock, device_fixture: str) -> Generator[AsyncMock]:
     """Return a specific device."""
     mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
-        load_fixture(f"devices/{device_fixture}.json", DOMAIN)
+        load_fixture(f"devices/{device_fixture}.json", smartthings.const.DOMAIN)
     ).items
     mock_smartthings.get_device_status.return_value = DeviceStatus.from_json(
-        load_fixture(f"device_status/{device_fixture}.json", DOMAIN)
+        load_fixture(f"device_status/{device_fixture}.json", smartthings.const.DOMAIN)
     ).components
     return mock_smartthings
 
@@ -191,21 +186,21 @@ def devices(mock_smartthings: AsyncMock, device_fixture: str) -> Generator[Async
 def mock_config_entry(expires_at: int) -> MockConfigEntry:
     """Mock a config entry."""
     return MockConfigEntry(
-        domain=DOMAIN,
+        domain=smartthings.const.DOMAIN,
         title="My home",
         unique_id="397678e5-9995-4a39-9d9f-ae6ba310236c",
         data={
-            "auth_implementation": DOMAIN,
+            "auth_implementation": smartthings.const.DOMAIN,
             "token": {
                 "access_token": "mock-access-token",
                 "refresh_token": "mock-refresh-token",
                 "expires_at": expires_at,
-                "scope": " ".join(SCOPES),
+                "scope": " ".join(smartthings.const.SCOPES),
                 "access_tier": 0,
                 "installed_app_id": "5aaaa925-2be1-4e40-b257-e4ef59083324",
             },
-            CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
-            CONF_INSTALLED_APP_ID: "123",
+            smartthings.const.CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
+            smartthings.const.CONF_INSTALLED_APP_ID: "123",
         },
         version=3,
         minor_version=2,
@@ -216,16 +211,16 @@ def mock_config_entry(expires_at: int) -> MockConfigEntry:
 def mock_old_config_entry() -> MockConfigEntry:
     """Mock the old config entry."""
     return MockConfigEntry(
-        domain=DOMAIN,
+        domain=smartthings.const.DOMAIN,
         title="My home",
         unique_id="appid123-2be1-4e40-b257-e4ef59083324_397678e5-9995-4a39-9d9f-ae6ba310236c",
         data={
             CONF_ACCESS_TOKEN: "mock-access-token",
-            CONF_REFRESH_TOKEN: "mock-refresh-token",
+            smartthings.const.CONF_REFRESH_TOKEN: "mock-refresh-token",
             CONF_CLIENT_ID: "CLIENT_ID",
             CONF_CLIENT_SECRET: "CLIENT_SECRET",
-            CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
-            CONF_INSTALLED_APP_ID: "123aa123-2be1-4e40-b257-e4ef59083324",
+            smartthings.const.CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
+            smartthings.const.CONF_INSTALLED_APP_ID: "123aa123-2be1-4e40-b257-e4ef59083324",
         },
         version=2,
     )

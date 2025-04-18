@@ -12,9 +12,9 @@ from homeassistant.const import ATTR_ENTITY_ID, SERVICE_LOCK, SERVICE_UNLOCK, Pl
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
-from . import setup_integration, snapshot_smartthings_entities, trigger_update
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+from . import setup_integration, snapshot_smartthings_entities, trigger_update
 
 
 async def test_all_entities(

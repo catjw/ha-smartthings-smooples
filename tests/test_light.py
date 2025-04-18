@@ -33,14 +33,14 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant, State
 from homeassistant.helpers import entity_registry as er
 
+from pytest_homeassistant_custom_component.common import MockConfigEntry, mock_restore_cache_with_extra_data
+
 from . import (
     set_attribute_value,
     setup_integration,
     snapshot_smartthings_entities,
     trigger_update,
 )
-
-from pytest_homeassistant_custom_component.common import MockConfigEntry, mock_restore_cache_with_extra_data
 
 
 async def test_all_entities(

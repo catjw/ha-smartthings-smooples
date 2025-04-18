@@ -22,8 +22,8 @@ from homeassistant.components.fan import DOMAIN as FAN_DOMAIN
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.lock import DOMAIN as LOCK_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
-from custom_components.smartthings import EVENT_BUTTON
-from custom_components.smartthings.const import (
+from homeassistant.components.smartthings import EVENT_BUTTON
+from homeassistant.components.smartthings.const import (
     CONF_INSTALLED_APP_ID,
     CONF_LOCATION_ID,
     CONF_SUBSCRIPTION_ID,
@@ -36,9 +36,9 @@ from homeassistant.const import EVENT_HOMEASSISTANT_STOP
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
-from . import setup_integration, trigger_update
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
+
+from . import setup_integration, trigger_update
 
 
 async def test_devices(
