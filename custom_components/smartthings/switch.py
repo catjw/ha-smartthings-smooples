@@ -240,6 +240,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
+        _LOGGER.warning(f"**DATA: {self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)}, {self.commands.page}")
         if self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href'] == self.commands.page:
             output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)['payload'][self.commands.section]
             _LOGGER.warning(f"**Output: {output}")
