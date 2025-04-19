@@ -218,7 +218,6 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
-        self.init_bool = False
         # if not self.init_bool:
             # await self.startup()
         
@@ -241,8 +240,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
-        if self.get_attribute_data(self.capability, self.entity_description.status_attribute)['href'] == self.commands.page:
-            self.init_bool = True
+        if self.get_attribute_data(self.capabilities[0], self.entity_description.status_attribute)['href'] == self.commands.page:
             output = self.get_attribute_value(self.capability, self.entity_description.status_attribute)['payload'][self.commands.section]
             if self.commands.on in output:
                 return True
