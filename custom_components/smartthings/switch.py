@@ -190,7 +190,7 @@ async def async_setup_entry(
                         capability=Capability.EXECUTE,
                         commands=SmartThingsExecuteCommands(
                             'Light',
-                            'mode/vs/0', 
+                            '/mode/vs/0', 
                             'x.com.samsung.da.options',
                             'Light_On',
                             'Light_Off',
