@@ -13,6 +13,7 @@ from pysmartthings import Attribute, Capability, Command, SmartThings
     # SwitchEntityDescription,
 # )
 from homeassistant.core import HomeAssistant
+from homeassistant.const import STATE_OFF, STATE_ON
 # from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
@@ -218,14 +219,16 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
         self.init_bool = False
+        # if not self.init_bool:
+            # await self.startup()
         
-    async def startup(self) -> None:
-        """Set up the entity."""
-        await self.execute_device_command(
-            self.switch_capability,
-            self.entity_description.command,
-            self.commands.page
-        )
+    # async def startup(self) -> None:
+    #     """Set up the entity."""
+    #     await self.execute_device_command(
+    #         self.switch_capability,
+    #         self.entity_description.command,
+    #         self.commands.page
+    #     )
     
     # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
     #     """Get the value of a device attribute."""
@@ -238,8 +241,6 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
-        if not self.init_bool:
-            self.startup()
         if self.get_attribute_data(self.capability, self.entity_description.status_attribute)['href'] == self.commands.page:
             self.init_bool = True
             output = self.get_attribute_value(self.capability, self.entity_description.status_attribute)['payload'][self.commands.section]
@@ -248,6 +249,13 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
             elif self.commands.off in output:
                 return False
         return False
+    
+    @property
+    def state(self):
+        """Return the state."""
+        if (is_on := self.is_on) is None:
+            return None
+        return STATE_ON if is_on else STATE_OFF
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
@@ -259,8 +267,6 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"**AC**: {self._internal_state[Capability.EXECUTE][Attribute.DATA].data}")
-        _LOGGER.warning(f"**AC**: {self._internal_state[Capability.EXECUTE][Attribute.DATA].value}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,
