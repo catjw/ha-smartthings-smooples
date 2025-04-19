@@ -82,8 +82,7 @@ def mock_smartthings() -> Generator[AsyncMock]:
             autospec=True,
         ) as mock_client,
         patch(
-            "homeassistant.components.smartthings.config_flow.SmartThings",
-            # "custom_components.smartthings.config_flow.SmartThings",
+            "custom_components.smartthings.config_flow.config_flow.SmartThings",
             new=mock_client,
         ),
     ):
