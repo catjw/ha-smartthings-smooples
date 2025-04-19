@@ -404,6 +404,9 @@
       "refresh": {},
       "execute": {
         "data": {
+          "data": {
+            "href": "/mode/vs/0"
+          },
           "value": {                                        
             "payload": {                           
               "rt": [                              

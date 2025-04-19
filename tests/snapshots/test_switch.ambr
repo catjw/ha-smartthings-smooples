@@ -634,7 +634,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:lightbulb',
     'original_name': 'Light',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -648,6 +648,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Office AirFree Light',
+      'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
     'entity_id': 'switch.office_airfree_light',
@@ -681,7 +682,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:lightbulb',
     'original_name': 'Light',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -695,6 +696,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Corridor A/C Light',
+      'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
     'entity_id': 'switch.corridor_a_c_light',
@@ -728,7 +730,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:lightbulb',
     'original_name': 'Light',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -742,6 +744,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Aire Dormitorio Principal Light',
+      'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
     'entity_id': 'switch.aire_dormitorio_principal_light',
@@ -916,7 +919,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:shimmer',
     'original_name': 'Auto Cleaning Mode',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -930,6 +933,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'AC Office Granit Auto Cleaning Mode',
+      'icon': 'mdi:shimmer',
     }),
     'context': <ANY>,
     'entity_id': 'switch.ac_office_granit_auto_cleaning_mode',
@@ -963,7 +967,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:shimmer',
     'original_name': 'Auto Cleaning Mode',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -977,6 +981,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Office AirFree Auto Cleaning Mode',
+      'icon': 'mdi:shimmer',
     }),
     'context': <ANY>,
     'entity_id': 'switch.office_airfree_auto_cleaning_mode',
@@ -1010,7 +1015,7 @@
     'options': dict({
     }),
     'original_device_class': None,
-    'original_icon': None,
+    'original_icon': 'mdi:shimmer',
     'original_name': 'Auto Cleaning Mode',
     'platform': 'smartthings',
     'previous_unique_id': None,
@@ -1024,6 +1029,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Aire Dormitorio Principal Auto Cleaning Mode',
+      'icon': 'mdi:shimmer',
     }),
     'context': <ANY>,
     'entity_id': 'switch.aire_dormitorio_principal_auto_cleaning_mode',

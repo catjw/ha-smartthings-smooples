@@ -145,6 +145,7 @@ async def async_setup_entry(
                             translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
                             status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
                             command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
+                            icon=CUSTOM_CAPABILITY_TO_SWITCH[capability].icon,
                         ),
                         capability
                     )
@@ -183,6 +184,7 @@ async def async_setup_entry(
                             translation_key="light",
                             status_attribute=Attribute.DATA,
                             command=Command.EXECUTE,
+                            icon="mdi:lightbulb",
                         ),
                         capability=Capability.EXECUTE,
                         commands=SmartThingsExecuteCommands(
@@ -227,14 +229,25 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     
     # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
     #     """Get the value of a device attribute."""
-    #     return self._internal_state[capability][attribute].value
+        # return self._internal_state[capability][attribute].value
     
-    # @property
-    # def is_on(self) -> bool:
-    #     """Return true if the switch is on."""
-    #     if not self.init_bool:
-    #         self.startup()
-        # if self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute) :
+    def get_attribute_data(self, capability: Capability, attribute: Attribute) -> Any:
+        """Get the value of a device attribute."""
+        return self._internal_state[capability][attribute].data
+    
+    @property
+    def is_on(self) -> bool:
+        """Return true if the switch is on."""
+        if not self.init_bool:
+            self.startup()
+        if self.get_attribute_data(self.capability, self.entity_description.status_attribute)['href'] == self.commands.page:
+            self.init_bool = True
+            output = self.get_attribute_value(self.capability, self.entity_description.status_attribute)['payload'][self.commands.section]
+            if self.commands.on in output:
+                return True
+            elif self.commands.off in output:
+                return False
+        return False
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
