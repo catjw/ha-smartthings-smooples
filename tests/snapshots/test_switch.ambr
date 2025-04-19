@@ -780,7 +780,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'spiMode',
+    'translation_key': 'spi_mode',
     'unique_id': '96a5ef74-5832-a84b-f1f7-ca799957065d_main_custom.spiMode_spiMode_spiMode',
     'unit_of_measurement': None,
   })
@@ -827,7 +827,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'spiMode',
+    'translation_key': 'spi_mode',
     'unique_id': 'c76d6f38-1b7f-13dd-37b5-db18d5272783_main_custom.spiMode_spiMode_spiMode',
     'unit_of_measurement': None,
   })
@@ -874,7 +874,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'spiMode',
+    'translation_key': 'spi_mode',
     'unique_id': '4ece486b-89db-f06a-d54d-748b676b4d8e_main_custom.spiMode_spiMode_spiMode',
     'unit_of_measurement': None,
   })
@@ -921,7 +921,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'autoCleaningMode',
+    'translation_key': 'auto_cleaning_mode',
     'unique_id': '96a5ef74-5832-a84b-f1f7-ca799957065d_main_custom.autoCleaningMode_autoCleaningMode_autoCleaningMode',
     'unit_of_measurement': None,
   })
@@ -968,7 +968,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'autoCleaningMode',
+    'translation_key': 'auto_cleaning_mode',
     'unique_id': 'c76d6f38-1b7f-13dd-37b5-db18d5272783_main_custom.autoCleaningMode_autoCleaningMode_autoCleaningMode',
     'unit_of_measurement': None,
   })
@@ -1015,7 +1015,7 @@
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
-    'translation_key': 'autoCleaningMode',
+    'translation_key': 'auto_cleaning_mode',
     'unique_id': '4ece486b-89db-f06a-d54d-748b676b4d8e_main_custom.autoCleaningMode_autoCleaningMode_autoCleaningMode',
     'unit_of_measurement': None,
   })
