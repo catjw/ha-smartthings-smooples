@@ -71,6 +71,7 @@ class SmartThingsCustomSwitch:
     """SmartThings custom switch."""
     attribute: Attribute
     command: str
+    translation: str
     on_value: str
     off_value: str
     icon: str = None
@@ -88,14 +89,16 @@ CUSTOM_CAPABILITY_TO_SWITCH = {
     #     ),
     # ],
     Capability.CUSTOM_SPI_MODE: SmartThingsCustomSwitch(
-            attribute=f"{Attribute.SPI_MODE}",
+            attribute=Attribute.SPI_MODE,
             command=Command.SET_SPI_MODE,
+            translation="spi_mode",
             on_value="on",
             off_value="off",
         ),
     Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
-            attribute=f"{Attribute.AUTO_CLEANING_MODE}",
+            attribute=Attribute.AUTO_CLEANING_MODE,
             command=Command.SET_AUTO_CLEANING_MODE,
+            translation="auto_cleaning_mode",
             on_value="on",
             off_value="off",
             icon="mdi:shimmer",
@@ -139,7 +142,7 @@ async def async_setup_entry(
                         device,
                         switch.SmartThingsCommandSwitchEntityDescription(
                             key=capability,
-                            translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
+                            translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
                             status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
                             command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
                         ),

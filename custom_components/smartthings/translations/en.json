@@ -479,10 +479,10 @@
       "light": {
         "name": "Light"
       },
-      "autoCleaningMode": {
+      "auto_cleaning_mode": {
         "name": "Auto Cleaning Mode"
       },
-      "spiMode": {
+      "spi_mode": {
         "name": "SPI Mode"
       }
     }
