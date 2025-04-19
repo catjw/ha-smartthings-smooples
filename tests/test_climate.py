@@ -1,6 +1,6 @@
 """Test for the SmartThings climate platform."""
 
-from typing import Any
+from typing import Any, Callable
 from unittest.mock import AsyncMock, call
 
 from pysmartthings import Attribute, Capability, Command, Status
@@ -709,7 +709,7 @@ async def test_thermostat_set_temperature(
     mock_config_entry: MockConfigEntry,
     state: str,
     data: dict[str, Any],
-    calls: list[call],
+    calls: list[Callable],
 ) -> None:
     """Test thermostat set temperature."""
     set_attribute_value(

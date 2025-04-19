@@ -1,6 +1,6 @@
 """Support for switches through the SmartThings cloud API."""
 
-# from __future__ import annotations
+import logging
 
 from dataclasses import dataclass
 from typing import Any
@@ -24,25 +24,8 @@ from homeassistant.components.smartthings import switch, FullDevice
 
 from . import SmartThingsConfigEntry
 
-# CAPABILITIES = (
-#     Capability.SWITCH_LEVEL,
-#     Capability.COLOR_CONTROL,
-#     Capability.COLOR_TEMPERATURE,
-#     Capability.FAN_SPEED,
-# )
 
-# AC_CAPABILITIES = (
-#     Capability.AIR_CONDITIONER_MODE,
-#     Capability.AIR_CONDITIONER_FAN_MODE,
-#     Capability.TEMPERATURE_MEASUREMENT,
-#     Capability.THERMOSTAT_COOLING_SETPOINT,
-# )
-
-# MEDIA_PLAYER_CAPABILITIES = (
-#     Capability.AUDIO_MUTE,
-#     Capability.AUDIO_VOLUME,
-#     Capability.MEDIA_PLAYBACK,
-# )
+_LOGGER = logging.getLogger(__name__)
 
 # SWITCH = switch.SmartThingsSwitchEntityDescription(
 #     key=Capability.SWITCH,
@@ -84,6 +67,43 @@ from . import SmartThingsConfigEntry
 #     command: Command
 
 @dataclass
+class SmartThingsCustomSwitch:
+    """SmartThings custom switch."""
+    attribute: Attribute
+    command: str
+    on_value: str
+    off_value: str
+    icon: str = None
+
+
+CUSTOM_CAPABILITY_TO_SWITCH = {
+    # Capability.SWITCH: [
+    #     SmartThingsCustomSwitch(
+    #         attribute=Attribute.SWITCH,
+    #         on_command="switch_on",
+    #         off_command="switch_off",
+    #         on_value="on",
+    #         off_value="off",
+    #         name="Switch",
+    #     ),
+    # ],
+    Capability.CUSTOM_SPI_MODE: SmartThingsCustomSwitch(
+            attribute=f"{Attribute.SPI_MODE}",
+            command=Command.SET_SPI_MODE,
+            on_value="on",
+            off_value="off",
+        ),
+    Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
+            attribute=f"{Attribute.AUTO_CLEANING_MODE}",
+            command=Command.SET_AUTO_CLEANING_MODE,
+            on_value="on",
+            off_value="off",
+            icon="mdi:shimmer",
+        ),
+}
+
+
+@dataclass
 class SmartThingsExecuteCommands:
     """SmartThings execute commands."""
     name: str
@@ -111,6 +131,21 @@ async def async_setup_entry(
     entry_data = entry.runtime_data
     entities: list[SmartThingsEntity] = []
     for device in entry_data.devices.values():
+        for capability in CUSTOM_CAPABILITY_TO_SWITCH:
+            if capability in device.status[MAIN]:
+                entities.append(
+                    switch.SmartThingsCommandSwitch(
+                        entry_data.client,
+                        device,
+                        switch.SmartThingsCommandSwitchEntityDescription(
+                            key=capability,
+                            translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
+                            status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
+                            command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
+                        ),
+                        capability
+                    )
+                )
         media_player = all(
                 capability in device.status[MAIN]
                 for capability in switch.MEDIA_PLAYER_CAPABILITIES
@@ -126,7 +161,6 @@ async def async_setup_entry(
             and device.status[MAIN][Capability.OCF][Attribute.MANUFACTURER_NAME].value == "Samsung Electronics"
         ):
             model = device.status[MAIN][Capability.OCF][Attribute.MODEL_NUMBER].value.split("|")[0]
-            print(model)
             if (
                 Capability.EXECUTE
                 and "Air Conditioner" in device.device.device_type_name
@@ -160,10 +194,11 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class SamsungOcfSwitch(switch.SmartThingsSwitch, SmartThingsExecuteCommands):
+class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteCommands):
     """Representation of a Samsung OCF switch."""
 
     entity_description: switch.SmartThingsCommandSwitchEntityDescription
+    commands: SmartThingsExecuteCommands
 
     def __init__(
         self,
@@ -177,19 +212,41 @@ class SamsungOcfSwitch(switch.SmartThingsSwitch, SmartThingsExecuteCommands):
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
+        self.init_bool = False
+        
+    async def startup(self) -> None:
+        """Set up the entity."""
+        await self.execute_device_command(
+            self.switch_capability,
+            self.entity_description.command,
+            self.commands.page
+        )
+    
+    # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
+    #     """Get the value of a device attribute."""
+    #     return self._internal_state[capability][attribute].value
+    
+    # @property
+    # def is_on(self) -> bool:
+    #     """Return true if the switch is on."""
+    #     if not self.init_bool:
+    #         self.startup()
+        # if self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute) :
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
         await self.execute_device_command(
-            'execute',
-            'execute',
+            self.switch_capability,
+            self.entity_description.command,
             self.commands.set_off
         )
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
+        _LOGGER.warning(f"**AC**: {self._internal_state[Capability.EXECUTE][Attribute.DATA].data}")
+        _LOGGER.warning(f"**AC**: {self._internal_state[Capability.EXECUTE][Attribute.DATA].value}")
         await self.execute_device_command(
-            'execute',
-            'execute',
+            self.switch_capability,
+            self.entity_description.command,
             self.commands.set_on
         )

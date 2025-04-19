@@ -1,6 +1,6 @@
 """Test for the SmartThings light platform."""
 
-from typing import Any
+from typing import Any, Callable
 from unittest.mock import AsyncMock, call
 
 from pysmartthings import Attribute, Capability, Command
@@ -138,7 +138,7 @@ async def test_turn_on_light(
     devices: AsyncMock,
     mock_config_entry: MockConfigEntry,
     data: dict[str, Any],
-    calls: list[call],
+    calls: list[Callable],  # noqa: F821
 ) -> None:
     """Test light turn on command."""
     await setup_integration(hass, mock_config_entry)
@@ -186,7 +186,7 @@ async def test_turn_off_light(
     devices: AsyncMock,
     mock_config_entry: MockConfigEntry,
     data: dict[str, Any],
-    calls: list[call],
+    calls: list[Callable],
 ) -> None:
     """Test light turn off command."""
     await setup_integration(hass, mock_config_entry)

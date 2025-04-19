@@ -478,6 +478,12 @@
       },
       "light": {
         "name": "Light"
+      },
+      "autoCleaningMode": {
+        "name": "Auto Cleaning Mode"
+      },
+      "spiMode": {
+        "name": "SPI Mode"
       }
     }
   },
