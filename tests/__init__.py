@@ -32,8 +32,6 @@ def snapshot_smartthings_entities(
     entities = hass.states.async_all(platform)
     for entity_state in entities:
         entity_entry = entity_registry.async_get(entity_state.entity_id)
-        if entity_state.entity_id == "switch.office_airfree_light":
-            print(entity_entry)
         assert entity_entry == snapshot(name=f"{entity_entry.entity_id}-entry")
         assert entity_state == snapshot(name=f"{entity_entry.entity_id}-state")
 

@@ -40,19 +40,6 @@ async def test_all_entities(
 
     snapshot_smartthings_entities(hass, entity_registry, snapshot, Platform.SWITCH)
 
-@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000003"])
-async def test_all_entities2(
-    hass: HomeAssistant,
-    snapshot: SnapshotAssertion,
-    devices: AsyncMock,
-    mock_config_entry: MockConfigEntry,
-    entity_registry: er.EntityRegistry,
-) -> None:
-    """Test all entities."""
-    await setup_integration(hass, mock_config_entry)
-
-    snapshot_smartthings_entities(hass, entity_registry, snapshot, Platform.SWITCH)
-
 
 @pytest.mark.parametrize("device_fixture", ["c2c_arlo_pro_3_switch"])
 @pytest.mark.parametrize(

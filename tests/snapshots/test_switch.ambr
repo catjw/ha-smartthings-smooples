@@ -655,7 +655,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': 'off',
+    'state': 'on',
   })
 # ---
 # name: test_all_entities[da_ac_rac_100001][switch.corridor_a_c_light-entry]
