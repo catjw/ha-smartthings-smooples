@@ -7,19 +7,12 @@ from typing import Any
 
 from pysmartthings import Attribute, Capability, Command, SmartThings
 
-# from homeassistant.components.switch import (
-    # DOMAIN as SWITCH_DOMAIN,
-    # SwitchEntity,
-    # SwitchEntityDescription,
-# )
 from homeassistant.core import HomeAssistant
 from homeassistant.const import STATE_OFF, STATE_ON
-# from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from homeassistant.components.smartthings.const import MAIN
 from homeassistant.components.smartthings.entity import SmartThingsEntity
-# from homeassistant.components.smartthings.util import deprecate_entity
 
 from homeassistant.components.smartthings import switch, FullDevice
 
@@ -28,44 +21,6 @@ from . import SmartThingsConfigEntry
 
 _LOGGER = logging.getLogger(__name__)
 
-# SWITCH = switch.SmartThingsSwitchEntityDescription(
-#     key=Capability.SWITCH,
-#     status_attribute=Attribute.SWITCH,
-#     name=None,
-# )
-
-# CAPABILITY_TO_COMMAND_SWITCHES: dict[
-#     Capability | str, switch.SmartThingsCommandSwitchEntityDescription
-# ] = {
-#     Capability.CUSTOM_DRYER_WRINKLE_PREVENT: switch.SmartThingsCommandSwitchEntityDescription(
-#         key=Capability.CUSTOM_DRYER_WRINKLE_PREVENT,
-#         translation_key="wrinkle_prevent",
-#         status_attribute=Attribute.DRYER_WRINKLE_PREVENT,
-#         command=Command.SET_DRYER_WRINKLE_PREVENT,
-#     )
-# }
-# CAPABILITY_TO_SWITCHES: dict[Capability | str, switch.SmartThingsSwitchEntityDescription] = {
-#     Capability.SAMSUNG_CE_WASHER_BUBBLE_SOAK: switch.SmartThingsSwitchEntityDescription(
-#         key=Capability.SAMSUNG_CE_WASHER_BUBBLE_SOAK,
-#         translation_key="bubble_soak",
-#         status_attribute=Attribute.STATUS,
-#     ),
-#     Capability.SWITCH: switch.SmartThingsSwitchEntityDescription(
-#         key=Capability.SWITCH,
-#         status_attribute=Attribute.SWITCH,
-#         component_translation_key={
-#             "icemaker": "ice_maker",
-#         },
-#     ),
-# }
-
-
-# @dataclass(frozen=True, kw_only=True)
-# class SamsungOcfSwitchEntityDescription(SwitchEntityDescription):
-#     """Describe a SmartThings switch entity."""
-
-#     status_attribute: Attribute
-#     command: Command
 
 @dataclass
 class SmartThingsCustomSwitch:
@@ -79,31 +34,21 @@ class SmartThingsCustomSwitch:
 
 
 CUSTOM_CAPABILITY_TO_SWITCH = {
-    # Capability.SWITCH: [
-    #     SmartThingsCustomSwitch(
-    #         attribute=Attribute.SWITCH,
-    #         on_command="switch_on",
-    #         off_command="switch_off",
-    #         on_value="on",
-    #         off_value="off",
-    #         name="Switch",
-    #     ),
-    # ],
     Capability.CUSTOM_SPI_MODE: SmartThingsCustomSwitch(
-            attribute=Attribute.SPI_MODE,
-            command=Command.SET_SPI_MODE,
-            translation="spi_mode",
-            on_value="on",
-            off_value="off",
-        ),
+        attribute=Attribute.SPI_MODE,
+        command=Command.SET_SPI_MODE,
+        translation="spi_mode",
+        on_value="on",
+        off_value="off",
+    ),
     Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
-            attribute=Attribute.AUTO_CLEANING_MODE,
-            command=Command.SET_AUTO_CLEANING_MODE,
-            translation="auto_cleaning_mode",
-            on_value="on",
-            off_value="off",
-            icon="mdi:shimmer",
-        ),
+        attribute=Attribute.AUTO_CLEANING_MODE,
+        command=Command.SET_AUTO_CLEANING_MODE,
+        translation="auto_cleaning_mode",
+        on_value="on",
+        off_value="off",
+        icon="mdi:shimmer",
+    ),
 }
 
 
@@ -120,10 +65,12 @@ class SmartThingsExecuteCommands:
     def set_off(self) -> list[str, dict[str, list[str]]]:
         """Set off command."""
         return [self.page, {self.section: [self.off]}]
+
     @property
     def set_on(self) -> list[str, dict[str, list[str]]]:
         """Set on command."""
         return [self.page, {self.section: [self.on]}]
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -152,9 +99,9 @@ async def async_setup_entry(
                     )
                 )
         media_player = all(
-                capability in device.status[MAIN]
-                for capability in switch.MEDIA_PLAYER_CAPABILITIES
-            )
+            capability in device.status[MAIN]
+            for capability in switch.MEDIA_PLAYER_CAPABILITIES
+        )
         appliance = (
             device.device.components[MAIN].manufacturer_category
             in switch.INVALID_SWITCH_CATEGORIES
@@ -190,7 +137,7 @@ async def async_setup_entry(
                         capability=Capability.EXECUTE,
                         commands=SmartThingsExecuteCommands(
                             'Light',
-                            '/mode/vs/0', 
+                            '/mode/vs/0',
                             'x.com.samsung.da.options',
                             'Light_On',
                             'Light_Off',
@@ -218,25 +165,15 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
-        # if not self.init_bool:
-            # await self.startup()
-        
-    # async def startup(self) -> None:
-    #     """Set up the entity."""
-    #     await self.execute_device_command(
-    #         self.switch_capability,
-    #         self.entity_description.command,
-    #         self.commands.page
-    #     )
-    
+
     # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
     #     """Get the value of a device attribute."""
         # return self._internal_state[capability][attribute].value
-    
+
     def get_attribute_data(self, capability: Capability, attribute: Attribute) -> Any:
         """Get the value of a device attribute."""
         return self._internal_state[capability][attribute].data
-    
+
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
@@ -249,7 +186,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
             elif self.commands.off in output:
                 return False
         return False
-    
+
     @property
     def state(self):
         """Return the state."""
