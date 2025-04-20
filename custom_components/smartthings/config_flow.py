@@ -2,5 +2,6 @@
 
 from homeassistant.components.smartthings import config_flow
 
+
 class SmartThingsConfigFlow(config_flow.SmartThingsConfigFlow):
-    pass
+    """Handle configuration of SmartThings integrations."""

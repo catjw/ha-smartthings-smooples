@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Check out code from GitHub
         uses: "actions/checkout@v4"
+        with:
+          submodules: "recursive"
       - name: Setup Python
         uses: "actions/setup-python@v4.7.0"
         with:
@@ -31,4 +33,5 @@ jobs:
         env:
           PYTEST: true
         run: |
-          python3 -m pytest -qq --timeout=30 --durations=10 -n auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
+          python3 -m pytest -qq --timeout=30 --durations=10 -n 8 --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
+        # python3 -m pytest -qq --timeout=30 --durations=10 -n auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
