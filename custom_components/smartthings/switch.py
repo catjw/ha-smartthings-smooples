@@ -79,16 +79,6 @@ class SmartThingsCustomSwitch:
 
 
 CUSTOM_CAPABILITY_TO_SWITCH = {
-    # Capability.SWITCH: [
-    #     SmartThingsCustomSwitch(
-    #         attribute=Attribute.SWITCH,
-    #         on_command="switch_on",
-    #         off_command="switch_off",
-    #         on_value="on",
-    #         off_value="off",
-    #         name="Switch",
-    #     ),
-    # ],
     Capability.CUSTOM_SPI_MODE: SmartThingsCustomSwitch(
             attribute=Attribute.SPI_MODE,
             command=Command.SET_SPI_MODE,
