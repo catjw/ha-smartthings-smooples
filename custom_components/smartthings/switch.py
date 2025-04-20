@@ -163,16 +163,6 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
-        # if not self.init_bool:
-            # await self.startup()
-        
-    # async def startup(self) -> None:
-    #     """Set up the entity."""
-    #     await self.execute_device_command(
-    #         self.switch_capability,
-    #         self.entity_description.command,
-    #         self.commands.page
-    #     )
     
     # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
     #     """Get the value of a device attribute."""
