@@ -7,19 +7,12 @@ from typing import Any
 
 from pysmartthings import Attribute, Capability, Command, SmartThings
 
-# from homeassistant.components.switch import (
-    # DOMAIN as SWITCH_DOMAIN,
-    # SwitchEntity,
-    # SwitchEntityDescription,
-# )
 from homeassistant.core import HomeAssistant
 from homeassistant.const import STATE_OFF, STATE_ON
-# from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from homeassistant.components.smartthings.const import MAIN
 from homeassistant.components.smartthings.entity import SmartThingsEntity
-# from homeassistant.components.smartthings.util import deprecate_entity
 
 from homeassistant.components.smartthings import switch, FullDevice
 
@@ -28,44 +21,6 @@ from . import SmartThingsConfigEntry
 
 _LOGGER = logging.getLogger(__name__)
 
-# SWITCH = switch.SmartThingsSwitchEntityDescription(
-#     key=Capability.SWITCH,
-#     status_attribute=Attribute.SWITCH,
-#     name=None,
-# )
-
-# CAPABILITY_TO_COMMAND_SWITCHES: dict[
-#     Capability | str, switch.SmartThingsCommandSwitchEntityDescription
-# ] = {
-#     Capability.CUSTOM_DRYER_WRINKLE_PREVENT: switch.SmartThingsCommandSwitchEntityDescription(
-#         key=Capability.CUSTOM_DRYER_WRINKLE_PREVENT,
-#         translation_key="wrinkle_prevent",
-#         status_attribute=Attribute.DRYER_WRINKLE_PREVENT,
-#         command=Command.SET_DRYER_WRINKLE_PREVENT,
-#     )
-# }
-# CAPABILITY_TO_SWITCHES: dict[Capability | str, switch.SmartThingsSwitchEntityDescription] = {
-#     Capability.SAMSUNG_CE_WASHER_BUBBLE_SOAK: switch.SmartThingsSwitchEntityDescription(
-#         key=Capability.SAMSUNG_CE_WASHER_BUBBLE_SOAK,
-#         translation_key="bubble_soak",
-#         status_attribute=Attribute.STATUS,
-#     ),
-#     Capability.SWITCH: switch.SmartThingsSwitchEntityDescription(
-#         key=Capability.SWITCH,
-#         status_attribute=Attribute.SWITCH,
-#         component_translation_key={
-#             "icemaker": "ice_maker",
-#         },
-#     ),
-# }
-
-
-# @dataclass(frozen=True, kw_only=True)
-# class SamsungOcfSwitchEntityDescription(SwitchEntityDescription):
-#     """Describe a SmartThings switch entity."""
-
-#     status_attribute: Attribute
-#     command: Command
 
 @dataclass
 class SmartThingsCustomSwitch:
