@@ -163,11 +163,6 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
-        _LOGGER.warning(f"****STARTING: {self.entity_id}|{self.is_on}")
-    
-    # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
-    #     """Get the value of a device attribute."""
-        # return self._internal_state[capability][attribute].value
     
     def get_attribute_data(self, capability: Capability, attribute: Attribute) -> Any:
         """Get the value of a device attribute."""
@@ -176,11 +171,8 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
-        _LOGGER.warning(f"**DATA: {self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)}, {self.commands.page}")
         if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
             output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)
-            _LOGGER.warning(f"**Output: {output}")
-            _LOGGER.warning(f"**STATE: {self.commands.on}, {self.commands.on in output}")
             if self.commands.on in output:
                 return True
             elif self.commands.off in output:
@@ -196,20 +188,16 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"**Turn off START: {self.state}|{self.commands.set_off}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,
             self.commands.set_off
         )
-        _LOGGER.warning(f"**Turn off END: {self.state}")
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"**Turn on START: {self.state}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,
             self.commands.set_on
         )
-        _LOGGER.warning(f"**Turn on END: {self.state}")
