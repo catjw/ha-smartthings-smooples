@@ -135,7 +135,7 @@ async def async_setup_entry(
                         capability=Capability.EXECUTE,
                         commands=SmartThingsExecuteCommands(
                             'Light',
-                            '/mode/vs/0', 
+                            'mode/vs/0', 
                             'x.com.samsung.da.options',
                             'Light_On',
                             'Light_Off',
@@ -177,7 +177,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     def is_on(self) -> bool:
         """Return true if the switch is on."""
         _LOGGER.warning(f"**DATA: {self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)}, {self.commands.page}")
-        if self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href'] == self.commands.page:
+        if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
             output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)['payload'][self.commands.section]
             _LOGGER.warning(f"**Output: {output}")
             _LOGGER.warning(f"**STATE: {self.commands.on}, {self.commands.on in output}")
@@ -196,7 +196,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"**Turn off START: {self.state}")
+        _LOGGER.warning(f"**Turn off START: {self.state}|{self.commands.set_off}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,

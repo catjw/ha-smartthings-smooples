@@ -74,8 +74,8 @@ async def test_switch_turn_on_off(
 @pytest.mark.parametrize(
     ("action", "argument"),
     [
-        (SERVICE_TURN_ON, ['/mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
-        (SERVICE_TURN_OFF, ['/mode/vs/0', {'x.com.samsung.da.options': ['Light_Off']}]),
+        (SERVICE_TURN_ON, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
+        (SERVICE_TURN_OFF, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_Off']}]),
     ],
 )
 async def test_command_switch_turn_on_off(
