@@ -180,19 +180,16 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
+        _LOGGER.warning(f"***IS ON: {self._attr_is_on}")
         if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
-            match self._attr_is_on:
-                case True:
-                    return True
-                case False:
-                    return False
-                case _:
-                    asyncio.create_task(self.async_turn_on())
-                    self._attr_is_on = True
+            if self._attr_is_on == None:
+                asyncio.create_task(self.async_turn_on())
+                self._attr_is_on = True
             return self._attr_is_on
     
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
+        _LOGGER.warning(f"***TURN OFF: {self.state}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,
@@ -202,6 +199,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
+        _LOGGER.warning(f"***TURN ON: {self.state}")
         await self.execute_device_command(
             self.switch_capability,
             self.entity_description.command,
