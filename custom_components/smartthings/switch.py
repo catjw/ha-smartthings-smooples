@@ -180,32 +180,24 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
-        _LOGGER.warning(f"***IS ON 1: {self._attr_is_on}")
         return self._attr_is_on
     
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"***TURN OFF 1: {self.state}")
         if self._attr_is_on in [None, True]:
-            
             await self.execute_device_command(
                 self.switch_capability,
                 self.entity_description.command,
                 self.commands.set_off
             )
-            _LOGGER.warning(f"***TURN OFF 2: {self.state}")
             self._attr_is_on = False
-        _LOGGER.warning(f"***TURN OFF 3: {self.state}")
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        _LOGGER.warning(f"***TURN ON 1: {self.state}")
         if self._attr_is_on in [None, False]:
             await self.execute_device_command(
                 self.switch_capability,
                 self.entity_description.command,
                 self.commands.set_on
             )
-            _LOGGER.warning(f"***TURN ON 2: {self.state}")
             self._attr_is_on = True
-        _LOGGER.warning(f"***TURN ON 3: {self.state}")

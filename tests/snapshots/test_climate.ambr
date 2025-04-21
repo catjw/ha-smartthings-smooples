@@ -320,7 +320,7 @@
       ]),
       'max_temp': 35,
       'min_temp': 7,
-      'preset_mode': None,
+      'preset_mode': 'off',
       'preset_modes': list([
         'off',
         'sleep',
@@ -442,7 +442,7 @@
       ]),
       'max_temp': 35,
       'min_temp': 7,
-      'preset_mode': None,
+      'preset_mode': 'off',
       'preset_modes': list([
         'off',
         'sleep',
