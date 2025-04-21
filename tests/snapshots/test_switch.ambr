@@ -563,7 +563,7 @@
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_light-entry]
+# name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_displayentry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -576,7 +576,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.ac_office_granit_light',
+    'entity_id': 'switch.ac_office_granit_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -588,7 +588,7 @@
     }),
     'original_device_class': None,
     'original_icon': None,
-    'original_name': 'Light',
+    'original_name': 'Display',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
@@ -597,20 +597,20 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_light-state]
+# name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'AC Office Granit Light',
+      'friendly_name': 'AC Office Granit Display',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.ac_office_granit_light',
+    'entity_id': 'switch.ac_office_granit_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_light-entry]
+# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_display-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -623,7 +623,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.office_airfree_light',
+    'entity_id': 'switch.office_airfree_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -635,7 +635,7 @@
     }),
     'original_device_class': None,
     'original_icon': 'mdi:lightbulb',
-    'original_name': 'Light',
+    'original_name': 'Display',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
@@ -644,21 +644,21 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_light-state]
+# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Office AirFree Light',
+      'friendly_name': 'Office AirFree Display',
       'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.office_airfree_light',
+    'entity_id': 'switch.office_airfree_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_100001][switch.corridor_a_c_light-entry]
+# name: test_all_entities[da_ac_rac_100001][switch.corridor_a_c_display-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -671,7 +671,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.corridor_a_c_light',
+    'entity_id': 'switch.corridor_a_c_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -683,7 +683,7 @@
     }),
     'original_device_class': None,
     'original_icon': 'mdi:lightbulb',
-    'original_name': 'Light',
+    'original_name': 'Display',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
@@ -692,21 +692,21 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_100001][switch.corridor_a_c_light-state]
+# name: test_all_entities[da_ac_rac_100001][switch.corridor_a_c_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Corridor A/C Light',
+      'friendly_name': 'Corridor A/C Display',
       'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.corridor_a_c_light',
+    'entity_id': 'switch.corridor_a_c_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_light-entry]
+# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_display-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -719,7 +719,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.aire_dormitorio_principal_light',
+    'entity_id': 'switch.aire_dormitorio_principal_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -731,7 +731,7 @@
     }),
     'original_device_class': None,
     'original_icon': 'mdi:lightbulb',
-    'original_name': 'Light',
+    'original_name': 'Display',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
@@ -740,14 +740,14 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_light-state]
+# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Aire Dormitorio Principal Light',
+      'friendly_name': 'Aire Dormitorio Principal Display',
       'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.aire_dormitorio_principal_light',
+    'entity_id': 'switch.aire_dormitorio_principal_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
@@ -1039,7 +1039,7 @@
     'state': 'on',
   })
 # ---
-# name: test_all_entities[da_sac_ehs_000001_sub][switch.eco_heating_system_light-entry]
+# name: test_all_entities[da_sac_ehs_000001_sub][switch.eco_heating_system_display-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -1052,7 +1052,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.eco_heating_system_light',
+    'entity_id': 'switch.eco_heating_system_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -1064,7 +1064,7 @@
     }),
     'original_device_class': None,
     'original_icon': 'mdi:lightbulb',
-    'original_name': 'Light',
+    'original_name': 'Display',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'supported_features': 0,
@@ -1073,14 +1073,14 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_sac_ehs_000001_sub][switch.eco_heating_system_light-state]
+# name: test_all_entities[da_sac_ehs_000001_sub][switch.eco_heating_system_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Eco Heating System Light',
+      'friendly_name': 'Eco Heating System Display',
       'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.eco_heating_system_light',
+    'entity_id': 'switch.eco_heating_system_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,

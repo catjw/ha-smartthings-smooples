@@ -137,8 +137,8 @@ async def async_setup_entry(
                             'Light',
                             'mode/vs/0', 
                             'x.com.samsung.da.options',
-                            'Light_On',
                             'Light_Off',
+                            'Light_On',
                         ),
                     )
                 )
