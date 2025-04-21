@@ -152,6 +152,7 @@
       'max_temp': 35,
       'min_temp': 7,
       'preset_modes': list([
+        'off',
         'windFree',
       ]),
       'swing_modes': None,
@@ -213,6 +214,7 @@
       'min_temp': 7,
       'preset_mode': 'windFree',
       'preset_modes': list([
+        'off',
         'windFree',
       ]),
       'supported_features': <ClimateEntityFeature: 441>,
@@ -251,7 +253,13 @@
       'max_temp': 35,
       'min_temp': 7,
       'preset_modes': list([
+        'off',
+        'sleep',
+        'quiet',
+        'smart',
+        'speed',
         'windFree',
+        'windFreeSleep',
       ]),
       'swing_modes': list([
         'off',
@@ -314,7 +322,13 @@
       'min_temp': 7,
       'preset_mode': None,
       'preset_modes': list([
+        'off',
+        'sleep',
+        'quiet',
+        'smart',
+        'speed',
         'windFree',
+        'windFreeSleep',
       ]),
       'supported_features': <ClimateEntityFeature: 441>,
       'swing_mode': 'off',
@@ -358,7 +372,13 @@
       'max_temp': 35,
       'min_temp': 7,
       'preset_modes': list([
+        'off',
+        'sleep',
+        'quiet',
+        'smart',
+        'speed',
         'windFree',
+        'windFreeSleep',
       ]),
       'swing_modes': list([
         'off',
@@ -424,7 +444,13 @@
       'min_temp': 7,
       'preset_mode': None,
       'preset_modes': list([
+        'off',
+        'sleep',
+        'quiet',
+        'smart',
+        'speed',
         'windFree',
+        'windFreeSleep',
       ]),
       'supported_features': <ClimateEntityFeature: 441>,
       'swing_mode': 'off',
