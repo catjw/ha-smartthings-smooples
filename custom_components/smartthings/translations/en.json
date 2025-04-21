@@ -484,6 +484,9 @@
       },
       "spi_mode": {
         "name": "SPI Mode"
+      },
+      "volume": {
+        "name": "Sound"
       }
     }
   },

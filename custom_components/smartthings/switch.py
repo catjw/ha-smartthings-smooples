@@ -49,6 +49,14 @@ CUSTOM_CAPABILITY_TO_SWITCH = {
             off_value="off",
             icon="mdi:shimmer",
         ),
+    Capability.AUDIO_VOLUME: SmartThingsCustomSwitch(
+        attribute=Attribute.VOLUME,
+        command=Command.SET_VOLUME,
+        translation="volume",
+        on_value=100,
+        off_value=0,
+        icon="mdi:volume-high",
+    )
 }
 
 
@@ -80,22 +88,6 @@ async def async_setup_entry(
     entry_data = entry.runtime_data
     entities: list[SmartThingsEntity] = []
     for device in entry_data.devices.values():
-        for capability in CUSTOM_CAPABILITY_TO_SWITCH:
-            if capability in device.status[MAIN]:
-                entities.append(
-                    switch.SmartThingsCommandSwitch(
-                        entry_data.client,
-                        device,
-                        switch.SmartThingsCommandSwitchEntityDescription(
-                            key=capability,
-                            translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
-                            status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
-                            command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
-                            icon=CUSTOM_CAPABILITY_TO_SWITCH[capability].icon,
-                        ),
-                        capability
-                    )
-                )
         media_player = all(
                 capability in device.status[MAIN]
                 for capability in switch.MEDIA_PLAYER_CAPABILITIES
@@ -110,6 +102,22 @@ async def async_setup_entry(
             and not appliance
             and device.status[MAIN][Capability.OCF][Attribute.MANUFACTURER_NAME].value == "Samsung Electronics"
         ):
+            for capability in CUSTOM_CAPABILITY_TO_SWITCH:
+                if capability in device.status[MAIN]:
+                    entities.append(
+                        switch.SmartThingsCommandSwitch(
+                            entry_data.client,
+                            device,
+                            switch.SmartThingsCommandSwitchEntityDescription(
+                                key=capability,
+                                translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
+                                status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
+                                command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
+                                icon=CUSTOM_CAPABILITY_TO_SWITCH[capability].icon,
+                            ),
+                            capability
+                        )
+                    )
             model = device.status[MAIN][Capability.OCF][Attribute.MODEL_NUMBER].value.split("|")[0]
             if (
                 Capability.EXECUTE
