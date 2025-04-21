@@ -1,5 +1,6 @@
 """Support for switches through the SmartThings cloud API."""
 
+import asyncio
 import logging
 
 from dataclasses import dataclass
@@ -176,24 +177,30 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Get the value of a device attribute."""
         return self._internal_state[capability][attribute].data
     
-    @property
-    def is_on(self) -> bool:
-        """Return true if the switch is on."""
-        if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
-            output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)
-            if self.commands.on in output:
-                return True
-            elif self.commands.off in output:
-                return False
-        return False
+    # @property
+    # def is_on(self) -> bool:
+    #     """Return true if the switch is on."""
+    #     if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
+    #         output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)
+    #         if self.commands.on in output:
+    #             return True
+    #         elif self.commands.off in output:
+    #             return False
+    #     return False
     
     @property
     def state(self):
         """Return the state."""
-        if (is_on := self.is_on) is None:
-            return None
-        return STATE_ON if is_on else STATE_OFF
-
+        match self._attr_is_on:
+            case True:
+                return STATE_ON
+            case False:
+                return STATE_OFF
+            case _:
+                asyncio.create_task(self.async_turn_on())
+                self._attr_is_on = True
+                return STATE_ON
+            
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
         await self.execute_device_command(
@@ -201,6 +208,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
             self.entity_description.command,
             self.commands.set_off
         )
+        self._attr_is_on = False
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
@@ -209,3 +217,4 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
             self.entity_description.command,
             self.commands.set_on
         )
+        self._attr_is_on = True
