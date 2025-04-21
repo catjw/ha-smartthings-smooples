@@ -29,8 +29,8 @@ class SmartThingsCustomSwitch:
     attribute: Attribute
     command: str
     translation: str
-    on_value: str
-    off_value: str
+    on_value: str | int
+    off_value: str | int
     icon: str = None
 
 
@@ -177,30 +177,20 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Get the value of a device attribute."""
         return self._internal_state[capability][attribute].data
     
-    # @property
-    # def is_on(self) -> bool:
-    #     """Return true if the switch is on."""
-    #     if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
-    #         output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)
-    #         if self.commands.on in output:
-    #             return True
-    #         elif self.commands.off in output:
-    #             return False
-    #     return False
-    
     @property
-    def state(self):
-        """Return the state."""
-        match self._attr_is_on:
-            case True:
-                return STATE_ON
-            case False:
-                return STATE_OFF
-            case _:
-                asyncio.create_task(self.async_turn_on())
-                self._attr_is_on = True
-                return STATE_ON
-            
+    def is_on(self) -> bool:
+        """Return true if the switch is on."""
+        if self.commands.page in self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href']:
+            match self._attr_is_on:
+                case True:
+                    return True
+                case False:
+                    return False
+                case _:
+                    asyncio.create_task(self.async_turn_on())
+                    self._attr_is_on = True
+            return self._attr_is_on
+    
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
         await self.execute_device_command(

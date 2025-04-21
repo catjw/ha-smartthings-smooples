@@ -703,7 +703,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': 'on',
+    'state': 'off',
   })
 # ---
 # name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_display-entry]
@@ -751,7 +751,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': 'on',
+    'state': 'off',
   })
 # ---
 # name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_spi_mode-entry]
@@ -1084,7 +1084,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': 'on',
+    'state': 'unknown',
   })
 # ---
 # name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_sound-entry]
