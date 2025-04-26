@@ -7,6 +7,10 @@ on:
         required: false
         default: 'generic'
         type: string
+      core_version:
+        description: The version of Home Assistant core to use
+        required: false
+        type: string
     # outputs:
     #   version:
     #     description: The version found for the requested type
@@ -59,6 +63,7 @@ jobs:
           
           core_version=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
           echo "    CORE_VERSION: ${core_version}"
+          echo "  2 CORE_VERSION: ${{ inputs.core_version }}"
           
           today="$(date --utc '+%Y-%m-%d')"
           midnight_timestamp="$(date --utc +%s --date=$today)"
@@ -72,4 +77,8 @@ jobs:
           commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
           calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
           version="${base_ver}${calver_dev}"
+          echo "     CALVER_DATE: ${calver_date}"
+          echo "        BASE_VER: ${base_ver}"
+          echo "    COMMIT_COUNT: ${commit_count}"
+          echo "      CALVER_DEV: ${calver_dev}"
           echo "         VERSION: ${version}"
