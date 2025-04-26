@@ -1,17 +1,4 @@
-
-homeassistant==2025.4.3
-pysmartthings==3.0.4
-pytest-homeassistant-custom-component==0.13.235
-hass_nabucasa
-hassil
-home-assistant-intents
-mutagen
-webrtcvad
-aiohttp_cors
-numpy
-colorlog==6.7.0
-asyncio
-annotatedyaml
+pytest-homeassistant-custom-component==0.13.236
 
 aresponses
 asynctest

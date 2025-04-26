@@ -47,9 +47,27 @@ jobs:
         run: |
           version=$(echo "$REF" | awk -F"/" '{print $NF}' )
 
-          echo $REF
-          echo $version
-          echo $GITHUB_EVENT_INPUTS_VERSION
-          echo $GITHUB_EVENT_INPUTS_STABLE
-          echo $INPUTS_TYPE
-          echo $EVENT_NAME
+          echo "             REF: ${REF}"
+          echo "         VERSION: ${version}"
+          echo "GH_EVENT_VERSION: ${GITHUB_EVENT_INPUTS_VERSION}"
+          echo " GH_EVENT_STABLE: ${GITHUB_EVENT_INPUTS_STABLE}"
+          echo "     INPUTS_TYPE: ${INPUTS_TYPE}"
+          echo "      EVENT_NAME: ${EVENT_NAME}"
+          echo "      GITHUB_SHA: ${{github.sha}}"
+          
+          core_version=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
+          echo "    CORE_VERSION: ${core_version}"
+          
+          today="$(date --utc '+%Y-%m-%d')"
+          midnight_timestamp="$(date --utc +%s --date=$today)"
+          calver_date="$(date --utc --date=$today '+%Y.%m')"
+          if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null)
+          then
+          base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
+          else
+          base_ver="${calver_date}.0"
+          fi
+          commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
+          calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
+          version="${base_ver}${calver_dev}"
+          echo "         VERSION: ${version}"
