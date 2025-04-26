@@ -1,0 +1,55 @@
+name: Debugging
+on:
+  workflow_call:
+    inputs:
+      type:
+        description: The type of target to check against (core, supervisor, plugin, generic)
+        required: false
+        default: 'generic'
+        type: string
+    # outputs:
+    #   version:
+    #     description: The version found for the requested type
+    #     value: ${{ steps.version.outputs.version }}
+    #   stable:
+    #     description: Returns "true" if it is a stable build, else "false"
+    #     value: ${{ steps.version.outputs.stable }}
+    #   channel:
+    #     description: Returns suggested channel.
+    #     value: ${{ steps.channel.outputs.channel }}
+    #   publish:
+    #     description: Returns "true" if it should be published, else "false"
+    #     value: ${{ steps.publish.outputs.publish }}
+  workflow_dispatch:
+
+    
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        env:
+          INPUTS_TYPE: ${{ inputs.type }}
+        run: |
+          if [[ -z "$INPUTS_TYPE" ]];then
+            echo "::error::Missing required key 'type' input!"
+            exit 1
+          fi
+      - shell: bash
+        id: version
+        env:
+          GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
+          GITHUB_EVENT_INPUTS_STABLE: ${{ github.event.inputs.stable }}
+          INPUTS_TYPE: ${{ inputs.type }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+          UV_SYSTEM_PYTHON: "true"
+        run: |
+          version=$(echo "$REF" | awk -F"/" '{print $NF}' )
+
+          echo $REF
+          echo $version
+          echo $GITHUB_EVENT_INPUTS_VERSION
+          echo $GITHUB_EVENT_INPUTS_STABLE
+          echo $INPUTS_TYPE
+          echo $EVENT_NAME
