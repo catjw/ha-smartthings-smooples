@@ -38,4 +38,4 @@ runs:
 
         echo "VERSION: ${base_ver}.${commit_count}"
 
-        echo "version=${base_ver}-${commit_count}" >> "$GITHUB_OUTPUT"
+        echo "version=${base_ver}_${commit_count}" >> "$GITHUB_OUTPUT"
