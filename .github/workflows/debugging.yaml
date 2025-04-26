@@ -5,13 +5,9 @@ on:
 
     
 jobs:
-  one:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Check out repository"
-        uses: "actions/checkout@v4"
-      - name: "Get version"
-        id: "version"
-        uses: "catjw/ha-smartthings-smooples/.github/workflows/helpers/version.yaml@dev"
-        with:
-          core_version: "2023.9.0"
+  check_out:
+    uses: "actions/checkout@v4"
+  version:
+    uses: "catjw/ha-smartthings-smooples/.github/workflows/helpers/version.yaml@dev"
+    with:
+      core_version: "2023.9.0"
