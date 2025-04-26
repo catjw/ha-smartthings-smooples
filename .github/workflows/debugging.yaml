@@ -67,18 +67,18 @@ jobs:
 
           if [[ "${CORE_VERSION}" == "" ]]; then
             CORE_VERSION=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
+            echo $CORE_VERSION
           fi
 
           if [[ "${version}" == "master"]]; then
-            base_ver=$(echo $CORE_VERSION)
+            base_ver=$CORE_VERSION
           elif [[ "${version}" == "dev" ]]; then
             today="$(date --utc '+%Y-%m-%d')"
             calver_date="$(date --utc --date=$today '+%Y.%m')"
-            if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null)
-            then
-            base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
+            if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
+              base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
             else
-            base_ver="${calver_date}.0"
+              base_ver="${calver_date}.0"
             fi
           fi
           commit_count=$(git tag --list "${base_ver}*" | wc -l)
