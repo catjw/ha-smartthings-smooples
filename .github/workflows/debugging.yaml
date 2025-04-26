@@ -31,60 +31,10 @@ jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code from GitHub
+      - name: "Check out repository"
         uses: "actions/checkout@v4"
-      - shell: bash
-        env:
-          INPUTS_TYPE: ${{ inputs.type }}
-        run: |
-          if [[ -z "$INPUTS_TYPE" ]];then
-            echo "::error::Missing required key 'type' input!"
-            exit 1
-          fi
-      - shell: bash
-        id: version
-        env:
-          GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
-          GITHUB_EVENT_INPUTS_STABLE: ${{ github.event.inputs.stable }}
-          INPUTS_TYPE: ${{ inputs.type }}
-          EVENT_NAME: ${{ github.event_name }}
-          REF: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
-          UV_SYSTEM_PYTHON: "true"
-          CORE_VERSION: ${{ inputs.core_version }}
-        run: |
-          version=$(echo "$REF" | awk -F"/" '{print $NF}' )
-
-          echo "             REF: ${REF}"
-          echo "         VERSION: ${version}"
-          echo "GH_EVENT_VERSION: ${GITHUB_EVENT_INPUTS_VERSION}"
-          echo " GH_EVENT_STABLE: ${GITHUB_EVENT_INPUTS_STABLE}"
-          echo "     INPUTS_TYPE: ${INPUTS_TYPE}"
-          echo "      EVENT_NAME: ${EVENT_NAME}"
-          echo "      GITHUB_SHA: ${{github.sha}}"
-          
-          core_version=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-          echo "    CORE_VERSION: ${core_version}"
-
-          if [[ "${CORE_VERSION}" == "" ]]; then
-            CORE_VERSION=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-            echo $CORE_VERSION
-          fi
-
-          if [[ "${version}" == "master" ]]; then
-            base_ver=$CORE_VERSION
-          elif [[ "${version}" == "dev" ]]; then
-            today="$(date --utc '+%Y-%m-%d')"
-            calver_date="$(date --utc --date=$today '+%Y.%m')"
-            if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
-              base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
-            else
-              base_ver="${calver_date}.0"
-            fi        
-            commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
-            calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
-            base_ver="${base_ver}${calver_dev}"
-          fi
-          commit_count=$(git tag --list "${base_ver}*" | wc -l)
-          new_ver=$((commit_count + 1))
-
-          echo "${base_ver}.${new_ver}"
+      - name: "Get version"
+        id: "version"
+        uses: "catjw/ha-smartthings-smooples/.github/workflows/helpers/version.yaml@dev"
+        with:
+          core_version: "2023.9.0"
