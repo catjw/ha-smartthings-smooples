@@ -64,7 +64,6 @@ jobs:
           
           core_version=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
           echo "    CORE_VERSION: ${core_version}"
-          echo "  2 CORE_VERSION: ${{ inputs.core_version }}"
 
           if [[ "${CORE_VERSION}" == "" ]]; then
             CORE_VERSION=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
