@@ -82,3 +82,11 @@ jobs:
           echo "    COMMIT_COUNT: ${commit_count}"
           echo "      CALVER_DEV: ${calver_dev}"
           echo "         VERSION: ${version}"
+
+            last_tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null || echo "")
+            if [[ -n "$last_tag" ]]; then
+            commit_count_since_last_tag=$(git rev-list --count ${last_tag}..HEAD --first-parent --branches=master)
+            else
+            commit_count_since_last_tag=$(git rev-list --count HEAD --first-parent --branches=master)
+            fi
+            echo "COMMITS_SINCE_LAST_TAG: ${commit_count_since_last_tag}"
