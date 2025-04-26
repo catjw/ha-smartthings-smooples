@@ -8,6 +8,6 @@ mutagen
 webrtcvad
 aiohttp_cors
 numpy
-colorlog==6.7.0
+colorlog==6.9.0
 asyncio
 annotatedyaml

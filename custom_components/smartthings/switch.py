@@ -43,13 +43,13 @@ CUSTOM_CAPABILITY_TO_SWITCH = {
         off_value="off",
     ),
     Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
-            attribute=Attribute.AUTO_CLEANING_MODE,
-            command=Command.SET_AUTO_CLEANING_MODE,
-            translation="auto_cleaning_mode",
-            on_value="on",
-            off_value="off",
-            icon="mdi:shimmer",
-        ),
+        attribute=Attribute.AUTO_CLEANING_MODE,
+        command=Command.SET_AUTO_CLEANING_MODE,
+        translation="auto_cleaning_mode",
+        on_value="on",
+        off_value="off",
+        icon="mdi:shimmer",
+    ),
     Capability.AUDIO_VOLUME: SmartThingsCustomSwitch(
         attribute=Attribute.VOLUME,
         command=Command.SET_VOLUME,
@@ -74,12 +74,12 @@ class SmartThingsExecuteCommands:
     def set_off(self) -> list[str, dict[str, list[str]]]:
         """Set off command."""
         return [self.page, {self.section: [self.off]}]
-
+    
     @property
     def set_on(self) -> list[str, dict[str, list[str]]]:
         """Set on command."""
         return [self.page, {self.section: [self.on]}]
-
+    
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -178,7 +178,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     def get_attribute_data(self, capability: Capability, attribute: Attribute) -> Any:
         """Get the value of a device attribute."""
         return self._internal_state[capability][attribute].data
-
+    
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
