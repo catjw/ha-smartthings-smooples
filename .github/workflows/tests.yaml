@@ -18,8 +18,6 @@ jobs:
     steps:
       - name: Check out code from GitHub
         uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
       - name: Setup Python
         uses: "actions/setup-python@v4.7.0"
         with:
@@ -28,7 +26,8 @@ jobs:
         run: |
           set -e
           python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.test.txt -r requirements.txt
+          python3 -m pip install -r requirements.txt
+          python3 -m pip install -r requirements.test.txt
       - name: Run tests
         env:
           PYTEST: true
