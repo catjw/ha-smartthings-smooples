@@ -74,8 +74,8 @@ async def test_switch_turn_on_off(
 @pytest.mark.parametrize(
     ("action", "argument"),
     [
-        (SERVICE_TURN_ON, ['/mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
-        (SERVICE_TURN_OFF, ['/mode/vs/0', {'x.com.samsung.da.options': ['Light_Off']}]),
+        (SERVICE_TURN_ON, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_Off']}]),
+        (SERVICE_TURN_OFF, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
     ],
 )
 async def test_command_switch_turn_on_off(
@@ -91,10 +91,10 @@ async def test_command_switch_turn_on_off(
     await hass.services.async_call(
         SWITCH_DOMAIN,
         action,
-        {ATTR_ENTITY_ID: "switch.office_airfree_light"},
+        {ATTR_ENTITY_ID: "switch.office_airfree_display"},
         blocking=True,
     )
-    devices.execute_device_command.assert_called_once_with(
+    devices.execute_device_command.assert_called_with(
         "c76d6f38-1b7f-13dd-37b5-db18d5272783",
         Capability.EXECUTE,
         Command.EXECUTE,

@@ -1,5 +1,6 @@
 """Support for switches through the SmartThings cloud API."""
 
+import asyncio
 import logging
 
 from dataclasses import dataclass
@@ -28,8 +29,8 @@ class SmartThingsCustomSwitch:
     attribute: Attribute
     command: str
     translation: str
-    on_value: str
-    off_value: str
+    on_value: str | int
+    off_value: str | int
     icon: str = None
 
 
@@ -42,13 +43,21 @@ CUSTOM_CAPABILITY_TO_SWITCH = {
         off_value="off",
     ),
     Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
-        attribute=Attribute.AUTO_CLEANING_MODE,
-        command=Command.SET_AUTO_CLEANING_MODE,
-        translation="auto_cleaning_mode",
-        on_value="on",
-        off_value="off",
-        icon="mdi:shimmer",
-    ),
+            attribute=Attribute.AUTO_CLEANING_MODE,
+            command=Command.SET_AUTO_CLEANING_MODE,
+            translation="auto_cleaning_mode",
+            on_value="on",
+            off_value="off",
+            icon="mdi:shimmer",
+        ),
+    Capability.AUDIO_VOLUME: SmartThingsCustomSwitch(
+        attribute=Attribute.VOLUME,
+        command=Command.SET_VOLUME,
+        translation="volume",
+        on_value=100,
+        off_value=0,
+        icon="mdi:volume-high",
+    )
 }
 
 
@@ -82,22 +91,6 @@ async def async_setup_entry(
     entry_data = entry.runtime_data
     entities: list[SmartThingsEntity] = []
     for device in entry_data.devices.values():
-        for capability in CUSTOM_CAPABILITY_TO_SWITCH:
-            if capability in device.status[MAIN]:
-                entities.append(
-                    switch.SmartThingsCommandSwitch(
-                        entry_data.client,
-                        device,
-                        switch.SmartThingsCommandSwitchEntityDescription(
-                            key=capability,
-                            translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
-                            status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
-                            command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
-                            icon=CUSTOM_CAPABILITY_TO_SWITCH[capability].icon,
-                        ),
-                        capability
-                    )
-                )
         media_player = all(
             capability in device.status[MAIN]
             for capability in switch.MEDIA_PLAYER_CAPABILITIES
@@ -112,6 +105,22 @@ async def async_setup_entry(
             and not appliance
             and device.status[MAIN][Capability.OCF][Attribute.MANUFACTURER_NAME].value == "Samsung Electronics"
         ):
+            for capability in CUSTOM_CAPABILITY_TO_SWITCH:
+                if capability in device.status[MAIN]:
+                    entities.append(
+                        switch.SmartThingsCommandSwitch(
+                            entry_data.client,
+                            device,
+                            switch.SmartThingsCommandSwitchEntityDescription(
+                                key=capability,
+                                translation_key=CUSTOM_CAPABILITY_TO_SWITCH[capability].translation,
+                                status_attribute=CUSTOM_CAPABILITY_TO_SWITCH[capability].attribute,
+                                command=CUSTOM_CAPABILITY_TO_SWITCH[capability].command,
+                                icon=CUSTOM_CAPABILITY_TO_SWITCH[capability].icon,
+                            ),
+                            capability
+                        )
+                    )
             model = device.status[MAIN][Capability.OCF][Attribute.MODEL_NUMBER].value.split("|")[0]
             if (
                 Capability.EXECUTE
@@ -137,10 +146,10 @@ async def async_setup_entry(
                         capability=Capability.EXECUTE,
                         commands=SmartThingsExecuteCommands(
                             'Light',
-                            '/mode/vs/0',
+                            'mode/vs/0', 
                             'x.com.samsung.da.options',
-                            'Light_On',
                             'Light_Off',
+                            'Light_On',
                         ),
                     )
                 )
@@ -165,11 +174,7 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
         """Initialize the switch."""
         super().__init__(client, device, entity_description, capability, component)
         self.commands = commands
-
-    # def get_attribute_value(self, capability: Capability, attribute: Attribute) -> Any:
-    #     """Get the value of a device attribute."""
-        # return self._internal_state[capability][attribute].value
-
+    
     def get_attribute_data(self, capability: Capability, attribute: Attribute) -> Any:
         """Get the value of a device attribute."""
         return self._internal_state[capability][attribute].data
@@ -177,35 +182,24 @@ class SamsungOcfSwitch(switch.SmartThingsCommandSwitch, SmartThingsExecuteComman
     @property
     def is_on(self) -> bool:
         """Return true if the switch is on."""
-        _LOGGER.warning(f"**DATA: {self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)}, {self.commands.page}")
-        if self.get_attribute_data(self.switch_capability, self.entity_description.status_attribute)['href'] == self.commands.page:
-            output = self.get_attribute_value(self.switch_capability, self.entity_description.status_attribute)['payload'][self.commands.section]
-            _LOGGER.warning(f"**Output: {output}")
-            if self.commands.on in output:
-                return True
-            elif self.commands.off in output:
-                return False
-        return False
-
-    @property
-    def state(self):
-        """Return the state."""
-        if (is_on := self.is_on) is None:
-            return None
-        return STATE_ON if is_on else STATE_OFF
-
+        return self._attr_is_on
+    
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        await self.execute_device_command(
-            self.switch_capability,
-            self.entity_description.command,
-            self.commands.set_off
-        )
+        if self._attr_is_on in [None, True]:
+            await self.execute_device_command(
+                self.switch_capability,
+                self.entity_description.command,
+                self.commands.set_off
+            )
+            self._attr_is_on = False
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch off."""
-        await self.execute_device_command(
-            self.switch_capability,
-            self.entity_description.command,
-            self.commands.set_on
-        )
+        if self._attr_is_on in [None, False]:
+            await self.execute_device_command(
+                self.switch_capability,
+                self.entity_description.command,
+                self.commands.set_on
+            )
+            self._attr_is_on = True
