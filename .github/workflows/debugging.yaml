@@ -70,7 +70,7 @@ jobs:
             echo $CORE_VERSION
           fi
 
-          if [[ "${version}" == "master"]]; then
+          if [[ "${version}" == "master" ]]; then
             base_ver=$CORE_VERSION
           elif [[ "${version}" == "dev" ]]; then
             today="$(date --utc '+%Y-%m-%d')"
