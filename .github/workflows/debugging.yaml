@@ -82,6 +82,6 @@ jobs:
             fi
           fi
           commit_count=$(git tag --list "${base_ver}*" | wc -l)
-          new_ver=$commit_count + 1
+          new_ver=$((commit_count + 1))
 
           echo "${base_ver}.${new_ver}"
