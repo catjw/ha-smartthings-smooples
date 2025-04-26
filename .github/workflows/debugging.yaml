@@ -27,6 +27,8 @@ jobs:
   one:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code from GitHub
+        uses: "actions/checkout@v4"
       - shell: bash
         env:
           INPUTS_TYPE: ${{ inputs.type }}
