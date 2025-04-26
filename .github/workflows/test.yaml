@@ -8,4 +8,6 @@ on:
 
 jobs:
   debugging:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/debugging.yaml@dev
+    uses: "catjw/ha-smartthings-smooples/.github/workflows/helpers/version.yaml@dev"
+    with:
+      core_version: "2023.9.0"
