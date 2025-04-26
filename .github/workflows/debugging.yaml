@@ -79,7 +79,10 @@ jobs:
               base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
             else
               base_ver="${calver_date}.0"
-            fi
+            fi        
+            commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
+            calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
+            base_ver="${base_ver}${calver_dev}"
           fi
           commit_count=$(git tag --list "${base_ver}*" | wc -l)
           new_ver=$((commit_count + 1))
