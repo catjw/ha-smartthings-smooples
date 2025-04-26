@@ -1,29 +1,6 @@
 name: Debugging
 on:
   workflow_call:
-    inputs:
-      type:
-        description: The type of target to check against (core, supervisor, plugin, generic)
-        required: false
-        default: 'generic'
-        type: string
-      core_version:
-        description: The version of Home Assistant core to use
-        required: false
-        type: string
-    # outputs:
-    #   version:
-    #     description: The version found for the requested type
-    #     value: ${{ steps.version.outputs.version }}
-    #   stable:
-    #     description: Returns "true" if it is a stable build, else "false"
-    #     value: ${{ steps.version.outputs.stable }}
-    #   channel:
-    #     description: Returns suggested channel.
-    #     value: ${{ steps.channel.outputs.channel }}
-    #   publish:
-    #     description: Returns "true" if it should be published, else "false"
-    #     value: ${{ steps.publish.outputs.publish }}
   workflow_dispatch:
 
     
@@ -35,6 +12,6 @@ jobs:
         uses: "actions/checkout@v4"
       - name: "Get version"
         id: "version"
-        uses: "catjw/ha-smartthings-smooples/.github/workflows/helpers/version.yaml@dev"
+        uses: "catjw/ha-smartthings-smooples/.github/actions/version.yaml@dev"
         with:
           core_version: "2023.9.0"
