@@ -1,0 +1,13 @@
+homeassistant==2025.4.4
+pysmartthings==3.0.5
+
+hass_nabucasa
+hassil
+home-assistant-intents
+mutagen
+webrtcvad
+aiohttp_cors
+numpy
+colorlog==6.9.0
+asyncio
+annotatedyaml

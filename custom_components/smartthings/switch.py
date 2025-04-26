@@ -36,20 +36,20 @@ class SmartThingsCustomSwitch:
 
 CUSTOM_CAPABILITY_TO_SWITCH = {
     Capability.CUSTOM_SPI_MODE: SmartThingsCustomSwitch(
-            attribute=Attribute.SPI_MODE,
-            command=Command.SET_SPI_MODE,
-            translation="spi_mode",
-            on_value="on",
-            off_value="off",
-        ),
+        attribute=Attribute.SPI_MODE,
+        command=Command.SET_SPI_MODE,
+        translation="spi_mode",
+        on_value="on",
+        off_value="off",
+    ),
     Capability.CUSTOM_AUTO_CLEANING_MODE: SmartThingsCustomSwitch(
-            attribute=Attribute.AUTO_CLEANING_MODE,
-            command=Command.SET_AUTO_CLEANING_MODE,
-            translation="auto_cleaning_mode",
-            on_value="on",
-            off_value="off",
-            icon="mdi:shimmer",
-        ),
+        attribute=Attribute.AUTO_CLEANING_MODE,
+        command=Command.SET_AUTO_CLEANING_MODE,
+        translation="auto_cleaning_mode",
+        on_value="on",
+        off_value="off",
+        icon="mdi:shimmer",
+    ),
     Capability.AUDIO_VOLUME: SmartThingsCustomSwitch(
         attribute=Attribute.VOLUME,
         command=Command.SET_VOLUME,
@@ -74,10 +74,12 @@ class SmartThingsExecuteCommands:
     def set_off(self) -> list[str, dict[str, list[str]]]:
         """Set off command."""
         return [self.page, {self.section: [self.off]}]
+    
     @property
     def set_on(self) -> list[str, dict[str, list[str]]]:
         """Set on command."""
         return [self.page, {self.section: [self.on]}]
+    
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -90,9 +92,9 @@ async def async_setup_entry(
     entities: list[SmartThingsEntity] = []
     for device in entry_data.devices.values():
         media_player = all(
-                capability in device.status[MAIN]
-                for capability in switch.MEDIA_PLAYER_CAPABILITIES
-            )
+            capability in device.status[MAIN]
+            for capability in switch.MEDIA_PLAYER_CAPABILITIES
+        )
         appliance = (
             device.device.components[MAIN].manufacturer_category
             in switch.INVALID_SWITCH_CATEGORIES

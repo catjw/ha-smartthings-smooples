@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
+    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
   hassfest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
     needs: [tests]
@@ -16,7 +16,7 @@ jobs:
     uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
     needs: [tests]
   update-hacs-manifest:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
+    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@dev
     needs: [hassfest, hacs-validate]
   # release:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
