@@ -404,7 +404,48 @@
       "refresh": {},
       "execute": {
         "data": {
-          "value": null
+          "data": {
+            "href": "mode/vs/0"
+          },
+          "value": {                                        
+            "payload": {                           
+              "rt": [                              
+                "x.com.samsung.da.mode"            
+              ],                                   
+              "if": [                              
+                "oic.if.baseline",                 
+                "oic.if.a"                         
+              ],                                   
+              "x.com.samsung.da.supportedModes": [ 
+                "Cool",                            
+                "Dry",                             
+                "Wind",                            
+                "Auto",                            
+                "Heat"                             
+              ],                                   
+              "x.com.samsung.da.modes": [          
+                "Cool"                             
+              ],                                   
+              "x.com.samsung.da.options": [        
+                "Sleep_0",                         
+                "ArtificialWorking_Off",           
+                "ComfortAICooling_Off",            
+                "AiTempChanged_Off",               
+                "AiTemp_220",                      
+                "OutdoorTemp_62",                  
+                "CoolCapa_20",                     
+                "WarmCapa_22",                     
+                "Light_On",                        
+                "Volume_100",                      
+                "OptionCode_35880",                
+                "ExtendOptionCode_2573",           
+                "RacInfo_None",                    
+                "UpdateAllow_NotAllowed",          
+                "DurationOn_0",                    
+                "WelcomeCoolingState_Off"          
+              ]                                    
+            }                                      
+          }
         }
       },
       "samsungce.selfCheck": {

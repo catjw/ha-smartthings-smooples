@@ -1,16 +1,11 @@
 """Support for number entities through the SmartThings cloud API."""
 
-from __future__ import annotations
-
-from pysmartthings import Attribute, Capability, Command, SmartThings
-
-from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from homeassistant.components.smartthings import FullDevice, SmartThingsConfigEntry, number
-from homeassistant.components.smartthings.const import MAIN
-from homeassistant.components.smartthings.entity import SmartThingsEntity
+from homeassistant.components.smartthings import number
+
+from . import SmartThingsConfigEntry
 
 
 async def async_setup_entry(
@@ -20,4 +15,3 @@ async def async_setup_entry(
 ) -> None:
     """Add number entities for a config entry."""
     await number.async_setup_entry(hass, entry, async_add_entities)
-    

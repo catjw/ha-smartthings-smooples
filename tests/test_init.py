@@ -36,9 +36,9 @@ from homeassistant.const import EVENT_HOMEASSISTANT_STOP
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
-from . import setup_integration, trigger_update
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
+
+from . import setup_integration, trigger_update
 
 
 async def test_devices(

@@ -1,0 +1,41 @@
+name: 'version'
+description: 'GitHub action helper: version'
+
+outputs:
+  version:
+    description: The version found for the requested type
+    value: ${{ steps.version.outputs.version }}
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: version
+      env:
+        GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
+        GITHUB_EVENT_INPUTS_STABLE: ${{ github.event.inputs.stable }}
+        INPUTS_TYPE: ${{ inputs.type }}
+        EVENT_NAME: ${{ github.event_name }}
+        REF: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+        UV_SYSTEM_PYTHON: "true"
+      run: |
+        version=$(echo "$REF" | awk -F"/" '{print $NF}' )
+
+        if [[ "${version}" == "master" ]]; then
+          base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
+        elif [[ "${version}" == "dev" ]]; then
+          today="$(date --utc '+%Y-%m-%d')"
+          calver_date="$(date --utc --date=$today '+%Y.%m')"
+          if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
+            base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
+          else
+            base_ver="${calver_date}.0"
+          fi        
+          commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
+          calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
+          base_ver="${base_ver}${calver_dev}"
+        fi
+        commit_count=$(git tag --list "${base_ver}*" | wc -l)
+
+        echo "VERSION: ${base_ver}.${commit_count}"
+
+        echo "version=${base_ver}_${commit_count}" >> "$GITHUB_OUTPUT"

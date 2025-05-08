@@ -1,6 +1,6 @@
 """Test for the SmartThings climate platform."""
 
-from typing import Any
+from typing import Any, Callable
 from unittest.mock import AsyncMock, call
 
 from pysmartthings import Attribute, Capability, Command, Status
@@ -41,14 +41,14 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
 from . import (
     set_attribute_value,
     setup_integration,
     snapshot_smartthings_entities,
     trigger_update,
 )
-
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(
@@ -709,7 +709,7 @@ async def test_thermostat_set_temperature(
     mock_config_entry: MockConfigEntry,
     state: str,
     data: dict[str, Any],
-    calls: list[call],
+    calls: list[Callable],
 ) -> None:
     """Test thermostat set temperature."""
     set_attribute_value(

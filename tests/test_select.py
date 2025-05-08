@@ -17,14 +17,14 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_registry as er
 
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
 from . import (
     set_attribute_value,
     setup_integration,
     snapshot_smartthings_entities,
     trigger_update,
 )
-
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(

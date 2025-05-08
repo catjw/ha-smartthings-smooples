@@ -23,9 +23,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er, issue_registry as ir
 from homeassistant.setup import async_setup_component
 
-from . import setup_integration, snapshot_smartthings_entities, trigger_update
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+from . import setup_integration, snapshot_smartthings_entities, trigger_update
 
 
 async def test_all_entities(
@@ -70,37 +70,37 @@ async def test_switch_turn_on_off(
     )
 
 
-# @pytest.mark.parametrize("device_fixture", ["da_wm_wd_000001"])
-# @pytest.mark.parametrize(
-#     ("action", "argument"),
-#     [
-#         (SERVICE_TURN_ON, "on"),
-#         (SERVICE_TURN_OFF, "off"),
-#     ],
-# )
-# async def test_command_switch_turn_on_off(
-#     hass: HomeAssistant,
-#     devices: AsyncMock,
-#     mock_config_entry: MockConfigEntry,
-#     action: str,
-#     argument: str,
-# ) -> None:
-#     """Test switch turn on and off command."""
-#     await setup_integration(hass, mock_config_entry)
+@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000003"])
+@pytest.mark.parametrize(
+    ("action", "argument"),
+    [
+        (SERVICE_TURN_ON, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_Off']}]),
+        (SERVICE_TURN_OFF, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
+    ],
+)
+async def test_command_switch_turn_on_off(
+    hass: HomeAssistant,
+    devices: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+    action: str,
+    argument: str,
+) -> None:
+    """Test switch turn on and off command."""
+    await setup_integration(hass, mock_config_entry)
 
-#     await hass.services.async_call(
-#         SWITCH_DOMAIN,
-#         action,
-#         {ATTR_ENTITY_ID: "switch.dryer_wrinkle_prevent"},
-#         blocking=True,
-#     )
-#     devices.execute_device_command.assert_called_once_with(
-#         "02f7256e-8353-5bdd-547f-bd5b1647e01b",
-#         Capability.CUSTOM_DRYER_WRINKLE_PREVENT,
-#         Command.SET_DRYER_WRINKLE_PREVENT,
-#         MAIN,
-#         argument,
-#     )
+    await hass.services.async_call(
+        SWITCH_DOMAIN,
+        action,
+        {ATTR_ENTITY_ID: "switch.office_airfree_display"},
+        blocking=True,
+    )
+    devices.execute_device_command.assert_called_with(
+        "c76d6f38-1b7f-13dd-37b5-db18d5272783",
+        Capability.EXECUTE,
+        Command.EXECUTE,
+        MAIN,
+        argument,
+    )
 
 
 @pytest.mark.parametrize("device_fixture", ["c2c_arlo_pro_3_switch"])
