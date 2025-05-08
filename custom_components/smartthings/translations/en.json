@@ -48,6 +48,9 @@
       "cooler_door": {
         "name": "Cooler door"
       },
+      "cool_select_plus_door": {
+        "name": "CoolSelect+ door"
+      },
       "remote_control": {
         "name": "Remote control"
       },
@@ -110,6 +113,26 @@
           "run": "Running",
           "pause": "Paused",
           "stop": "Stopped"
+        }
+      },
+      "detergent_amount": {
+        "name": "Detergent dispense amount",
+        "state": {
+          "none": "Off",
+          "less": "Less",
+          "standard": "Standard",
+          "extra": "Extra",
+          "custom": "Custom"
+        }
+      },
+      "flexible_detergent_amount": {
+        "name": "Flexible compartment dispense amount",
+        "state": {
+          "none": "Off",
+          "less": "Less",
+          "standard": "Standard",
+          "extra": "Extra",
+          "custom": "Custom"
         }
       }
     },
@@ -464,6 +487,9 @@
           "wrinkle_prevent": "Wrinkle prevention",
           "freeze_protection": "Freeze protection"
         }
+      },
+      "water_consumption": {
+        "name": "Water consumption"
       }
     },
     "switch": {
@@ -487,6 +513,9 @@
       },
       "volume": {
         "name": "Sound"
+      },
+      "sabbath_mode": {
+        "name": "Sabbath mode"
       }
     }
   },
