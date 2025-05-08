@@ -5,6 +5,7 @@ import time
 from unittest.mock import AsyncMock, patch
 
 from pysmartthings import (
+    DeviceHealth,
     DeviceResponse,
     DeviceStatus,
     LocationResponse,
@@ -12,13 +13,20 @@ from pysmartthings import (
     SceneResponse,
     Subscription,
 )
+from pysmartthings.models import HealthStatus
 import pytest
 
 from homeassistant.components.application_credentials import (
     ClientCredential,
     async_import_client_credential,
 )
-
+from homeassistant.components.smartthings import CONF_INSTALLED_APP_ID
+from homeassistant.components.smartthings.const import (
+    CONF_LOCATION_ID,
+    CONF_REFRESH_TOKEN,
+    DOMAIN,
+    SCOPES,
+)
 from homeassistant.const import CONF_ACCESS_TOKEN, CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
@@ -28,7 +36,6 @@ from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotEx
 from syrupy.assertion import SnapshotAssertion
 
 from custom_components.smartthings import smartthings
-
 
 pytest_plugins = ["pytest_homeassistant_custom_component"]
 
@@ -88,16 +95,19 @@ def mock_smartthings() -> Generator[AsyncMock]:
     ):
         client = mock_client.return_value
         client.get_scenes.return_value = SceneResponse.from_json(
-            load_fixture("scenes.json", smartthings.const.DOMAIN)
+            load_fixture("scenes.json", DOMAIN)
         ).items
         client.get_locations.return_value = LocationResponse.from_json(
-            load_fixture("locations.json", smartthings.const.DOMAIN)
+            load_fixture("locations.json", DOMAIN)
         ).items
         client.get_rooms.return_value = RoomResponse.from_json(
-            load_fixture("rooms.json", smartthings.const.DOMAIN)
+            load_fixture("rooms.json", DOMAIN)
         ).items
         client.create_subscription.return_value = Subscription.from_json(
-            load_fixture("subscription.json", smartthings.const.DOMAIN)
+            load_fixture("subscription.json", DOMAIN)
+        )
+        client.get_device_health.return_value = DeviceHealth.from_json(
+            load_fixture("device_health.json", DOMAIN)
         )
         yield client
 
@@ -120,13 +130,17 @@ def mock_smartthings() -> Generator[AsyncMock]:
         "centralite",
         "da_ref_normal_000001",
         "da_ref_normal_01011",
+        "da_ref_normal_01001",
         "vd_network_audio_002s",
+        "vd_network_audio_003s",
         "vd_sensor_light_2023",
         "iphone",
         "da_sac_ehs_000001_sub",
         "da_wm_dw_000001",
         "da_wm_wd_000001",
         "da_wm_wd_000001_1",
+        "da_wm_wm_01011",
+        "da_wm_wm_100001",
         "da_wm_wm_000001",
         "da_wm_wm_000001_1",
         "da_wm_sc_000001",
@@ -173,33 +187,40 @@ def device_fixture(
 def devices(mock_smartthings: AsyncMock, device_fixture: str) -> Generator[AsyncMock]:
     """Return a specific device."""
     mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
-        load_fixture(f"devices/{device_fixture}.json", smartthings.const.DOMAIN)
+        load_fixture(f"devices/{device_fixture}.json", DOMAIN)
     ).items
     mock_smartthings.get_device_status.return_value = DeviceStatus.from_json(
-        load_fixture(f"device_status/{device_fixture}.json", smartthings.const.DOMAIN)
+        load_fixture(f"device_status/{device_fixture}.json", DOMAIN)
     ).components
     return mock_smartthings
+
+
+@pytest.fixture
+def unavailable_device(devices: AsyncMock) -> AsyncMock:
+    """Mock an unavailable device."""
+    devices.get_device_health.return_value.state = HealthStatus.OFFLINE
+    return devices
 
 
 @pytest.fixture
 def mock_config_entry(expires_at: int) -> MockConfigEntry:
     """Mock a config entry."""
     return MockConfigEntry(
-        domain=smartthings.const.DOMAIN,
+        domain=DOMAIN,
         title="My home",
         unique_id="397678e5-9995-4a39-9d9f-ae6ba310236c",
         data={
-            "auth_implementation": smartthings.const.DOMAIN,
+            "auth_implementation": DOMAIN,
             "token": {
                 "access_token": "mock-access-token",
                 "refresh_token": "mock-refresh-token",
                 "expires_at": expires_at,
-                "scope": " ".join(smartthings.const.SCOPES),
+                "scope": " ".join(SCOPES),
                 "access_tier": 0,
                 "installed_app_id": "5aaaa925-2be1-4e40-b257-e4ef59083324",
             },
-            smartthings.const.CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
-            smartthings.const.CONF_INSTALLED_APP_ID: "123",
+            CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
+            CONF_INSTALLED_APP_ID: "123",
         },
         version=3,
         minor_version=2,
@@ -210,16 +231,16 @@ def mock_config_entry(expires_at: int) -> MockConfigEntry:
 def mock_old_config_entry() -> MockConfigEntry:
     """Mock the old config entry."""
     return MockConfigEntry(
-        domain=smartthings.const.DOMAIN,
+        domain=DOMAIN,
         title="My home",
         unique_id="appid123-2be1-4e40-b257-e4ef59083324_397678e5-9995-4a39-9d9f-ae6ba310236c",
         data={
             CONF_ACCESS_TOKEN: "mock-access-token",
-            smartthings.const.CONF_REFRESH_TOKEN: "mock-refresh-token",
+            CONF_REFRESH_TOKEN: "mock-refresh-token",
             CONF_CLIENT_ID: "CLIENT_ID",
             CONF_CLIENT_SECRET: "CLIENT_SECRET",
-            smartthings.const.CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
-            smartthings.const.CONF_INSTALLED_APP_ID: "123aa123-2be1-4e40-b257-e4ef59083324",
+            CONF_LOCATION_ID: "397678e5-9995-4a39-9d9f-ae6ba310236c",
+            CONF_INSTALLED_APP_ID: "123aa123-2be1-4e40-b257-e4ef59083324",
         },
         version=2,
     )

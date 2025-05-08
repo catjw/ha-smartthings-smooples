@@ -3,6 +3,7 @@
 from unittest.mock import AsyncMock
 
 from pysmartthings import Attribute, Capability, Command
+from pysmartthings.models import HealthStatus
 import pytest
 from syrupy import SnapshotAssertion
 
@@ -17,6 +18,7 @@ from homeassistant.const import (
     SERVICE_TURN_ON,
     STATE_OFF,
     STATE_ON,
+    STATE_UNAVAILABLE,
     Platform,
 )
 from homeassistant.core import HomeAssistant
@@ -25,7 +27,12 @@ from homeassistant.setup import async_setup_component
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from . import setup_integration, snapshot_smartthings_entities, trigger_update
+from . import (
+    setup_integration,
+    snapshot_smartthings_entities,
+    trigger_health_update,
+    trigger_update,
+)
 
 
 async def test_all_entities(
@@ -78,7 +85,7 @@ async def test_switch_turn_on_off(
         (SERVICE_TURN_OFF, ['mode/vs/0', {'x.com.samsung.da.options': ['Light_On']}]),
     ],
 )
-async def test_command_switch_turn_on_off(
+async def test_command_ac_switch_turn_on_off(
     hass: HomeAssistant,
     devices: AsyncMock,
     mock_config_entry: MockConfigEntry,
@@ -98,6 +105,39 @@ async def test_command_switch_turn_on_off(
         "c76d6f38-1b7f-13dd-37b5-db18d5272783",
         Capability.EXECUTE,
         Command.EXECUTE,
+        MAIN,
+        argument,
+    )
+
+
+@pytest.mark.parametrize("device_fixture", ["da_wm_wd_000001"])
+@pytest.mark.parametrize(
+    ("action", "argument"),
+    [
+        (SERVICE_TURN_ON, "on"),
+        (SERVICE_TURN_OFF, "off"),
+    ],
+)
+async def test_command_switch_turn_on_off(
+    hass: HomeAssistant,
+    devices: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+    action: str,
+    argument: str,
+) -> None:
+    """Test switch turn on and off command."""
+    await setup_integration(hass, mock_config_entry)
+
+    await hass.services.async_call(
+        SWITCH_DOMAIN,
+        action,
+        {ATTR_ENTITY_ID: "switch.dryer_wrinkle_prevent"},
+        blocking=True,
+    )
+    devices.execute_device_command.assert_called_once_with(
+        "02f7256e-8353-5bdd-547f-bd5b1647e01b",
+        Capability.CUSTOM_DRYER_WRINKLE_PREVENT,
+        Command.SET_DRYER_WRINKLE_PREVENT,
         MAIN,
         argument,
     )
@@ -377,3 +417,38 @@ async def test_create_issue(
     # Assert the issue is no longer present
     assert not issue_registry.async_get_issue(DOMAIN, issue_id)
     assert len(issue_registry.issues) == 0
+
+
+@pytest.mark.parametrize("device_fixture", ["c2c_arlo_pro_3_switch"])
+async def test_availability(
+    hass: HomeAssistant,
+    devices: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+) -> None:
+    """Test availability."""
+    await setup_integration(hass, mock_config_entry)
+
+    assert hass.states.get("switch.2nd_floor_hallway").state == STATE_ON
+
+    await trigger_health_update(
+        hass, devices, "10e06a70-ee7d-4832-85e9-a0a06a7a05bd", HealthStatus.OFFLINE
+    )
+
+    assert hass.states.get("switch.2nd_floor_hallway").state == STATE_UNAVAILABLE
+
+    await trigger_health_update(
+        hass, devices, "10e06a70-ee7d-4832-85e9-a0a06a7a05bd", HealthStatus.ONLINE
+    )
+
+    assert hass.states.get("switch.2nd_floor_hallway").state == STATE_ON
+
+
+@pytest.mark.parametrize("device_fixture", ["c2c_arlo_pro_3_switch"])
+async def test_availability_at_start(
+    hass: HomeAssistant,
+    unavailable_device: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+) -> None:
+    """Test unavailable at boot."""
+    await setup_integration(hass, mock_config_entry)
+    assert hass.states.get("switch.2nd_floor_hallway").state == STATE_UNAVAILABLE

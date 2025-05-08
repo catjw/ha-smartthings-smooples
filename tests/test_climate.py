@@ -1,9 +1,11 @@
 """Test for the SmartThings climate platform."""
 
-from typing import Any, Callable
+from typing import Any
+# from typing import Any, Callable
 from unittest.mock import AsyncMock, call
 
 from pysmartthings import Attribute, Capability, Command, Status
+from pysmartthings.models import HealthStatus
 import pytest
 from syrupy import SnapshotAssertion
 
@@ -36,6 +38,8 @@ from homeassistant.const import (
     ATTR_TEMPERATURE,
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
+    STATE_OFF,
+    STATE_UNAVAILABLE,
     Platform,
 )
 from homeassistant.core import HomeAssistant
@@ -47,6 +51,7 @@ from . import (
     set_attribute_value,
     setup_integration,
     snapshot_smartthings_entities,
+    trigger_health_update,
     trigger_update,
 )
 
@@ -709,7 +714,7 @@ async def test_thermostat_set_temperature(
     mock_config_entry: MockConfigEntry,
     state: str,
     data: dict[str, Any],
-    calls: list[Callable],
+    calls: list[call],
 ) -> None:
     """Test thermostat set temperature."""
     set_attribute_value(
@@ -857,3 +862,38 @@ async def test_thermostat_state_attributes_update(
     )
 
     assert hass.states.get("climate.asd").attributes[state_attribute] == expected_value
+
+
+@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
+async def test_availability(
+    hass: HomeAssistant,
+    devices: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+) -> None:
+    """Test availability."""
+    await setup_integration(hass, mock_config_entry)
+
+    assert hass.states.get("climate.ac_office_granit").state == STATE_OFF
+
+    await trigger_health_update(
+        hass, devices, "96a5ef74-5832-a84b-f1f7-ca799957065d", HealthStatus.OFFLINE
+    )
+
+    assert hass.states.get("climate.ac_office_granit").state == STATE_UNAVAILABLE
+
+    await trigger_health_update(
+        hass, devices, "96a5ef74-5832-a84b-f1f7-ca799957065d", HealthStatus.ONLINE
+    )
+
+    assert hass.states.get("climate.ac_office_granit").state == STATE_OFF
+
+
+@pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])
+async def test_availability_at_start(
+    hass: HomeAssistant,
+    unavailable_device: AsyncMock,
+    mock_config_entry: MockConfigEntry,
+) -> None:
+    """Test unavailable at boot."""
+    await setup_integration(hass, mock_config_entry)
+    assert hass.states.get("climate.ac_office_granit").state == STATE_UNAVAILABLE
