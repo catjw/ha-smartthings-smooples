@@ -7,8 +7,6 @@ on:
       - dev
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
   tests:
     uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
   hassfest:
