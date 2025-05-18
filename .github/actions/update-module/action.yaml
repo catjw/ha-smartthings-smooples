@@ -28,5 +28,4 @@ runs:
     - name: Push changes
       shell: bash
       run: |
-        git push
         git push origin ${{ inputs.version }}
