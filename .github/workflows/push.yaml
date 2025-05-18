@@ -30,6 +30,7 @@ jobs:
       - name: Get latest Version
         id: latest
         run: |
+          set -e
           python3 -m pip list --outdated
           latest=$(python3 -m pip list --outdated | grep ^homessistant | awk '{print $3}')
           echo "version=${latest}" >> $GITHUB_OUTPUT
