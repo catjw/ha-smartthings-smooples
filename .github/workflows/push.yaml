@@ -31,13 +31,13 @@ jobs:
         id: latest
         run: |
           set -e
-          latest=$(python3 -m pip list --outdates | grep ^homessistant | awk '{print $3}')
+          latest=$(python3 -m pip list --outdated | grep ^homessistant | awk '{print $3}')
           echo "version=${latest}" >> "$GITHUB_OUTPUT"
       - name: Compare versions
         id: compare
         run: |
-          echo "${{ steps.current.outputs.* }}"
-          echo "${{ steps.latest.outputs.* }}"
+          echo "${{ join(steps.current.outputs.*, '\n') }}"
+          echo "${{ join(steps.latest.outputs.*, '\n') }}"
           if [ "${{ steps.current.outputs.version }}" != "${{ steps.latest.outputs.version }}" ]; then
             echo "Versions are different"
             echo "version=${{ steps.latest.outputs.version }}" >> "$GITHUB_OUTPUT"
