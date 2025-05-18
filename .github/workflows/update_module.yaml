@@ -1,0 +1,12 @@
+name: Update module
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  update-module:
+    name: "Update module"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out repository"
+        uses: "actions/checkout@v4"

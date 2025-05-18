@@ -34,13 +34,18 @@ jobs:
         run: |
           echo "${{ join(steps.current.outputs.*, '\n') }}"
           echo "${{ join(steps.latest.outputs.*, '\n') }}"
-          if [ "${{ steps.current.outputs.version }}" != "${{ steps.latest.outputs.version }}" ]; then
+          if [ "${{ steps.current.outputs.current }}" != "${{ steps.latest.outputs.latest }}" ]; then
             echo "Versions are different"
-            echo "version=${{ steps.latest.outputs.version }}" >> "$GITHUB_OUTPUT"
-          else
+            echo "version=${{ steps.latest.outputs.latest }}" >> "$GITHUB_OUTPUT"
+            echo "release_changed=true" >> $GITHUB_OUTPUT
+            else
             echo "Versions are the same"
-            echo "version=${{ steps.current.outputs.version }}" >> "$GITHUB_OUTPUT"
+            echo "version=${{ steps.current.outputs.current }}" >> "$GITHUB_OUTPUT"
+            echo "release_changed=false" >> $GITHUB_OUTPUT
           fi
+      - name: Call to update code
+        if: steps.compare.outputs.release_changed == 'true'
+        uses: catjw/ha-smartthings-smooples/.github/workflows/update_module.yaml
   # tests:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
   # hassfest:
