@@ -19,11 +19,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull origin/${{ github.ref }}
+          git pull origin/${{ github.ref_name }}
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Update to ${{ github.ref }}"
+          git commit -m "Update to ${{ github.ref_name }}"
       - name: Push changes
         run: |
           git push origin automation
