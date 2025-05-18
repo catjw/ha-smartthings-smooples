@@ -1,0 +1,28 @@
+name: Automatically create / update pull request
+
+# run this workflow only on new feature branches, not when they're merged to main
+on:
+  push:
+    branches-ignore:
+      - master
+      - dev
+      - automation
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: automation
+      - name: Merge branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge origin/${{ github.ref }}
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Update to ${{ github.ref }}"
+      - name: Push changes
+        run: |
+          git push origin automation
