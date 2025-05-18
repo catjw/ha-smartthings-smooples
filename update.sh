@@ -30,9 +30,9 @@ function update_requirement() {
     if [[ $requirement == homeassistant ]]; then
         remote_version=$HA_VERSION
     fi
-    if [[ $requirement == pytest-homeassistant-custom-component ]]; then
-        remote_version=$(pip list -o | grep pytest-homeassistant-custom-component | awk '{print $3}')
-    fi
+    # if [[ $requirement == pytest-homeassistant-custom-component ]]; then
+    #     remote_version=$(pip list -o | grep pytest-homeassistant-custom-component | awk '{print $3}')
+    # fi
     if [ "$local_version" == "$remote_version" ]; then
         echo "No update needed for $requirement"
         return
