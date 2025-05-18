@@ -14,12 +14,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: automation
-          persist-credentials: false
       - name: merge
         uses: mtanzi/action-automerge@v1
         id: merge
         with:
-          github_token: ${{ github.token }}
+          github_token: ${{ secrets.GH_TOKEN }}
           source: ${{ github.ref }}
           target: 'automation'
           webhook_url: #if present add the Slack webhook
