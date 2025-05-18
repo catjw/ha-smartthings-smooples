@@ -45,3 +45,4 @@ jobs:
         uses: ./.github/actions/update-module
         with:
           version: ${{ steps.compare.outputs.version }}
+          token: ${{ secrets.GH_TOKEN }}

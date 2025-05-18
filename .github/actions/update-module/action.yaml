@@ -4,6 +4,9 @@ inputs:
   version:
     description: The version to update to
     required: true
+  token:
+    description: The token to use for authentication
+    required: true
 runs:
   using: composite
   steps:
@@ -11,7 +14,7 @@ runs:
       uses: "actions/checkout@v4"
       with:
         ref: master
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ inputs.token }}
     - shell: bash
       run: |
         git config user.name "github-actions[bot]"

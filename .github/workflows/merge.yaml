@@ -2,12 +2,12 @@ name: Automatically create / update pull request
 
 # run this workflow only on new feature branches, not when they're merged to main
 on:
-  push:
+  create:
     branches-ignore:
       - master
       - dev
       - automation
-  pull_request:
+  push:
     branches-ignore:
       - master
       - dev
