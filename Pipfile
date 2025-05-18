@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 homeassistant = "==2025.5.1"
 pysmartthings = "==3.2.1"
-pytest-homeassistant-custom-component = "==0.13.244"
+pytest-homeassistant-custom-component = "*"
 hass-nabucasa = "*"
 hassil = "*"
 home-assistant-intents = "*"

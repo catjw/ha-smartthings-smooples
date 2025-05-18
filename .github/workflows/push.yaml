@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
+    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
   hassfest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
     needs: [tests]

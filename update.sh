@@ -5,12 +5,12 @@ RAW_URL="https://raw.githubusercontent.com/home-assistant/core/refs/tags/${HA_VE
 TEST_URL="${RAW_URL}/tests/components/smartthings"
 MAIN_URL="${RAW_URL}/homeassistant/components/smartthings"
 
-YQ_VERSION="v4.44.3"
-if ! yq --version 2>/dev/null | grep -q "${YQ_VERSION}"; then
-    echo "Installing yq version ${YQ_VERSION}" >&2
-    wget -qO ~/.local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
-    chmod a+x ~/.local/bin/yq
-fi
+# YQ_VERSION="v4.44.3"
+# if ! yq --version 2>/dev/null | grep -q "${YQ_VERSION}"; then
+#     echo "Installing yq version ${YQ_VERSION}" >&2
+#     wget -qO ~/.local/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64
+#     chmod a+x ~/.local/bin/yq
+# fi
 
 function update_requirement() {
     requirement=$(echo $1 | cut -d'=' -f1)
@@ -30,9 +30,9 @@ function update_requirement() {
     if [[ $requirement == homeassistant ]]; then
         remote_version=$HA_VERSION
     fi
-    if [[ $requirement == pytest-homeassistant-custom-component ]]; then
-        remote_version=$(pip list -o | grep pytest-homeassistant-custom-component | awk '{print $3}')
-    fi
+    # if [[ $requirement == pytest-homeassistant-custom-component ]]; then
+    #     remote_version=$(pip list -o | grep pytest-homeassistant-custom-component | awk '{print $3}')
+    # fi
     if [ "$local_version" == "$remote_version" ]; then
         echo "No update needed for $requirement"
         return
@@ -93,7 +93,7 @@ echo "-------------------------------------------"
 for requirement in $(cat requirements*.txt | grep "=="); do
     update_requirement $requirement
 done
-pipenv update
+# pipenv update
 
 echo "-------------------------------------------"
 echo "Updating translations"
