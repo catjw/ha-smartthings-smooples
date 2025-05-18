@@ -45,7 +45,7 @@ jobs:
           fi
       - name: Call to update code
         if: steps.compare.outputs.release_changed == 'true'
-        uses: catjw/ha-smartthings-smooples/.github/workflows/update_module.yaml
+        uses: ./.github/actions/update-module
   # tests:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
   # hassfest:
