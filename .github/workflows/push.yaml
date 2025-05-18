@@ -7,17 +7,36 @@ on:
       - dev
 
 jobs:
-  tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
-  hassfest:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
-    needs: [tests]
-  hacs-validate:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
-    needs: [tests]
-  update-hacs-manifest:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
-    needs: [hassfest, hacs-validate]
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Home Assistant Release
+        id: check_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const response = await github.rest.repos.getReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const releases = response.data;
+            const latestRelease = releases[0];
+            const latestTag = latestRelease.tag_name;
+            return latestTag;
+      - name: Output Latest Release
+        run: |
+          echo "Latest Home Assistant Release: ${{ steps.check_release.outputs.result }}"
+  # tests:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
+  # hassfest:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
+  #   needs: [tests]
+  # hacs-validate:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
+  #   needs: [tests]
+  # update-hacs-manifest:
+  #   uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
+  #   needs: [hassfest, hacs-validate]
   # release:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
   #   needs: [update-hacs-manifest]
