@@ -14,18 +14,9 @@ runs:
     - shell: bash
       run: |
         git checkout -b ${{ inputs.version }}
-    - name: Run update script
-      shell: bash
-      run: |
         ./update.sh ${{ inputs.version }}
-    - name: Commit changes
-      shell: bash
-      run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
         git commit -m "Update to ${{ inputs.version }}"
-    - name: Push changes
-      shell: bash
-      run: |
         git push origin ${{ inputs.version }}
