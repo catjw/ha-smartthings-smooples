@@ -31,8 +31,7 @@ jobs:
         id: latest
         run: |
           set -e
-          python3 -m pip list --outdated
-          latest=$(python3 -m pip list --outdated | grep ^homessistant | awk '{print $3}')
+          latest=$(python3 -m pip index versions homeassistant | grep LATEST | awk '{print $2}')
           echo "version=${latest}" >> $GITHUB_OUTPUT
       - name: Compare versions
         id: compare
