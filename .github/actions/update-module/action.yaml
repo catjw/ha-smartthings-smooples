@@ -16,8 +16,6 @@ runs:
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git checkout -b ${{ inputs.version }}
-        git add .
-        git commit -m "Create ${{ inputs.version }}"
         git push origin ${{ inputs.version }}
         ./update.sh ${{ inputs.version }}
         git add .
