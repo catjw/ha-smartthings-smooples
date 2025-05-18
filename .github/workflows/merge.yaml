@@ -15,15 +15,11 @@ jobs:
         with:
           ref: automation
           persist-credentials: false
-      - name: Merge branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git merge ${{ github.ref_name }}
-      - name: Commit changes
-        run: |
-          git add .
-          git commit -m "Update to ${{ github.ref_name }}"
-      - name: Push changes
-        run: |
-          git push origin automation
+      - name: merge
+        uses: mtanzi/action-automerge@v1
+        id: merge
+        with:
+          github_token: ${{ github.token }}
+          source: ${{ github.ref }}
+          target: 'automation'
+          webhook_url: #if present add the Slack webhook
