@@ -1,6 +1,7 @@
 name: Update module
 
 runs:
+  using: composite
   steps:
     - name: "Check out repository"
       uses: "actions/checkout@v4"
