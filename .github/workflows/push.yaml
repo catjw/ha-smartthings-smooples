@@ -30,7 +30,7 @@ jobs:
       - name: Get latest Version
         id: latest
         run: |
-          set -e
+          python3 -m pip index versions homeassistant | grep LATEST | awk '{print $2}'
           latest=$(python3 -m pip index versions homeassistant | grep LATEST | awk '{print $2}')
           echo "version=${latest}" >> $GITHUB_OUTPUT
       - name: Compare versions
