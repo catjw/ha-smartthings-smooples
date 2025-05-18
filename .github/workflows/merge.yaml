@@ -7,6 +7,11 @@ on:
       - master
       - dev
       - automation
+  pull_request:
+    branches-ignore:
+      - master
+      - dev
+      - automation
 jobs:
   create_pr:
     runs-on: ubuntu-latest
