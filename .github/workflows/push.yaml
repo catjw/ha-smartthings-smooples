@@ -9,56 +9,17 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    outputs:
-      current: ${{ steps.current.outputs.current }}
-      latest: ${{ steps.latest.outputs.latest }}
-    steps:
-      - name: "Check out repository"
-        uses: "actions/checkout@v4"
-      - name: Get current version
-        id: current
-        run: |
-          current_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-          echo "current=${current_ver}" >> $GITHUB_OUTPUT
-      - name: Setup Python
-        uses: "actions/setup-python@v4.7.0"
-        with:
-          python-version: 3.13
-      - name: Get latest Version
-        id: latest
-        run: |
-          latest=$(python3 -m pip index versions homeassistant | grep ^homeassistant | awk -F'[()]' '{print $2}')
-          echo "latest=${latest}" >> $GITHUB_OUTPUT
-      - name: Compare versions
-        id: compare
-        run: |
-          echo "${{ join(steps.current.outputs.*, '\n') }}"
-          echo "${{ join(steps.latest.outputs.*, '\n') }}"
-          if [ "${{ steps.current.outputs.current }}" != "${{ steps.latest.outputs.latest }}" ]; then
-            echo "Versions are different"
-            echo "version=${{ steps.latest.outputs.latest }}" >> "$GITHUB_OUTPUT"
-            echo "release_changed=true" >> $GITHUB_OUTPUT
-            else
-            echo "Versions are the same"
-            echo "version=${{ steps.current.outputs.current }}" >> "$GITHUB_OUTPUT"
-            echo "release_changed=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Call to update code
-        if: steps.compare.outputs.release_changed == 'true'
-        uses: ./.github/actions/update-module
-        with:
-          version: ${{ steps.compare.outputs.version }}
-  # tests:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
-  # hassfest:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
-  #   needs: [tests]
-  # hacs-validate:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
-  #   needs: [tests]
-  # update-hacs-manifest:
-  #   uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
-  #   needs: [hassfest, hacs-validate]
+  tests:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
+  hassfest:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
+    needs: [tests]
+  hacs-validate:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
+    needs: [tests]
+  update-hacs-manifest:
+    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
+    needs: [hassfest, hacs-validate]
   # release:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
   #   needs: [update-hacs-manifest]
