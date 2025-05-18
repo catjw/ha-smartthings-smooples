@@ -12,6 +12,9 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.13"]
+    outputs:
+      current: ${{ steps.current.outputs.version }}
+      latest: ${{ steps.latest.outputs.version }}
     steps:
       - name: "Check out repository"
         uses: "actions/checkout@v4"
@@ -33,6 +36,8 @@ jobs:
       - name: Compare versions
         id: compare
         run: |
+          echo "${{ steps.current.outputs.* }}"
+          echo "${{ steps.latest.outputs.* }}"
           if [ "${{ steps.current.outputs.version }}" != "${{ steps.latest.outputs.version }}" ]; then
             echo "Versions are different"
             echo "version=${{ steps.latest.outputs.version }}" >> "$GITHUB_OUTPUT"
