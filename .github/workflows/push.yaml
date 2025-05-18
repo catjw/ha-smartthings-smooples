@@ -46,6 +46,8 @@ jobs:
       - name: Call to update code
         if: steps.compare.outputs.release_changed == 'true'
         uses: ./.github/actions/update-module
+        with:
+          version: ${{ steps.compare.outputs.version }}
   # tests:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@dev
   # hassfest:
