@@ -15,13 +15,22 @@ runs:
       with:
         ref: master
         token: ${{ inputs.token }}
-    - shell: bash
+    - name: create branch
+      shell: bash
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git checkout -b ${{ inputs.version }}
-        git push origin ${{ inputs.version }}
+    - name: run update
+      shell: bash
+      run: |
         ./update.sh ${{ inputs.version }}
+    - name: commit changes
+      shell: bash
+      run: |
         git add .
         git commit -m "Update to ${{ inputs.version }}"
+    - name: push changes
+      shell: bash
+      run: |
         git push origin ${{ inputs.version }}
