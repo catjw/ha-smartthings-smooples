@@ -13,4 +13,4 @@ runs:
         ref: master
     - shell: bash
       run: |
-        git checkout -b ${{ github.event.inputs.version }}
+        git checkout -b ${{ inputs.version }}
