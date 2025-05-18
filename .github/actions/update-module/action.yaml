@@ -17,4 +17,4 @@ runs:
     - name: Run update script
       shell: bash
       run: |
-        ./update.sh
+        ./update.sh ${{ inputs.version }}
