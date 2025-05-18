@@ -15,5 +15,6 @@ runs:
       run: |
         git checkout -b ${{ inputs.version }}
     - name: Run update script
+      shell: bash
       run: |
         ./update.sh
