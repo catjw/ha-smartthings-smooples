@@ -22,7 +22,7 @@ runs:
 
         if [[ "${version}" == "master" ]]; then
           base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-        elif [[ "${version}" == "dev" ]]; then
+        elif [[ "${version}" == "dev" || "${version}" == "integration" ]]; then
           today="$(date --utc '+%Y-%m-%d')"
           calver_date="$(date --utc --date=$today '+%Y.%m')"
           if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
