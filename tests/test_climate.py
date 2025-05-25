@@ -120,7 +120,7 @@ async def test_ac_set_hvac_mode_off(
 @pytest.mark.parametrize(
     ("hvac_mode", "argument"),
     [
-        (HVACMode.AUTO, "auto"),
+        (HVACMode.HEAT_COOL, "heat_cool"),
         (HVACMode.COOL, "cool"),
         (HVACMode.DRY, "dry"),
         (HVACMode.HEAT, "heat"),
@@ -175,7 +175,7 @@ async def test_ac_set_hvac_mode_turns_on(
         SERVICE_SET_HVAC_MODE,
         {
             ATTR_ENTITY_ID: "climate.ac_office_granit",
-            ATTR_HVAC_MODE: HVACMode.AUTO,
+            ATTR_HVAC_MODE: HVACMode.HEAT_COOL,
         },
         blocking=True,
     )
@@ -267,7 +267,7 @@ async def test_ac_set_temperature_and_hvac_mode_while_off(
         {
             ATTR_ENTITY_ID: "climate.ac_office_granit",
             ATTR_TEMPERATURE: 23,
-            ATTR_HVAC_MODE: HVACMode.AUTO,
+            ATTR_HVAC_MODE: HVACMode.HEAT_COOL,
         },
         blocking=True,
     )
@@ -317,7 +317,7 @@ async def test_ac_set_temperature_and_hvac_mode(
         {
             ATTR_ENTITY_ID: "climate.ac_office_granit",
             ATTR_TEMPERATURE: 23,
-            ATTR_HVAC_MODE: HVACMode.AUTO,
+            ATTR_HVAC_MODE: HVACMode.HEAT_COOL,
         },
         blocking=True,
     )
@@ -624,7 +624,7 @@ async def test_thermostat_set_hvac_mode(
     await hass.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
-        {ATTR_ENTITY_ID: "climate.asd", ATTR_HVAC_MODE: HVACMode.AUTO},
+        {ATTR_ENTITY_ID: "climate.asd", ATTR_HVAC_MODE: HVACMode.HEAT_COOL},
         blocking=True,
     )
     devices.execute_device_command.assert_called_once_with(
@@ -824,8 +824,8 @@ async def test_updating_humidity(
             Attribute.SUPPORTED_THERMOSTAT_MODES,
             ["rush hour", "heat"],
             ATTR_HVAC_MODES,
-            [HVACMode.AUTO],
-            [HVACMode.AUTO, HVACMode.HEAT],
+            [HVACMode.HEAT_COOL],
+            [HVACMode.HEAT_COOL, HVACMode.HEAT],
         ),
     ],
     ids=[
