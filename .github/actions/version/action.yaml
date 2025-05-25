@@ -25,8 +25,9 @@ runs:
         elif [[ "${version}" == "dev" || "${version}" == "automation" ]]; then
           today="$(date --utc '+%Y-%m-%d')"
           calver_date="$(date --utc --date=$today '+%Y.%m')"
+          ha_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
           if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
-            base_ver="$(echo $tag | awk -F. '{printf "%s.%s.%d",$1,$2,$3+1}')"
+            base_ver="$(echo $tag | awk -F. '{printf "%s.%d",$ha_ver,$4+1}')"
           else
             base_ver="${calver_date}.0"
           fi        
