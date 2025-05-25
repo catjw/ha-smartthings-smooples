@@ -19,7 +19,7 @@ runs:
         UV_SYSTEM_PYTHON: "true"
       run: |
         version=$(echo "$REF" | awk -F"/" '{print $NF}' )
-
+        echo "VERSION: ${version}"
         if [[ "${version}" == "master" ]]; then
           base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
         elif [[ "${version}" == "dev" || "${version}" == "integration" ]]; then
