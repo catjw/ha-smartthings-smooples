@@ -23,7 +23,7 @@ runs:
         base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
         if [[ "${version}" == "master" ]]; then
           if tag="$(git describe --tags --abbrev=0 --match="${base_ver}.*" 2>/dev/null)"; then 
-            final_ver="$(echo $tag | awk -F. '{printf "%s.%s.%s.%d",$1,$2,$3,$4+1}'}""
+            final_ver="$(echo $tag | awk -F. '{printf "%s.%s.%s.%d",$1,$2,$3,$4+1}')"
           else
             final_ver="${base_ver}.0"
           fi    
