@@ -26,7 +26,7 @@ runs:
           today="$(date --utc '+%Y-%m-%d')"
           calver_date="$(date --utc --date=$today '+%Y.%m')"
           ha_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-          tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*"
+          tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*")
           echo "HA: ${ha_ver}"
           echo "TAG: ${tag}"
           if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
