@@ -20,26 +20,21 @@ runs:
       run: |
         version=$(echo "$REF" | awk -F"/" '{print $NF}' )
         echo "VERSION: ${version}"
+        base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
         if [[ "${version}" == "master" ]]; then
-          base_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-        elif [[ "${version}" == "dev" || "${version}" == "automation" ]]; then
-          today="$(date --utc '+%Y-%m-%d')"
-          calver_date="$(date --utc --date=$today '+%Y.%m')"
-          ha_ver=$(grep "homeassistant" requirements.txt | awk -F"==" '{print $2}')
-          tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*")
-          echo "HA: ${ha_ver}"
-          echo "TAG: ${tag}"
-          if tag=$(git describe --tags --abbrev=0 --match="${calver_date}.*" 2>/dev/null); then
-            base_ver="$(echo $tag | awk -F. '{printf "%s.%d",$ha_ver,$4+1}')"
+          if tag="$(git describe --tags --abbrev=0 --match="${base_ver}.*" 2>/dev/null)"; then 
+            final_ver="$(echo $tag | awk -F. '{printf "%s.%s.%s.%d",$1,$2,$3,$4+1}'}""
           else
-            base_ver="${calver_date}.0"
-          fi        
-          commit_count="$(git rev-list --count --since=$midnight_timestamp HEAD)"
-          calver_dev="$(date --utc --date=$today '+.dev%d')$(printf "%02d" ${commit_count})"
-          base_ver="${base_ver}${calver_dev}"
+            final_ver="${base_ver}.0"
+          fi    
+        elif [[ "${version}" == "dev" || "${version}" == "automation" ]]; then
+          if tag="$(git describe --tags --abbrev=0 --match="${base_ver}_${version}.*" 2>/dev/null)"; then 
+            final_ver="$(echo $tag | awk -F. '{printf "%s.%s.%s.%d",$1,$2,$3,$4+1}')"
+          else
+            final_ver="${base_ver}_${version}.0"
+          fi    
         fi
-        commit_count=$(git tag --list "${base_ver}*" | wc -l)
 
-        echo "VERSION: ${base_ver}.${commit_count}"
+        echo "VERSION: ${final_ver}"
 
-        echo "version=${base_ver}_${commit_count}" >> "$GITHUB_OUTPUT"
+        echo "version=${final_ver}" >> "$GITHUB_OUTPUT"
