@@ -20,7 +20,7 @@ jobs:
       - name: Setup Python
         uses: "actions/setup-python@v4.7.0"
         with:
-          python-version: 3.13
+          python-version: 3.13.2
       - name: Get latest Version
         id: latest
         run: |
