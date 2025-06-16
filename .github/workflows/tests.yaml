@@ -36,10 +36,13 @@ jobs:
           python -m pip install --upgrade pipenv wheel
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        env:
+          PIPENV_VENV_IN_PROJECT: enabled
         run: |
-          pipenv install --deploy --dev
+          pipenv install --deploy --dev --verbose
       - name: Run tests
         env:
           PYTEST: true
+          PIPENV_VENV_IN_PROJECT: enabled
         run: |
           $(pipenv --venv)/bin/python3 -m pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
