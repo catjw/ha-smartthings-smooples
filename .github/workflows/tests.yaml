@@ -19,28 +19,17 @@ jobs:
       - name: Check out code from GitHub
         uses: "actions/checkout@v4"
       - name: Setup Python
-        uses: "actions/setup-python@v4.7.0"
+        uses: "actions/setup-python@v5"
         with:
           python-version: ${{ matrix.python-version }}
           cache: pipenv
-      # - name: Cache Pipenv
-      #   uses: actions/cache@v3
-      #   id: cache-pipenv
-      #   with:
-      #     path: ./.venv
-      #     key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pipenv
       - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
       - name: Install dependencies
-        env:
-          PIPENV_VENV_IN_PROJECT: enabled
         run: |
           pipenv install --dev --deploy
       - name: Run tests
         env:
           PYTEST: true
-          PIPENV_VENV_IN_PROJECT: enabled
         run: |
-          .venv/bin/python3 -m pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
+          pipenv run pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
