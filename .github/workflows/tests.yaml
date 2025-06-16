@@ -37,7 +37,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
-          pipenv install --system --deploy --dev
+          ls -l
+          pipenv install --deploy --dev
       # - name: Install requirements
       #   run: |
       #     set -e
