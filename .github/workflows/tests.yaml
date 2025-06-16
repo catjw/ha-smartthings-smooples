@@ -45,4 +45,6 @@ jobs:
           PYTEST: true
           PIPENV_VENV_IN_PROJECT: enabled
         run: |
+          ls -l
+          ls -l venv
           $(pipenv --venv)/bin/python3 -m pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
