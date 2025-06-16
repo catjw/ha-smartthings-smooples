@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 homeassistant = "==2025.6.1"
 pysmartthings = "==3.2.4"
-pytest-homeassistant-custom-component = "*"
 hass-nabucasa = "*"
 hassil = "*"
 home-assistant-intents = "*"
@@ -14,9 +13,12 @@ mutagen = "*"
 webrtcvad = "*"
 aiohttp-cors = "*"
 numpy = "*"
-colorlog = "==6.7.0"
+colorlog = "==6.9.0"
 asyncio = "*"
 annotatedyaml = "*"
+
+[dev-packages]
+pytest-homeassistant-custom-component = "*"
 aresponses = "*"
 asynctest = "*"
 astroid = "==3.3.10"
@@ -64,8 +66,6 @@ types-pytz = "==2025.1.0.20250204"
 types-PyYAML = "==6.0.12.20241230"
 types-requests = "==2.31.0.3"
 types-xmltodict = "==0.13.0.3"
-
-[dev-packages]
 
 [requires]
 python_version = "3.13"
