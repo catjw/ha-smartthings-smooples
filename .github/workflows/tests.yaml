@@ -38,6 +38,7 @@ jobs:
         env:
           PIPENV_VENV_IN_PROJECT: enabled
         run: |
+          pipenv lock
           pipenv install --deploy --system
       - name: Run tests
         env:
