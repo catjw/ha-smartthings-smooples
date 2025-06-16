@@ -22,7 +22,7 @@ jobs:
         uses: "actions/setup-python@v4.7.0"
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pipenv
+          cache: pip
       # - name: Cache Pipenv
       #   uses: actions/cache@v3
       #   id: cache-pipenv
