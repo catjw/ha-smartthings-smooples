@@ -41,6 +41,8 @@ jobs:
           which python
           pipenv install --deploy --dev
           which python
+          pipenv shell
+          which python
       # - name: Install requirements
       #   run: |
       #     set -e
