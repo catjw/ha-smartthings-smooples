@@ -37,12 +37,11 @@ jobs:
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
-          ls -l
-          which python
           pipenv install --deploy --dev
-          which python
-          pipenv shell
-          which python
+          echo $PYTHON_PATH
+          pipenv --venv
+          export PYTHON_PATH=$(pipenv --venv):$PYTHON_PATH
+          echo $PYTHON_PATH
       # - name: Install requirements
       #   run: |
       #     set -e
