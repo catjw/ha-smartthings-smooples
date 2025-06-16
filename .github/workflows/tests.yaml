@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v3
         id: cache-pipenv
         with:
-          path: ${{ env.pythonLocation }}
+          path: ./.venv
           key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pipenv
