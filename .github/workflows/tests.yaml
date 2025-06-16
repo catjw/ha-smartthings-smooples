@@ -38,10 +38,6 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
-          echo $PYTHON_PATH
-          pipenv --venv
-          export PYTHON_PATH=$(pipenv --venv):$PYTHON_PATH
-          echo $PYTHON_PATH
       # - name: Install requirements
       #   run: |
       #     set -e
@@ -51,4 +47,4 @@ jobs:
         env:
           PYTEST: true
         run: |
-          python3 -m pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
+          $(pipenv -venv)/python3 -m pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
