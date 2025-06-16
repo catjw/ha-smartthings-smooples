@@ -27,7 +27,7 @@ jobs:
         id: cache-pipenv
         with:
           path: ./.venv
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile.lock') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile') }}
           restore-keys: |
             ${{ runner.os }}-pipenv
       - name: Install pipenv
