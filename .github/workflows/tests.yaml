@@ -22,7 +22,7 @@ jobs:
         uses: "actions/setup-python@v4.7.0"
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
+          cache: pipenv
       # - name: Cache Pipenv
       #   uses: actions/cache@v3
       #   id: cache-pipenv
@@ -37,8 +37,6 @@ jobs:
         env:
           PIPENV_VENV_IN_PROJECT: enabled
         run: |
-          pipenv lock --dev
-          cat Pipfile.lock
           pipenv install --dev --deploy
       - name: Run tests
         env:
