@@ -38,7 +38,9 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           ls -l
+          which python
           pipenv install --deploy --dev
+          which python
       # - name: Install requirements
       #   run: |
       #     set -e
