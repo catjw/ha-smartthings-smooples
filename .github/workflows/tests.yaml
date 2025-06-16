@@ -38,7 +38,7 @@ jobs:
         env:
           PIPENV_VENV_IN_PROJECT: enabled
         run: |
-          pipenv install --system
+          pipenv install --deploy --system
       - name: Run tests
         env:
           PYTEST: true
