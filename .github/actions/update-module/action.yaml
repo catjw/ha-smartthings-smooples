@@ -25,12 +25,3 @@ runs:
       shell: bash
       run: |
         ./update.sh ${{ inputs.version }}
-    - name: commit changes
-      shell: bash
-      run: |
-        git add .
-        git commit -m "Update to ${{ inputs.version }}"
-    - name: push changes
-      shell: bash
-      run: |
-        git push origin ${{ inputs.version }}
