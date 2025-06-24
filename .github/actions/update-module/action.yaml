@@ -29,6 +29,7 @@ runs:
       shell: bash
       run: |
         git add .
+        git add Pipfile.lock
         git commit -m "Update to ${{ inputs.version }}"
     - name: push changes
       shell: bash
