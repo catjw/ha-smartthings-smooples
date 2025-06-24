@@ -93,7 +93,7 @@ echo "-------------------------------------------"
 for requirement in $(cat requirements*.txt | grep "=="); do
     update_requirement $requirement
 done
-# pipenv update
+pipenv update
 
 echo "-------------------------------------------"
 echo "Updating translations"
