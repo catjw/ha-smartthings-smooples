@@ -465,19 +465,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:2e3411bb43285caad1c8e1a3186d025ba65a6342e26bad493f6b8feb3d1a1680",
-                "sha256:9b0ff0b34c9cf7328546c532c20b081f09055ff485f4d57c19146c36877048c5"
+                "sha256:9c8e88a32a6465e5905308708cff5b17547117f06982908bdfdb0108b4a65079"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==1.38.43"
+            "version": "==1.38.46"
         },
         "botocore": {
             "hashes": [
-                "sha256:2ee60ac0b08e80e9be2aa2841d42e438d5bc4f82549560a682837655097a3db7",
-                "sha256:c453c5c16c157c5427058bb3cc2c5ad35ee2e43336f0ccbfcc6092c5635505c6"
+                "sha256:8798e5a418c27cf93195b077153644aea44cb171fcd56edc1ecebaa1e49e226e",
+                "sha256:89ca782ffbf2e8769ca9c89234cfa5ca577f1987d07d913ee3c68c4776b1eb5b"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==1.38.43"
+            "version": "==1.38.46"
         },
         "btsocket": {
             "hashes": [
@@ -3038,19 +3037,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:2e3411bb43285caad1c8e1a3186d025ba65a6342e26bad493f6b8feb3d1a1680",
-                "sha256:9b0ff0b34c9cf7328546c532c20b081f09055ff485f4d57c19146c36877048c5"
+                "sha256:9c8e88a32a6465e5905308708cff5b17547117f06982908bdfdb0108b4a65079"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==1.38.43"
+            "version": "==1.38.46"
         },
         "botocore": {
             "hashes": [
-                "sha256:2ee60ac0b08e80e9be2aa2841d42e438d5bc4f82549560a682837655097a3db7",
-                "sha256:c453c5c16c157c5427058bb3cc2c5ad35ee2e43336f0ccbfcc6092c5635505c6"
+                "sha256:8798e5a418c27cf93195b077153644aea44cb171fcd56edc1ecebaa1e49e226e",
+                "sha256:89ca782ffbf2e8769ca9c89234cfa5ca577f1987d07d913ee3c68c4776b1eb5b"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==1.38.43"
+            "version": "==1.38.46"
         },
         "btsocket": {
             "hashes": [
