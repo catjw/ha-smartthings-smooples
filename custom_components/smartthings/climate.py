@@ -27,6 +27,16 @@ async def async_setup_entry(
         if all(
             capability in device.status[climate.MAIN] for capability in climate.THERMOSTAT_CAPABILITIES
         )
+    )   
+    entities.extend(
+        climate.SmartThingsHeatPumpZone(entry_data.client, device, component)
+        for device in entry_data.devices.values()
+        for component in device.status
+        if component in {"INDOOR", "INDOOR1", "INDOOR2"}
+        and all(
+            capability in device.status[component]
+            for capability in climate.HEAT_PUMP_CAPABILITIES
+        )
     )
     async_add_entities(entities)
 
