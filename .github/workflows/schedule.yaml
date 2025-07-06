@@ -52,6 +52,7 @@ jobs:
         run: |
           pipenv lock
       - name: commit changes
+        if: steps.compare.outputs.release_changed == 'true'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
