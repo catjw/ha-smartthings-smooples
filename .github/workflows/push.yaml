@@ -22,8 +22,8 @@ jobs:
     uses: catjw/ha-smartthings-smooples/.github/workflows/validate.yaml@master
     needs: [tests]
   update-hacs-manifest:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@automation
-    # uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
+    # uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@automation
+    uses: catjw/ha-smartthings-smooples/.github/workflows/update_hacs_manifest.yaml@master
     needs: [hassfest, hacs-validate]
   # release:
   #   uses: catjw/ha-smartthings-smooples/.github/workflows/release.yaml@master
