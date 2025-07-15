@@ -29,9 +29,9 @@ runs:
           fi    
         elif [[ "${version}" == "dev" || "${version}" == "automation" ]]; then
           if tag="$(git describe --tags --abbrev=0 --match="${base_ver}-${version}.*" 2>/dev/null)"; then 
-            final_ver="$(echo $tag | awk -F_ '{printf "%s-%s-%d",$1,$2,$3+1}')"
+            final_ver="$(echo $tag | awk -F_ '{printf "%s-%s.%d",$1,$2,$3+1}')"
           else
-            final_ver="${base_ver}-${version}-0"
+            final_ver="${base_ver}-${version}.0"
           fi    
         fi
 
