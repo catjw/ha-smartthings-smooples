@@ -408,13 +408,13 @@ async def test_create_issue_with_items(
             "media_player",
             "2025.10.0",
         ),
-        # (
-        #     "da_sac_ehs_000002_sub",
-        #     "3810e5ad-5351-d9f9-12ff-000001200000",
-        #     "warmepumpe",
-        #     "dhw",
-        #     "2025.12.0",
-        # ),
+        (
+            "da_sac_ehs_000002_sub",
+            "3810e5ad-5351-d9f9-12ff-000001200000",
+            "warmepumpe",
+            "dhw",
+            "2025.12.0",
+        ),
     ],
 )
 async def test_create_issue(

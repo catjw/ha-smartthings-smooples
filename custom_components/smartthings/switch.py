@@ -12,8 +12,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from homeassistant.components.smartthings.const import MAIN
+from homeassistant.components.smartthings.const import INVALID_SWITCH_CATEGORIES, MAIN
 from homeassistant.components.smartthings.entity import SmartThingsEntity
+from homeassistant.components.smartthings.util import deprecate_entity
 
 from homeassistant.components.smartthings import switch, FullDevice
 
@@ -97,7 +98,7 @@ async def async_setup_entry(
         )
         appliance = (
             device.device.components[MAIN].manufacturer_category
-            in switch.INVALID_SWITCH_CATEGORIES
+            in INVALID_SWITCH_CATEGORIES
         )
         if (
             device.device.type == "OCF"
