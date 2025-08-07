@@ -29,13 +29,13 @@ runs:
           fi    
         elif [[ "${version}" == "dev" ]]; then
           if tag="$(git describe --tags --abbrev=0 --match="${base_ver}-beta.*" 2>/dev/null)"; then 
-            final_ver="$(echo $tag | awk -F'-' '{printf "%s-%s.%d",$1,$2,$3+1}')"
+            final_ver="$(echo $tag | awk -F'.' '{printf "%s.%.%s.%d",$1,$2,$3,$4+1}')"
           else
             final_ver="${base_ver}-beta.0"
           fi    
         elif [[ "${version}" == "automation" ]]; then
           if tag="$(git describe --tags --abbrev=0 --match="${base_ver}-rc.*" 2>/dev/null)"; then 
-            final_ver="$(echo $tag | awk -F'-' '{printf "%s-%s.%d",$1,$2,$3+1}')"
+            final_ver="$(echo $tag | awk -F'.' '{printf "%s.%s.%s.%d",$1,$2,$3,$4+1}')"
           else
             final_ver="${base_ver}-rc.0"
           fi    
