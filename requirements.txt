@@ -1,5 +1,5 @@
-homeassistant==2025.8.2
-pysmartthings==3.2.8
+homeassistant==2025.8.3
+pysmartthings==3.2.9
 
 hass_nabucasa
 hassil
