@@ -4,7 +4,7 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-homeassistant = "==2025.9.1"
+homeassistant = "==2025.9.2"
 pysmartthings = "==3.2.9"
 hass-nabucasa = "*"
 hassil = "*"
