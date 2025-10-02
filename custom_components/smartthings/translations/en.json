@@ -4,7 +4,7 @@
       "pick_implementation": {
         "title": "Pick authentication method",
         "data": {
-          "implementation": "Application Credentials"
+          "implementation": "Application credentials"
         },
         "data_description": {
           "implementation": "The credentials you want to use to authenticate."
@@ -76,6 +76,21 @@
       },
       "stop": {
         "name": "Stop"
+      }
+    },
+    "climate": {
+      "air_conditioner": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "wind_free": "WindFree",
+              "wind_free_sleep": "WindFree sleep",
+              "quiet": "Quiet",
+              "long_wind": "Long wind",
+              "smart": "Smart"
+            }
+          }
+        }
       }
     },
     "event": {
@@ -604,6 +619,9 @@
       "bubble_soak": {
         "name": "Bubble Soak"
       },
+      "display_lighting": {
+        "name": "Display lighting"
+      },
       "wrinkle_prevent": {
         "name": "Wrinkle prevent"
       },
@@ -623,7 +641,7 @@
         "name": "Power freeze"
       },
       "auto_cycle_link": {
-        "name": "Auto cycle link"
+        "name": "Auto Cycle Link"
       },
       "sanitize": {
         "name": "Sanitize"
