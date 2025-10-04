@@ -36,6 +36,7 @@ from pytest_homeassistant_custom_component.syrupy import HomeAssistantSnapshotEx
 from syrupy.assertion import SnapshotAssertion
 
 from custom_components.smartthings import smartthings
+DOMAIN = smartthings.const.DOMAIN
 
 pytest_plugins = ["pytest_homeassistant_custom_component"]
 
@@ -74,9 +75,9 @@ async def setup_credentials(hass: HomeAssistant) -> None:
     assert await async_setup_component(hass, "application_credentials", {})
     await async_import_client_credential(
         hass,
-        smartthings.const.DOMAIN,
+        DOMAIN,
         ClientCredential("CLIENT_ID", "CLIENT_SECRET"),
-        smartthings.const.DOMAIN,
+        DOMAIN,
     )
 
 
@@ -114,11 +115,13 @@ def mock_smartthings() -> Generator[AsyncMock]:
 
 @pytest.fixture(
     params=[
+        "aq_sensor_3_ikea",
         "da_ac_airsensor_01001",
         "da_ac_rac_000001",
         "da_ac_rac_000003",
         "da_ac_rac_100001",
         "da_ac_rac_01001",
+        "da_ac_cac_01001",
         "multipurpose_sensor",
         "contact_sensor",
         "base_electric_meter",
@@ -130,6 +133,7 @@ def mock_smartthings() -> Generator[AsyncMock]:
         "centralite",
         "da_ref_normal_000001",
         "da_ref_normal_01011",
+        "da_ref_normal_01011_onedoor",
         "da_ref_normal_01001",
         "vd_network_audio_002s",
         "vd_network_audio_003s",
