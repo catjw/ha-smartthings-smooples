@@ -47,6 +47,54 @@
     'state': 'on',
   })
 # ---
+# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_display_lighting-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': <EntityCategory.CONFIG: 'config'>,
+    'entity_id': 'switch.aire_dormitorio_principal_display_lighting',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Display lighting',
+    'platform': 'smartthings',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'display_lighting',
+    'unique_id': '4ece486b-89db-f06a-d54d-748b676b4d8e_main_samsungce.airConditionerLighting_lighting_lighting',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_all_entities[da_ac_rac_01001][switch.aire_dormitorio_principal_display_lighting-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Aire Dormitorio Principal Display lighting',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.aire_dormitorio_principal_display_lighting',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
 # name: test_all_entities[da_ref_normal_000001][switch.refrigerator_cubed_ice-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
@@ -623,6 +671,54 @@
     'state': 'off',
   })
 # ---
+# name: test_all_entities[da_ref_normal_01011_onedoor][switch.lodowka_power_cool-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': <EntityCategory.CONFIG: 'config'>,
+    'entity_id': 'switch.lodowka_power_cool',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Power cool',
+    'platform': 'smartthings',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'power_cool',
+    'unique_id': '271d82e0-5b0c-e4b8-058e-cdf23a188610_main_samsungce.powerCool_activated_activated',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_all_entities[da_ref_normal_01011_onedoor][switch.lodowka_power_cool-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Lodówka Power cool',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.lodowka_power_cool',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
 # name: test_all_entities[da_rvc_map_01011][switch.robot_vacuum-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
@@ -744,7 +840,7 @@
     }),
     'original_device_class': None,
     'original_icon': None,
-    'original_name': 'Auto cycle link',
+    'original_name': 'Auto Cycle Link',
     'platform': 'smartthings',
     'previous_unique_id': None,
     'suggested_object_id': None,
@@ -757,7 +853,7 @@
 # name: test_all_entities[da_wm_sc_000001][switch.airdresser_auto_cycle_link-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'AirDresser Auto cycle link',
+      'friendly_name': 'AirDresser Auto Cycle Link',
     }),
     'context': <ANY>,
     'entity_id': 'switch.airdresser_auto_cycle_link',
@@ -1634,6 +1730,55 @@
     'state': 'off',
   })
 # ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_auto_cleaning_mode-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.ar_varanda_auto_cleaning_mode',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:shimmer',
+    'original_name': 'Auto Cleaning Mode',
+    'platform': 'smartthings',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'auto_cleaning_mode',
+    'unique_id': '23c6d296-4656-20d8-f6eb-2ff13e041753_main_custom.autoCleaningMode_autoCleaningMode_autoCleaningMode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_auto_cleaning_mode-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Ar Varanda Auto Cleaning Mode',
+      'icon': 'mdi:shimmer',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.ar_varanda_auto_cleaning_mode',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
 # name: test_all_entities[da_ac_rac_000001][switch.ac_office_granit_auto_cleaning_mode-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
@@ -1779,6 +1924,55 @@
     'last_reported': <ANY>,
     'last_updated': <ANY>,
     'state': 'on',
+  })
+# ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_display-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.ar_varanda_display',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:lightbulb',
+    'original_name': 'Display',
+    'platform': 'smartthings',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'light',
+    'unique_id': '23c6d296-4656-20d8-f6eb-2ff13e041753_main_execute_data_data',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_display-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Ar Varanda Display',
+      'icon': 'mdi:lightbulb',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.ar_varanda_display',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
   })
 # ---
 # name: test_all_entities[da_sac_ehs_000001_sub][switch.eco_heating_system_display-entry]
@@ -1971,6 +2165,55 @@
     }),
     'context': <ANY>,
     'entity_id': 'switch.aire_dormitorio_principal_sound',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_sound-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.ar_varanda_sound',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:volume-high',
+    'original_name': 'Sound',
+    'platform': 'smartthings',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'volume',
+    'unique_id': '23c6d296-4656-20d8-f6eb-2ff13e041753_main_audioVolume_volume_volume',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_all_entities[da_ac_cac_01001][switch.ar_varanda_sound-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Ar Varanda Sound',
+      'icon': 'mdi:volume-high',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.ar_varanda_sound',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
