@@ -40,5 +40,5 @@
     "homeassistant==2025.10.3",
     "pysmartthings==3.3.1"
   ],
-  "version": "2025.10.2"
+  "version": "2025.10.3-rc.0"
 }
