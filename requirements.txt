@@ -1,4 +1,4 @@
-homeassistant==2025.10.4
+homeassistant==2025.11.0
 pysmartthings==3.3.1
 
 hass_nabucasa
@@ -8,6 +8,6 @@ mutagen
 webrtcvad
 aiohttp_cors
 numpy
-colorlog==6.9.0
+colorlog==6.10.1
 asyncio
 annotatedyaml
