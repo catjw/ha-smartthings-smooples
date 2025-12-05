@@ -1439,7 +1439,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_display-entry]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_display-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -1452,7 +1452,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.office_airfree_display',
+    'entity_id': 'switch.clim_salon_display',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -1474,14 +1474,14 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_display-state]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_display-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Office AirFree Display',
+      'friendly_name': 'Clim Salon Display',
       'icon': 'mdi:lightbulb',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.office_airfree_display',
+    'entity_id': 'switch.clim_salon_display',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
@@ -1634,7 +1634,7 @@
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_spi_mode-entry]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_spi_mode-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -1647,7 +1647,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.office_airfree_spi_mode',
+    'entity_id': 'switch.clim_salon_spi_mode',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -1669,13 +1669,13 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_spi_mode-state]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_spi_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Office AirFree SPI Mode',
+      'friendly_name': 'Clim Salon SPI Mode',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.office_airfree_spi_mode',
+    'entity_id': 'switch.clim_salon_spi_mode',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
@@ -1828,7 +1828,7 @@
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_auto_cleaning_mode-entry]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_auto_cleaning_mode-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -1841,7 +1841,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.office_airfree_auto_cleaning_mode',
+    'entity_id': 'switch.clim_salon_auto_cleaning_mode',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -1863,14 +1863,14 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_auto_cleaning_mode-state]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_auto_cleaning_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Office AirFree Auto Cleaning Mode',
+      'friendly_name': 'Clim Salon Auto Cleaning Mode',
       'icon': 'mdi:shimmer',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.office_airfree_auto_cleaning_mode',
+    'entity_id': 'switch.clim_salon_auto_cleaning_mode',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
@@ -2073,7 +2073,7 @@
     'state': 'off',
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_sound-entry]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_sound-entry]
   EntityRegistryEntrySnapshot({
     'aliases': set({
     }),
@@ -2086,7 +2086,7 @@
     'disabled_by': None,
     'domain': 'switch',
     'entity_category': None,
-    'entity_id': 'switch.office_airfree_sound',
+    'entity_id': 'switch.clim_salon_sound',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -2108,14 +2108,14 @@
     'unit_of_measurement': None,
   })
 # ---
-# name: test_all_entities[da_ac_rac_000003][switch.office_airfree_sound-state]
+# name: test_all_entities[da_ac_rac_000003][switch.clim_salon_sound-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Office AirFree Sound',
+      'friendly_name': 'Clim Salon Sound',
       'icon': 'mdi:volume-high',
     }),
     'context': <ANY>,
-    'entity_id': 'switch.office_airfree_sound',
+    'entity_id': 'switch.clim_salon_sound',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,

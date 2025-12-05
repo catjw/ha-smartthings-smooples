@@ -25,14 +25,14 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er, issue_registry as ir
 from homeassistant.setup import async_setup_component
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-
 from . import (
     setup_integration,
     snapshot_smartthings_entities,
     trigger_health_update,
     trigger_update,
 )
+
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(
@@ -98,7 +98,7 @@ async def test_command_ac_switch_turn_on_off(
     await hass.services.async_call(
         SWITCH_DOMAIN,
         action,
-        {ATTR_ENTITY_ID: "switch.office_airfree_display"},
+        {ATTR_ENTITY_ID: "switch.clim_salon_display"},
         blocking=True,
     )
     devices.execute_device_command.assert_called_with(
