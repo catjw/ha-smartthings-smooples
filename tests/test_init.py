@@ -42,7 +42,7 @@ from homeassistant.helpers.config_entry_oauth2_flow import (
 
 from . import setup_integration, trigger_update
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry, async_load_fixture
+from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
 
 
 async def test_devices(
@@ -377,11 +377,11 @@ async def test_hub_via_device(
 ) -> None:
     """Test hub with child devices."""
     mock_smartthings.get_devices.return_value = DeviceResponse.from_json(
-        await async_load_fixture(hass, "devices/hub.json", DOMAIN)
+        load_fixture("devices/hub.json", DOMAIN)
     ).items
     mock_smartthings.get_device_status.side_effect = [
         DeviceStatus.from_json(
-            await async_load_fixture(hass, f"device_status/{fixture}.json", DOMAIN)
+            load_fixture(f"device_status/{fixture}.json", DOMAIN)
         ).components
         for fixture in ("hub", "multipurpose_sensor")
     ]
