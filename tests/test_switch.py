@@ -102,7 +102,7 @@ async def test_command_ac_switch_turn_on_off(
         blocking=True,
     )
     devices.execute_device_command.assert_called_with(
-        "c76d6f38-1b7f-13dd-37b5-db18d5272783",
+        "1e3f7ca2-e005-e1a4-f6d7-bc231e3f7977",
         Capability.EXECUTE,
         Command.EXECUTE,
         MAIN,
