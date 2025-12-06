@@ -42,7 +42,7 @@ from homeassistant.helpers.config_entry_oauth2_flow import (
 
 from . import setup_integration, trigger_update
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry, load_fixture
+from pytest_homeassistant_custom_component.common import MockConfigEntry, async_load_fixture, load_fixture
 
 
 async def test_devices(
