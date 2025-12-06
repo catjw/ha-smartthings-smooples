@@ -21,6 +21,18 @@ async def setup_integration(hass: HomeAssistant, config_entry: MockConfigEntry) 
 
     await hass.config_entries.async_setup(config_entry.entry_id)
     await hass.async_block_till_done()
+    
+
+def compare_snaps(snap_name, snap: "SerializableData", current: "SerializableData") -> None:
+    """Compare two snapshot dictionaries."""
+    if snap:
+        snap_data = snap.split('\n')
+        current_data = current.split('\n')
+        for i in range(len(current_data)):
+            assert snap_data[i] == current_data[i], f"\n\t{snap_name}\n\tLine {i} does not match\n\t\t{snap_data[i]} != {current_data[i]}"
+    else:
+        return snap_name
+        
 
 
 def snapshot_smartthings_entities(
@@ -33,8 +45,13 @@ def snapshot_smartthings_entities(
     entities = hass.states.async_all(platform)
     for entity_state in entities:
         entity_entry = entity_registry.async_get(entity_state.entity_id)
-        assert entity_entry == snapshot(name=f"{entity_entry.entity_id}-entry")
-        assert entity_state == snapshot(name=f"{entity_entry.entity_id}-state")
+        ee_snap = snapshot(name=f"{entity_entry.entity_id}-entry")
+        ee_snap_data = ee_snap._recall_data(index=ee_snap.index)[0]
+        assert entity_entry == snapshot(name=f"{entity_entry.entity_id}-entry"), compare_snaps(f"{entity_entry.entity_id}-entry", ee_snap_data, ee_snap._serialize(entity_entry))
+        es_snap = snapshot(name=f"{entity_entry.entity_id}-state")
+        es_snap_data = es_snap._recall_data(index=es_snap.index)[0]
+        assert entity_state == snapshot(name=f"{entity_entry.entity_id}-state"), compare_snaps(f"{entity_entry.entity_id}-entry", es_snap_data, es_snap._serialize(entity_state))
+            
 
 
 def set_attribute_value(
