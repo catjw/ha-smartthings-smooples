@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6aa253b8810bbea0506eecd41f7236e84a6150aeac9ce147be86f89625478eb5"
+            "sha256": "07ed73218da854e85930d5c3ccae2504437290d6fd2aef1ad066ad87cc7fe0ab"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1547,12 +1547,12 @@
         },
         "homeassistant": {
             "hashes": [
-                "sha256:431b0228bd2bb0c2a2775a1e6ec13a83e8b8b2eda74a7eab216385ec97be6adf",
-                "sha256:ff1c1458dbc6f1864de8d405914445b7b35c536fbcce5ac61dd72f9a87e8a1f4"
+                "sha256:32761ee3349300fb3a215254af52b6fb030a8b3e537b5395bcafc22cbde05c47",
+                "sha256:bad722b0444aa3b4f1757930bc1ab9ff202d82c124bdf062b2df59d168c3ade2"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.13.2'",
-            "version": "==2025.12.0"
+            "version": "==2025.12.1"
         },
         "httpcore": {
             "hashes": [
@@ -5529,12 +5529,12 @@
         },
         "homeassistant": {
             "hashes": [
-                "sha256:431b0228bd2bb0c2a2775a1e6ec13a83e8b8b2eda74a7eab216385ec97be6adf",
-                "sha256:ff1c1458dbc6f1864de8d405914445b7b35c536fbcce5ac61dd72f9a87e8a1f4"
+                "sha256:32761ee3349300fb3a215254af52b6fb030a8b3e537b5395bcafc22cbde05c47",
+                "sha256:bad722b0444aa3b4f1757930bc1ab9ff202d82c124bdf062b2df59d168c3ade2"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.13.2'",
-            "version": "==2025.12.0"
+            "version": "==2025.12.1"
         },
         "httpcore": {
             "hashes": [
@@ -7132,12 +7132,12 @@
         },
         "pytest-homeassistant-custom-component": {
             "hashes": [
-                "sha256:273ec930450c748767fdcccd66c749e7ed8af811d1ff1ea23363bd061b30f42a",
-                "sha256:451c520a2865f5a54638c06d5308b1e61a749575b2fc6707b4dc155ee8d9d6c2"
+                "sha256:524147293761d386cabe938013f9b31cdbd637eaa48a403121fb19bd84d14b81",
+                "sha256:83707d9d5ad9185d6a82ff0a4f261fd8eebf69e18146e71951c122b958366e03"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.13'",
-            "version": "==0.13.298"
+            "version": "==0.13.299"
         },
         "pytest-picked": {
             "hashes": [
