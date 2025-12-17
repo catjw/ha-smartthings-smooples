@@ -11,3 +11,4 @@ numpy
 colorlog==6.10.1
 asyncio
 annotatedyaml
+pycares==4.11.0
