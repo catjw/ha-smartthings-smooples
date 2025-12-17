@@ -28,6 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           pipenv install --dev
+          pipenv run pip install --no-deps pytest-homeassistant-custom-component
       - name: Run tests
         env:
           PYTEST: true
