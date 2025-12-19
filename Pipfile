@@ -4,21 +4,13 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-homeassistant = "==2025.12.2"
-pysmartthings = "==3.5.0"
-hass-nabucasa = "*"
+homeassistant = "==2025.12.3"
+pysmartthings = "==3.5.1"
 hassil = "*"
-home-assistant-intents = "*"
-mutagen = "*"
 webrtcvad = "*"
-aiohttp-cors = "*"
-numpy = "*"
-colorlog = "==6.10.1"
-asyncio = "*"
-annotatedyaml = "*"
+pycares = "==4.11.0"
 
 [dev-packages]
-pytest-homeassistant-custom-component = "*"
 aresponses = "*"
 asynctest = "*"
 astroid = "==4.0.1"

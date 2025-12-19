@@ -1,5 +1,5 @@
-homeassistant==2025.12.2
-pysmartthings==3.5.0
+homeassistant==2025.12.3
+pysmartthings==3.5.1
 
 hass_nabucasa
 hassil
@@ -11,3 +11,5 @@ numpy
 colorlog==6.10.1
 asyncio
 annotatedyaml
+pycares==4.11.0
+pluggy
