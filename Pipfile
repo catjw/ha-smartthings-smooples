@@ -4,11 +4,11 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-homeassistant = "==2025.12.3"
+homeassistant = "==2025.12.4"
 pysmartthings = "==3.5.1"
 hassil = "*"
 webrtcvad = "*"
-pycares = "==4.11.0"
+pycares = "=="
 
 [dev-packages]
 aresponses = "*"
