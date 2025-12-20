@@ -3,3 +3,4 @@
 .coverage
 .vscode
 .venv
+test.http
