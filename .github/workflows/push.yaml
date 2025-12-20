@@ -11,10 +11,11 @@ on:
       - 'custom_components/smartthings/**'
       - 'tests/**'
       - 'requirements*.txt'
+      - 'Pipfile*'
 
 jobs:
   tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@automation
+    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
   hassfest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
     needs: [tests]
