@@ -8,9 +8,6 @@ homeassistant = "==2025.12.4"
 pysmartthings = "==3.5.1"
 hassil = "*"
 webrtcvad = "*"
-pluggy = "*"
-pygments = "*"
-iniconfig = "*"
 
 [dev-packages]
 aresponses = "*"

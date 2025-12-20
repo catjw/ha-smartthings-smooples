@@ -11,6 +11,3 @@ numpy
 colorlog==6.10.1
 asyncio
 annotatedyaml
-pluggy
-Pygments
-iniconfig
