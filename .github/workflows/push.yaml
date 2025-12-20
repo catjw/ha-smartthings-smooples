@@ -15,7 +15,7 @@ on:
 
 jobs:
   tests:
-    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@master
+    uses: catjw/ha-smartthings-smooples/.github/workflows/tests.yaml@automation
   hassfest:
     uses: catjw/ha-smartthings-smooples/.github/workflows/hassfest.yaml@master
     needs: [tests]
