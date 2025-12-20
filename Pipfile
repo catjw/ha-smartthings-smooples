@@ -9,6 +9,7 @@ pysmartthings = "==3.5.1"
 hassil = "*"
 webrtcvad = "*"
 pluggy = "*"
+pygments = "*"
 
 [dev-packages]
 aresponses = "*"
