@@ -37,8 +37,8 @@
     "pysmartthings"
   ],
   "requirements": [
-    "homeassistant==2026.1.0",
+    "homeassistant==2026.1.1",
     "pysmartthings==3.5.1"
   ],
-  "version": "2026.1.0-rc.0"
+  "version": "2026.1.0"
 }
