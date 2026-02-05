@@ -9,6 +9,7 @@
       "no_url_available": "No URL available. For information about this error, [check the help section]({docs_url})",
       "oauth_error": "Received invalid token data.",
       "oauth_failed": "Error while obtaining access token.",
+      "oauth_implementation_unavailable": "No OAuth2 implementations are currently available.",
       "oauth_timeout": "Timeout resolving OAuth token.",
       "oauth_unauthorized": "OAuth authorization error while obtaining access token.",
       "reauth_account_mismatch": "Authenticated account does not match the account to be reauthenticated. Please log in with the correct account and pick the right location.",
@@ -17,6 +18,9 @@
     },
     "error": {
       "already_configured": "Account is already configured"
+    },
+    "initiate_flow": {
+      "user": "Add account"
     },
     "step": {
       "pick_implementation": {
