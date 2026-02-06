@@ -29,6 +29,8 @@ def compare_snaps(snap_name, snap: "SerializableData", current: "SerializableDat
         snap_data = snap.split('\n')
         current_data = current.split('\n')
         for i in range(len(current_data)):
+            sd = snap_data[i]
+            cd = current_data[i]
             assert snap_data[i] == current_data[i], f"\n\t{snap_name}\n\tLine {i} does not match\n\t\t{snap_data[i]} != {current_data[i]}"
     else:
         return snap_name
