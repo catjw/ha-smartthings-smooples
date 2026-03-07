@@ -23,6 +23,9 @@
       "user": "Add account"
     },
     "step": {
+      "oauth_discovery": {
+        "description": "Home Assistant has found a SmartThings device on your network. Press **Submit** to continue setting up SmartThings."
+      },
       "pick_implementation": {
         "data": {
           "implementation": "Application credentials"
@@ -66,6 +69,9 @@
       },
       "keep_fresh_mode_active": {
         "name": "Keep fresh mode active"
+      },
+      "oven_cavity_status": {
+        "name": "Second cavity status"
       },
       "remote_control": {
         "name": "Remote control"
@@ -217,6 +223,15 @@
           "stop": "Stopped"
         }
       },
+      "selected_zone": {
+        "name": "Selected zone",
+        "state": {
+          "all": "All",
+          "lower": "Lower",
+          "none": "None",
+          "upper": "Upper"
+        }
+      },
       "soil_level": {
         "name": "Soil level",
         "state": {
@@ -280,6 +295,15 @@
           "semi_hot": "Semi Hot",
           "tap_cold": "Tap Cold",
           "warm": "Warm"
+        }
+      },
+      "zone_booster": {
+        "name": "Zone booster",
+        "state": {
+          "all": "All",
+          "left": "Left",
+          "none": "None",
+          "right": "Right"
         }
       }
     },
@@ -489,6 +513,9 @@
       "odor_sensor": {
         "name": "Odor sensor"
       },
+      "oven_completion_time_cavity_01": {
+        "name": "Second cavity completion time"
+      },
       "oven_job_state": {
         "name": "Job state",
         "state": {
@@ -511,8 +538,38 @@
           "warming": "Warming"
         }
       },
+      "oven_job_state_cavity_01": {
+        "name": "Second cavity job state",
+        "state": {
+          "cleaning": "Cleaning",
+          "cooking": "Cooking",
+          "cooling": "Cooling",
+          "defrosting": "Defrosting",
+          "draining": "Draining",
+          "fast_preheat": "Fast preheat",
+          "finished": "Finished",
+          "preheat": "Preheat",
+          "ready": "Ready",
+          "rinsing": "Rinsing",
+          "scheduled_end": "Scheduled end",
+          "scheduled_start": "Scheduled start",
+          "searing": "Searing",
+          "sensing": "Sensing",
+          "stone_heating": "Stone heating",
+          "time_hold_preheat": "Time hold preheat",
+          "warming": "Warming"
+        }
+      },
       "oven_machine_state": {
         "name": "Machine state",
+        "state": {
+          "paused": "Paused",
+          "ready": "Ready",
+          "running": "Running"
+        }
+      },
+      "oven_machine_state_cavity_01": {
+        "name": "Second cavity machine state",
         "state": {
           "paused": "Paused",
           "ready": "Ready",
@@ -553,8 +610,48 @@
           "warming": "Warming"
         }
       },
+      "oven_mode_cavity_01": {
+        "name": "Second cavity oven mode",
+        "state": {
+          "bake": "Bake",
+          "bottom_heat": "Bottom heat",
+          "broil": "Broil",
+          "convection_bake": "Convection bake",
+          "convection_broil": "Convection broil",
+          "convection_roast": "Convection roast",
+          "conventional": "Conventional",
+          "defrosting": "Defrosting",
+          "dehydrate": "Dehydrate",
+          "descale": "Descale",
+          "grill": "Grill",
+          "heating": "Heating",
+          "microwave": "Microwave",
+          "microwave_plus_convection": "Microwave plus convection",
+          "microwave_plus_grill": "Microwave plus grill",
+          "microwave_plus_hot_blast": "Microwave plus hot blast",
+          "microwave_plus_hot_blast_2": "Microwave plus hot blast 2",
+          "others": "Others",
+          "proof": "Proof",
+          "rinse": "Rinse",
+          "slim_middle": "Slim middle",
+          "slim_strong": "Slim strong",
+          "slow_cook": "Slow cook",
+          "steam_bake": "Steam bake",
+          "steam_bottom_heat_plus_convection": "Steam bottom heat plus convection",
+          "steam_cook": "Steam cook",
+          "steam_roast": "Steam roast",
+          "strong_steam": "Strong steam",
+          "warming": "Warming"
+        }
+      },
       "oven_setpoint": {
         "name": "Setpoint"
+      },
+      "oven_setpoint_cavity_01": {
+        "name": "Second cavity setpoint"
+      },
+      "oven_temperature_cavity_01": {
+        "name": "Second cavity temperature"
       },
       "pm10_health_concern": {
         "name": "PM10 health concern",
@@ -621,7 +718,8 @@
           "off": "Off",
           "pause": "Paused",
           "point": "Point",
-          "reserve": "Reserve"
+          "reserve": "Reserve",
+          "washing_mop": "Washing mop"
         }
       },
       "robot_cleaner_turbo_mode": {
@@ -749,6 +847,9 @@
       }
     },
     "switch": {
+      "add_rinse": {
+        "name": "Add rinse"
+      },
       "auto_cycle_link": {
         "name": "Auto Cycle Link"
       },
@@ -757,6 +858,18 @@
       },
       "display_lighting": {
         "name": "Display lighting"
+      },
+      "dry_plus": {
+        "name": "Dry plus"
+      },
+      "heated_dry": {
+        "name": "Heated dry"
+      },
+      "high_temp_wash": {
+        "name": "High temp wash"
+      },
+      "hot_air_dry": {
+        "name": "Hot air dry"
       },
       "ice_maker": {
         "name": "Cubed ice"
@@ -767,11 +880,17 @@
       "keep_fresh_mode": {
         "name": "Keep fresh mode"
       },
+      "multi_tab": {
+        "name": "Multi-tab"
+      },
       "power_cool": {
         "name": "Power cool"
       },
       "power_freeze": {
         "name": "Power freeze"
+      },
+      "rinse_plus": {
+        "name": "Rinse plus"
       },
       "sabbath_mode": {
         "name": "Sabbath mode"
@@ -779,8 +898,20 @@
       "sanitize": {
         "name": "Sanitize"
       },
+      "sanitizing_wash": {
+        "name": "Sanitizing wash"
+      },
       "sound_effect": {
         "name": "Sound effect"
+      },
+      "speed_booster": {
+        "name": "Speed booster"
+      },
+      "steam_soak": {
+        "name": "Steam soak"
+      },
+      "storm_wash": {
+        "name": "Storm wash"
       },
       "wrinkle_prevent": {
         "name": "Wrinkle prevent"
