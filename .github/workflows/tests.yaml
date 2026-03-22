@@ -33,4 +33,4 @@ jobs:
         env:
           PYTEST: true
         run: |
-          pipenv run pytest -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
+          pipenv run pytest --snapshot-update -qq --timeout=30 --durations=10 -n=auto --cov custom_components.smartthings -o console_output_style=count -p no:sugar --asyncio-mode=auto tests
