@@ -1,4 +1,4 @@
-homeassistant==2026.3.3
+homeassistant==2026.3.4
 pysmartthings==3.7.2
 
 hass_nabucasa
