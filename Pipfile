@@ -4,7 +4,7 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-homeassistant = "==2026.3.4"
+homeassistant = "==2026.4.0"
 pysmartthings = "==3.7.2"
 hassil = "*"
 webrtcvad = "*"
@@ -57,6 +57,7 @@ types-pytz = "==2025.2.0.20251108"
 types-PyYAML = "==6.0.12.20250915"
 types-requests = "==2.32.4.20260107"
 types-xmltodict = "==1.0.1.20260113"
+pytest-homeassistant-custom-component = "*"
 
 [requires]
 python_version = "3.14"

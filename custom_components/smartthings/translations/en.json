@@ -49,6 +49,9 @@
       "child_lock": {
         "name": "Child lock"
       },
+      "cooktop_operating_state": {
+        "name": "Operating state"
+      },
       "cool_select_plus_door": {
         "name": "CoolSelect+ door"
       },
@@ -70,11 +73,23 @@
       "keep_fresh_mode_active": {
         "name": "Keep fresh mode active"
       },
+      "microfiber_filter_blockage": {
+        "name": "Filter blockage"
+      },
       "oven_cavity_status": {
         "name": "Second cavity status"
       },
       "remote_control": {
         "name": "Remote control"
+      },
+      "robot_cleaner_dust_bag": {
+        "name": "Dust bag full"
+      },
+      "stick_cleaner_dust_bag": {
+        "name": "Dust bag full"
+      },
+      "stick_cleaner_status": {
+        "name": "Stick cleaner in station"
       },
       "sub_remote_control": {
         "name": "Upper washer remote control"
@@ -84,11 +99,29 @@
       }
     },
     "button": {
+      "cancel": {
+        "name": "Cancel"
+      },
+      "cancel_and_drain": {
+        "name": "Cancel and drain"
+      },
+      "pause": {
+        "name": "Pause"
+      },
+      "reset_hepa_filter": {
+        "name": "Reset HEPA filter"
+      },
       "reset_hood_filter": {
         "name": "Reset filter"
       },
       "reset_water_filter": {
         "name": "Reset water filter"
+      },
+      "resume": {
+        "name": "Resume"
+      },
+      "start": {
+        "name": "Start"
       },
       "stop": {
         "name": "Stop"
@@ -159,6 +192,11 @@
         }
       }
     },
+    "light": {
+      "light": {
+        "name": "Light"
+      }
+    },
     "number": {
       "cool_select_plus_temperature": {
         "name": "CoolSelect+ temperature"
@@ -223,6 +261,41 @@
           "stop": "Stopped"
         }
       },
+      "robot_cleaner_cleaning_type": {
+        "name": "Cleaning type",
+        "state": {
+          "mop": "Mop",
+          "mop_after_vacuum": "Mop after vacuuming",
+          "vacuum": "Vacuum",
+          "vacuum_and_mop_together": "Vacuum and mop together"
+        }
+      },
+      "robot_cleaner_driving_mode": {
+        "name": "Driving mode",
+        "state": {
+          "area_then_walls": "Area then walls",
+          "quick_clean_zigzag_pattern": "Quick clean in a zigzag pattern",
+          "walls_first": "Walls first"
+        }
+      },
+      "robot_cleaner_sound_mode": {
+        "name": "Sound mode",
+        "state": {
+          "mute": "Mute",
+          "tone": "Tone",
+          "voice": "Voice"
+        }
+      },
+      "robot_cleaner_water_spray_level": {
+        "name": "Water level",
+        "state": {
+          "high": "High",
+          "low": "Low",
+          "medium": "Medium",
+          "moderate_high": "Moderate high",
+          "moderate_low": "Moderate low"
+        }
+      },
       "selected_zone": {
         "name": "Selected zone",
         "state": {
@@ -243,6 +316,14 @@
           "none": "None",
           "normal": "Normal",
           "up": "Up"
+        }
+      },
+      "sound_detection_sensitivity": {
+        "name": "Sound detection sensitivity",
+        "state": {
+          "high": "High",
+          "low": "Low",
+          "medium": "Medium"
         }
       },
       "spin_level": {
@@ -510,6 +591,25 @@
       "media_playback_status": {
         "name": "Media playback status"
       },
+      "microfiber_filter_job_state": {
+        "name": "Job state",
+        "state": {
+          "bypassing": "Bypassing",
+          "filtering": "Filtering",
+          "none": "None",
+          "sensing": "Weight sensing",
+          "stopping": "Stopping",
+          "waiting": "Waiting"
+        }
+      },
+      "microfiber_filter_operating_state": {
+        "name": "Operating state",
+        "state": {
+          "paused": "Paused",
+          "ready": "Ready",
+          "running": "Running"
+        }
+      },
       "odor_sensor": {
         "name": "Odor sensor"
       },
@@ -739,6 +839,22 @@
           "tested": "Tested"
         }
       },
+      "stick_cleaner_dust_bag_usage": {
+        "name": "Dust bag cycles",
+        "unit_of_measurement": "cycles"
+      },
+      "stick_cleaner_dustbin_last_emptied": {
+        "name": "Last emptied"
+      },
+      "stick_cleaner_operating_state": {
+        "state": {
+          "emptying_dustbin": "Emptying dustbin",
+          "ready": "Ready",
+          "using_vacuum": "Using vacuum",
+          "uv_cleaning": "UV cleaning",
+          "uv_paused": "UV paused"
+        }
+      },
       "thermostat_cooling_setpoint": {
         "name": "Cooling setpoint"
       },
@@ -856,11 +972,20 @@
       "bubble_soak": {
         "name": "Bubble Soak"
       },
+      "bypass_mode": {
+        "name": "Bypass mode"
+      },
       "display_lighting": {
         "name": "Display lighting"
       },
+      "do_not_disturb": {
+        "name": "Do not disturb"
+      },
       "dry_plus": {
         "name": "Dry plus"
+      },
+      "empty_dustbin": {
+        "name": "Empty dustbin"
       },
       "heated_dry": {
         "name": "Heated dry"
@@ -901,6 +1026,9 @@
       "sanitizing_wash": {
         "name": "Sanitizing wash"
       },
+      "sound_detection": {
+        "name": "Sound detection"
+      },
       "sound_effect": {
         "name": "Sound effect"
       },
@@ -928,11 +1056,36 @@
       "volume": {
         "name": "Sound"
       }
+    },
+    "time": {
+      "do_not_disturb_end_time": {
+        "name": "Do not disturb end time"
+      },
+      "do_not_disturb_start_time": {
+        "name": "Do not disturb start time"
+      }
+    },
+    "vacuum": {
+      "vacuum": {
+        "state_attributes": {
+          "fan_speed": {
+            "state": {
+              "maximum": "Maximum",
+              "normal": "Normal",
+              "quiet": "Quiet",
+              "smart": "Smart"
+            }
+          }
+        }
+      }
     }
   },
   "exceptions": {
     "oauth2_implementation_unavailable": {
       "message": "OAuth2 implementation unavailable, will retry"
+    },
+    "remote_control_status": {
+      "message": "Can only be changed when remote control is enabled"
     }
   },
   "issues": {
