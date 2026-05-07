@@ -2,7 +2,7 @@
   "config": {
     "abort": {
       "already_configured": "Account is already configured",
-      "authorize_url_timeout": "Timeout generating authorize URL.",
+      "authorize_url_timeout": "Timeout while generating an authorization URL.",
       "cloud_not_enabled": "Please make sure you run Home Assistant with `{default_config}` enabled in your configuration.yaml.",
       "missing_configuration": "The component is not configured. Please follow the documentation.",
       "missing_scopes": "Authentication failed. Please make sure you have granted all required permissions.",
@@ -10,7 +10,7 @@
       "oauth_error": "Received invalid token data.",
       "oauth_failed": "Error while obtaining access token.",
       "oauth_implementation_unavailable": "No OAuth2 implementations are currently available.",
-      "oauth_timeout": "Timeout resolving OAuth token.",
+      "oauth_timeout": "Timeout while resolving the OAuth token.",
       "oauth_unauthorized": "OAuth authorization error while obtaining access token.",
       "reauth_account_mismatch": "Authenticated account does not match the account to be reauthenticated. Please log in with the correct account and pick the right location.",
       "reauth_location_mismatch": "Authenticated location does not match the location to be reauthenticated. Please log in with the correct account and pick the right location.",
@@ -1013,6 +1013,9 @@
       },
       "power_freeze": {
         "name": "Power freeze"
+      },
+      "purify": {
+        "name": "Purify"
       },
       "rinse_plus": {
         "name": "Rinse plus"
