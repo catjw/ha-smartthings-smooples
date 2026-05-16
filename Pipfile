@@ -4,7 +4,7 @@ verify_ssl = false
 name = "pypi"
 
 [packages]
-homeassistant = "==2026.5.1"
+homeassistant = "==2026.5.2"
 pysmartthings = "==3.7.3"
 hassil = "*"
 webrtcvad = "*"
