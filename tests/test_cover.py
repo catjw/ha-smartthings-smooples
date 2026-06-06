@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock
 from pysmartthings import Attribute, Capability, Command, Status
 from pysmartthings.models import HealthStatus
 import pytest
-from syrupy import SnapshotAssertion
+from syrupy.assertion import SnapshotAssertion
 
 from homeassistant.components.cover import (
     ATTR_CURRENT_POSITION,
@@ -27,14 +27,14 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-
 from . import (
     setup_integration,
     snapshot_smartthings_entities,
     trigger_health_update,
     trigger_update,
 )
+
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(

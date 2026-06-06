@@ -2,16 +2,16 @@
 
 from unittest.mock import AsyncMock
 
-from syrupy import SnapshotAssertion
+from syrupy.assertion import SnapshotAssertion
 
 from homeassistant.components.scene import DOMAIN as SCENE_DOMAIN
 from homeassistant.const import ATTR_ENTITY_ID, SERVICE_TURN_ON, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-
 from . import setup_integration, snapshot_smartthings_entities
+
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(
