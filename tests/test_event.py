@@ -6,14 +6,12 @@ from freezegun.api import FrozenDateTimeFactory
 from pysmartthings import Attribute, Capability
 from pysmartthings.models import HealthStatus
 import pytest
-from syrupy import SnapshotAssertion
+from syrupy.assertion import SnapshotAssertion
 
 from homeassistant.components.event import ATTR_EVENT_TYPES
 from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
-
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from . import (
     setup_integration,
@@ -21,6 +19,8 @@ from . import (
     trigger_health_update,
     trigger_update,
 )
+
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def test_all_entities(

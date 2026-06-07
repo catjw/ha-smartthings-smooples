@@ -36,8 +36,10 @@ DEVICE_FIXTURES = [
     "da_ac_cac_01001",
     "multipurpose_sensor",
     "contact_sensor",
+    "copper_water_meter_v03",
     "base_electric_meter",
     "smart_plug",
+    "fibaro_dimmer_2",
     "vd_stv_2017_k",
     "c2c_arlo_pro_3_switch",
     "yale_push_button_deadbolt_lock",
@@ -147,20 +149,6 @@ async def setup_integration(hass: HomeAssistant, config_entry: MockConfigEntry) 
 
     await hass.config_entries.async_setup(config_entry.entry_id)
     await hass.async_block_till_done()
-    
-
-def compare_snaps(snap_name, snap: "SerializableData", current: "SerializableData") -> None:
-    """Compare two snapshot dictionaries."""
-    if snap:
-        snap_data = snap.split('\n')
-        current_data = current.split('\n')
-        for i in range(len(current_data)):
-            sd = snap_data[i]
-            cd = current_data[i]
-            assert snap_data[i] == current_data[i], f"\n\t{snap_name}\n\tLine {i} does not match\n\t\t{snap_data[i]} != {current_data[i]}"
-    else:
-        return snap_name
-        
 
 
 def snapshot_smartthings_entities(
