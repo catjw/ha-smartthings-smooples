@@ -13,11 +13,11 @@ from homeassistant.helpers import device_registry as dr
 from . import setup_integration
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry, async_load_json_object_fixture
-from pytest_homeassistant_custom_component.components.diagnostics import (
+from tests.components.diagnostics import (
     get_diagnostics_for_config_entry,
     get_diagnostics_for_device,
 )
-from pytest_homeassistant_custom_component.typing import ClientSessionGenerator
+from tests.typing import ClientSessionGenerator
 
 
 @pytest.mark.parametrize("device_fixture", ["da_ac_rac_000001"])

@@ -1,0 +1,7 @@
+# serializer version: 1
+# name: test_all_entities[yale_push_button_deadbolt_lock][lock.theater_basement_door_lock-entry]
+  RegistryEntry(entity_id='lock.theater_basement_door_lock', unique_id='a9f587c5-5d8b-4273-8907-e7f609af5158_main', platform='smartthings', previous_unique_id=None, aliases=[<ComputedNameType._singleton: 0>], area_id=None, categories={}, capabilities=None, config_entry_id='01KZEZKQ6X6QRC4FR11CZKAJEY', config_subentry_id=None, created_at=datetime.datetime(2026, 8, 7, 20, 46, 7, 988882, tzinfo=datetime.timezone.utc), device_class=None, device_id='cf53373bb5e5438fb2b2301f2011f97e', disabled_by=None, entity_category=None, has_entity_name=True, hidden_by=None, icon=None, id='04d439197bd79bbc7fade95feae450ed', labels=set(), modified_at=datetime.datetime(2026, 8, 7, 20, 46, 7, 989030, tzinfo=datetime.timezone.utc), name=None, object_id_base=None, options={}, original_device_class=None, original_icon=None, original_name=None, suggested_object_id=None, supported_features=0, translation_key=None, unit_of_measurement=None, compat_aliases=[], original_name_unprefixed=None, _cache={})
+# ---
+# name: test_all_entities[yale_push_button_deadbolt_lock][lock.theater_basement_door_lock-state]
+  <state lock.theater_basement_door_lock=locked; lock_state=locked, friendly_name=Basement Door Lock, supported_features=0 @ 2026-08-07T13:46:07.989438-07:00>
+# ---

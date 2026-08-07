@@ -1,0 +1,13 @@
+# serializer version: 1
+# name: test_all_entities[scene.away-entry]
+  RegistryEntry(entity_id='scene.away', unique_id='743b0f37-89b8-476c-aedf-eea8ad8cd29d', platform='smartthings', previous_unique_id=None, aliases=[<ComputedNameType._singleton: 0>], area_id=None, categories={}, capabilities=None, config_entry_id='01KZEZKS73TPQNCXHFB992SWBA', config_subentry_id=None, created_at=datetime.datetime(2026, 8, 7, 20, 46, 9, 753532, tzinfo=datetime.timezone.utc), device_class=None, device_id=None, disabled_by=None, entity_category=None, has_entity_name=True, hidden_by=None, icon=None, id='e9382082529d62046886e237fdfbc987', labels=set(), modified_at=datetime.datetime(2026, 8, 7, 20, 46, 9, 753614, tzinfo=datetime.timezone.utc), name=None, object_id_base='Away', options={}, original_device_class=None, original_icon=None, original_name='Away', suggested_object_id=None, supported_features=0, translation_key=None, unit_of_measurement=None, compat_aliases=[], original_name_unprefixed=None, _cache={})
+# ---
+# name: test_all_entities[scene.away-state]
+  <state scene.away=unknown; icon=203, color=None, location_id=88a3a314-f0c8-40b4-bb44-44ba06c9c42f, friendly_name=Away @ 2026-08-07T13:46:09.754068-07:00>
+# ---
+# name: test_all_entities[scene.home-entry]
+  RegistryEntry(entity_id='scene.home', unique_id='f3341e8b-9b32-4509-af2e-4f7c952e98ba', platform='smartthings', previous_unique_id=None, aliases=[<ComputedNameType._singleton: 0>], area_id=None, categories={}, capabilities=None, config_entry_id='01KZEZKS73TPQNCXHFB992SWBA', config_subentry_id=None, created_at=datetime.datetime(2026, 8, 7, 20, 46, 9, 754150, tzinfo=datetime.timezone.utc), device_class=None, device_id=None, disabled_by=None, entity_category=None, has_entity_name=True, hidden_by=None, icon=None, id='d466e266a705057b375f5fb3a1cbfb61', labels=set(), modified_at=datetime.datetime(2026, 8, 7, 20, 46, 9, 754199, tzinfo=datetime.timezone.utc), name=None, object_id_base='Home', options={}, original_device_class=None, original_icon=None, original_name='Home', suggested_object_id=None, supported_features=0, translation_key=None, unit_of_measurement=None, compat_aliases=[], original_name_unprefixed=None, _cache={})
+# ---
+# name: test_all_entities[scene.home-state]
+  <state scene.home=unknown; icon=204, color=None, location_id=88a3a314-f0c8-40b4-bb44-44ba06c9c42f, friendly_name=Home @ 2026-08-07T13:46:09.754353-07:00>
+# ---
