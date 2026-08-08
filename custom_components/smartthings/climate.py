@@ -29,7 +29,7 @@ async def async_setup_entry(
         )
     )   
     entities.extend(
-        climate.SmartThingsHeatPumpZone(entry_data.client, device, component)
+        climate.SmartThingsHeatPumpZone(hass, entry_data.client, device, component, entry.entry_id)
         for device in entry_data.devices.values()
         for component in device.status
         if component in {"INDOOR", "INDOOR1", "INDOOR2"}
