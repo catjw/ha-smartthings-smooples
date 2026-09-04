@@ -64,7 +64,7 @@ async def test_device_diagnostics(
     mock_smartthings.get_raw_device.return_value = device_items["items"][0]
     await setup_integration(hass, mock_config_entry)
 
-    device = device_registry.async_get_device(
+    device = device_registry.async_get_device_by_identifier(
         identifiers={(DOMAIN, "96a5ef74-5832-a84b-f1f7-ca799957065d")}
     )
 
