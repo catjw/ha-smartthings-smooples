@@ -1,4 +1,4 @@
-homeassistant==2026.8.3
+homeassistant==2026.9.0
 pysmartthings==4.0.1
 
 hass_nabucasa
