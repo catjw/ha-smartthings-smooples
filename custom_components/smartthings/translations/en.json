@@ -6,8 +6,7 @@
       "missing_configuration": "The component is not configured. Please follow the documentation.",
       "missing_scopes": "Authentication failed. Please make sure you have granted all required permissions.",
       "reauth_account_mismatch": "Authenticated account does not match the account to be reauthenticated. Please log in with the correct account and pick the right location.",
-      "reauth_location_mismatch": "Authenticated location does not match the location to be reauthenticated. Please log in with the correct account and pick the right location.",
-      "reauth_successful": "Re-authentication was successful"
+      "reauth_location_mismatch": "Authenticated location does not match the location to be reauthenticated. Please log in with the correct account and pick the right location."
     },
     "error": {
       "already_configured": "Account is already configured"
@@ -194,6 +193,14 @@
     "media_player": {
       "media_player": {
         "state_attributes": {
+          "sound_mode": {
+            "state": {
+              "adaptive_sound": "Adaptive sound",
+              "game": "Game",
+              "standard": "Standard",
+              "surround": "Surround"
+            }
+          },
           "source": {
             "state": {
               "am": "AM",
@@ -1158,9 +1165,6 @@
     }
   },
   "exceptions": {
-    "oauth2_implementation_unavailable": {
-      "message": "OAuth2 implementation unavailable, will retry"
-    },
     "remote_control_status": {
       "message": "Can only be changed when remote control is enabled"
     }
