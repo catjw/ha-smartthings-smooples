@@ -302,9 +302,9 @@ async def test_media_next_track(
     mock_config_entry: MockConfigEntry,
 ) -> None:
     """Test media player next track command."""
-    devices.get_device_status.return_value[MAIN][Capability.MEDIA_PLAYBACK] = {
-        Attribute.SUPPORTED_PLAYBACK_COMMANDS: Status(["fastForward"])
-    }
+    devices.get_device_status.return_value[MAIN][Capability.MEDIA_PLAYBACK][
+        Attribute.SUPPORTED_PLAYBACK_COMMANDS
+    ] = Status(["fastForward"])
     await setup_integration(hass, mock_config_entry)
 
     await hass.services.async_call(
