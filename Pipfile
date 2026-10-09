@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 homeassistant = "==2026.10.0"
-pysmartthings = "==4.0.3"
+pysmartthings = ">=4.0.3"
 hassil = "*"
 webrtcvad = "*"
 
