@@ -24,7 +24,7 @@ function update_requirement() {
     fi
     if [[ $requirement == pysmartthings ]]; then
         echo "Running additional update steps for pysmartthings" >&2
-        yq -i ".requirements=[\"homeassistant==${HA_VERSION}\",\"pysmartthings==${remote_version}\"]" custom_components/smartthings/manifest.json
+        yq -i ".requirements=[\"homeassistant==${HA_VERSION}\",\"pysmartthings>=${remote_version}\"]" custom_components/smartthings/manifest.json
     fi
     
     if [[ $requirement == homeassistant ]]; then
